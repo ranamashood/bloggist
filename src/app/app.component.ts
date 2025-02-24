@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-root',
   imports: [RouterOutlet, NgbModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'bloggist';

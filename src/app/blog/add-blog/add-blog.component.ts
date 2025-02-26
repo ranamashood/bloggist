@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BlogsService } from '../../blogs.service';
 
 @Component({
   selector: 'app-add-blog',
@@ -7,11 +8,22 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-blog.component.html',
 })
 export class AddBlogComponent {
+  constructor(private readonly blogService: BlogsService) {}
+
   title = '';
   desc = '';
 
-  addNewBlog() {
-    console.log(this.title);
-    console.log(this.desc);
+  onAddBlog() {
+    this.blogService
+      .create({
+        title: this.title,
+        desc: this.desc,
+      })
+      .subscribe({
+        next: () => {
+          this.title = '';
+          this.desc = '';
+        },
+      });
   }
 }

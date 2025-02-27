@@ -49,6 +49,12 @@ app.post('/api/blogs', async (req, res) => {
   res.status(201).json(newBlog);
 });
 
+app.get('/api/blogs', async (_req, res) => {
+  const blogs = await db.collection('blogs').find().toArray();
+
+  res.status(200).json(blogs);
+});
+
 /**
  * Serve static files from /browser
  */

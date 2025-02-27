@@ -12,4 +12,8 @@ export class BlogsService {
   create(blog: Partial<Blog>): Observable<Blog> {
     return this.http.post<Blog>('/api/blogs', blog);
   }
+
+  getAll(): Observable<Blog[]> {
+    return this.http.get<Blog[]>('/api/blogs');
+  }
 }

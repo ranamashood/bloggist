@@ -23,8 +23,10 @@ app.use(express.json());
 const MONGO_URI = process.env['DB_CONN_STRING'] || 'mongodb://localhost:27017/';
 const DB_NAME = process.env['DB_NAME'] || 'bloggistDB';
 
-let db: Db;
-MongoClient.connect(MONGO_URI).then((client) => (db = client.db(DB_NAME)));
+const mongoClient = new MongoClient(MONGO_URI);
+await mongoClient.connect();
+
+const db = mongoClient.db(DB_NAME);
 
 /**
  * Example Express Rest API endpoints can be defined here.

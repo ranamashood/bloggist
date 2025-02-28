@@ -9,7 +9,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import 'dotenv/config';
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, ObjectId } from 'mongodb';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -53,6 +53,14 @@ app.get('/api/blogs', async (_req, res) => {
   const blogs = await db.collection('blogs').find().toArray();
 
   res.status(200).json(blogs);
+});
+
+app.get('/api/blogs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const blog = await db.collection('blogs').findOne({ _id: new ObjectId(id) });
+
+  res.status(200).json(blog);
 });
 
 /**

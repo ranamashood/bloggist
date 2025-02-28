@@ -1,8 +1,13 @@
 <div>
   <button class="btn btn-primary" routerLink="/blogs/add">Create new</button>
 
-  <div *ngFor="let blog of blogs$ | async">
+  <a
+    class="d-block"
+    *ngFor="let blog of blogs$ | async"
+    [routerLink]="['/blogs/', blog.id]"
+    [state]="blog"
+  >
     {{ blog.title }}
     {{ blog.desc }}
-  </div>
+  </a>
 </div>

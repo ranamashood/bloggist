@@ -5,7 +5,6 @@
     class="d-block"
     *ngFor="let blog of blogs$ | async"
     [routerLink]="['/blogs/', blog._id]"
-    [state]="blog"
   >
     <app-preview-blog [blog]="blog"></app-preview-blog>
   </a>

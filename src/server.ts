@@ -55,15 +55,15 @@ app.get('/api/blogs', async (_req, res) => {
   res.status(200).json(blogs);
 });
 
-// app.get('/api/blogs/ids', async (_req, res) => {
-//   const blogs = await db
-//     .collection('blogs')
-//     .find()
-//     .project({ _id: 1 })
-//     .toArray();
-//
-//   res.status(200).json(blogs);
-// });
+app.get('/api/blogs/ids', async (_req, res) => {
+  const blogs = await db
+    .collection('blogs')
+    .find()
+    .project({ _id: 1 })
+    .toArray();
+
+  res.status(200).json(blogs);
+});
 
 app.get('/api/blogs/:id', async (req, res) => {
   const { id } = req.params;

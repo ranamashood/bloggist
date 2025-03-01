@@ -13,11 +13,15 @@ export class BlogsService {
     return this.http.post<Blog>('/api/blogs', blog);
   }
 
+  getById(id: string): Observable<Blog> {
+    return this.http.get<Blog>(`/api/blogs/${id}`);
+  }
+
   getAll(): Observable<Blog[]> {
     return this.http.get<Blog[]>('/api/blogs');
   }
 
-  // getAllIds(): Observable<string[]> {
-  //   return this.http.get<string[]>('/api/blogs/ids');
-  // }
+  getAllIds(): Observable<{ _id: string }[]> {
+    return this.http.get<{ _id: string }[]>('/api/blogs/ids');
+  }
 }

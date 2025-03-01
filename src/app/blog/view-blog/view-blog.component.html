@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="blog$ | async as blog">
   {{ blog.title }}
   {{ blog.desc }}
 </div>

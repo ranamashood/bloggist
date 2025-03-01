@@ -16,4 +16,8 @@ export class BlogsService {
   getAll(): Observable<Blog[]> {
     return this.http.get<Blog[]>('/api/blogs');
   }
+
+  // getAllIds(): Observable<string[]> {
+  //   return this.http.get<string[]>('/api/blogs/ids');
+  // }
 }

@@ -7,7 +7,6 @@
     [routerLink]="['/blogs/', blog._id]"
     [state]="blog"
   >
-    {{ blog.title }}
-    {{ blog.desc }}
+    <app-preview-blog [blog]="blog"></app-preview-blog>
   </a>
 </div>

@@ -4,7 +4,7 @@
   <a
     class="d-block"
     *ngFor="let blog of blogs$ | async"
-    [routerLink]="['/blogs/', blog.id]"
+    [routerLink]="['/blogs/', blog._id]"
     [state]="blog"
   >
     {{ blog.title }}

@@ -34,7 +34,7 @@
             "ssr": {
               "entry": "src/server.ts"
             },
-            "externalDependencies": ["whatwg-url"]
+            "externalDependencies": ["whatwg-url", "bcrypt"]
           },
           "configurations": {
             "production": {

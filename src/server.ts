@@ -10,6 +10,9 @@ import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import 'dotenv/config';
 import { MongoClient, Db, ObjectId } from 'mongodb';
+import { User } from './app/user.model';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -39,6 +42,36 @@ const db = mongoClient.db(DB_NAME);
  * });
  * ```
  */
+
+app.post('/api/user/register', async (req, res) => {
+  const { email, password } = req.body;
+
+  const newUser = {
+    email: email,
+    password: await bcrypt.hash(password, 10),
+  };
+
+  await db.collection('users').insertOne(newUser);
+
+  res.status(201).json(newUser);
+});
+
+app.post('/api/user/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await db.collection<User>('users').findOne({ email });
+  const passwordMatched = user
+    ? await bcrypt.compare(password, user.password)
+    : false;
+
+  const token = jwt.sign({ id: user?._id }, process.env['TOKEN_SECRET']!, {
+    expiresIn: '1d',
+  });
+
+  passwordMatched
+    ? res.status(200).json({ token })
+    : res.status(401).json(null);
+});
 
 app.post('/api/blogs', async (req, res) => {
   const { title, desc } = req.body;

@@ -120,7 +120,12 @@ app.get('/api/user', verifyTokenMiddleware, async (req, res) => {
 app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   const { title, desc } = req.body;
 
-  const newBlog = { title, desc };
+  const newBlog = {
+    title,
+    desc,
+    userId: req.user!.id,
+  };
+
   await db.collection('blogs').insertOne(newBlog);
 
   res.status(201).json(newBlog);

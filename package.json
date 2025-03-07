@@ -41,7 +41,7 @@
     "@angular/compiler-cli": "^19.1.0",
     "@angular/localize": "^19.1.0",
     "@types/bcrypt": "^5.0.2",
-    "@types/express": "^4.17.17",
+    "@types/express": "^4.17.21",
     "@types/jasmine": "~5.1.0",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.8",

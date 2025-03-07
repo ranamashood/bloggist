@@ -4,12 +4,12 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import 'dotenv/config';
-import { MongoClient, Db, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { User } from './app/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -30,6 +30,32 @@ const mongoClient = new MongoClient(MONGO_URI);
 await mongoClient.connect();
 
 const db = mongoClient.db(DB_NAME);
+
+function verifyTokenMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    res.status(403).json({ message: 'No token provided' });
+    return;
+  }
+
+  try {
+    const decoded = jwt.verify(
+      token.split(' ')[1],
+      process.env['TOKEN_SECRET']!,
+    );
+    (req as any).user = decoded;
+    (req as any).user.token = token.split(' ')[1];
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+    return;
+  }
+}
 
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -73,7 +99,25 @@ app.post('/api/user/login', async (req, res) => {
     : res.status(401).json(null);
 });
 
-app.post('/api/blogs', async (req, res) => {
+app.get('/api/user', verifyTokenMiddleware, async (req, res) => {
+  if (!req.user) {
+    return res.json(null);
+  }
+
+  const user = await db
+    .collection<User>('users')
+    .findOne({ _id: new ObjectId(req.user.id) });
+
+  if (!user) {
+    return res.json(null);
+  }
+
+  user.token = req.user.token;
+
+  return res.json(user);
+});
+
+app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   const { title, desc } = req.body;
 
   const newBlog = { title, desc };

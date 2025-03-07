@@ -42,7 +42,7 @@ export class UserService {
   }
 
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>('/user').pipe(
+    return this.http.get<User>('/api/user').pipe(
       tap({
         next: (user) => this.setAuth(user),
       }),
@@ -66,7 +66,7 @@ export class UserService {
 
   getToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
-      return window.localStorage.getItem('jwtToken');
+      return window.localStorage.getItem('token');
     }
     return null;
   }

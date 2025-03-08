@@ -34,7 +34,7 @@
             "ssr": {
               "entry": "src/server.ts"
             },
-            "externalDependencies": ["whatwg-url", "bcrypt"]
+            "externalDependencies": ["mongodb", "bcrypt"]
           },
           "configurations": {
             "production": {

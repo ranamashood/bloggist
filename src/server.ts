@@ -10,9 +10,10 @@ import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import 'dotenv/config';
 import { MongoClient, ObjectId } from 'mongodb';
-import { User } from './app/user.model';
+import { User } from './app/server/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Comment } from './app/server/comment.model';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -123,7 +124,7 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   const newBlog = {
     title,
     desc,
-    userId: req.user!.id,
+    userId: new ObjectId(req.user!.id),
   };
 
   await db.collection('blogs').insertOne(newBlog);
@@ -153,6 +154,31 @@ app.get('/api/blogs/:id', async (req, res) => {
   const blog = await db.collection('blogs').findOne({ _id: new ObjectId(id) });
 
   res.status(200).json(blog);
+});
+
+app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
+  const { comment, blogId }: { comment: string; blogId: string } = req.body;
+
+  const newComment: Comment = {
+    comment,
+    blogId: new ObjectId(blogId),
+    userId: new ObjectId(req.user!.id),
+  };
+
+  await db.collection<Comment>('comments').insertOne(newComment);
+
+  res.status(201).json(newComment);
+});
+
+app.get('/api/comments/:blogId', async (req, res) => {
+  const { blogId } = req.params;
+
+  const comments = await db
+    .collection<Comment>('comments')
+    .find({ blogId: new ObjectId(blogId) })
+    .toArray();
+
+  res.status(200).json(comments);
 });
 
 /**

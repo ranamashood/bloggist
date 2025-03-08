@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'blogs/:id',
+    path: 'blog/:id',
     renderMode: RenderMode.Prerender,
     getPrerenderParams: async () => {
       const blogService = inject(BlogsService);

@@ -1,6 +1,8 @@
-<div *ngIf="blog$ | async as blog">
-  {{ blog.title }}
-  {{ blog.desc }}
+<div class="pb-5">
+  <div *ngIf="blog$ | async as blog">
+    {{ blog.title }}
+    {{ blog.desc }}
+  </div>
 </div>
 
 <app-add-comment [blogId]="blogId"></app-add-comment>

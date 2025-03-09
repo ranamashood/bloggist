@@ -1,5 +1,26 @@
-<div>
-  <textarea [(ngModel)]="comment"></textarea>
-  <button (click)="onCancelComment()">Cancel</button>
-  <button (click)="onAddComment()">Comment</button>
-</div>
+<form>
+  <div class="mb-3">
+    <textarea
+      class="form-control"
+      name="comment"
+      id="comment"
+      placeholder="Write comment..."
+      [(ngModel)]="comment"
+    ></textarea>
+  </div>
+  <div class="mb-3 d-flex gap-2">
+    <button
+      class="btn btn-outline-primary text-capitalize"
+      (click)="onCancelComment()"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary text-capitalize"
+      (click)="onAddComment()"
+    >
+      Comment
+    </button>
+  </div>
+</form>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeaderComponent } from './layout/header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgbModule, RouterLink],
+  imports: [RouterOutlet, NgbModule, HeaderComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

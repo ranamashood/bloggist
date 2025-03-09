@@ -1,0 +1,15 @@
+<div class="NgxEditor__Wrapper">
+  <ngx-editor-menu
+    [editor]="editor"
+    [toolbar]="toolbar"
+    *ngIf="editor"
+  ></ngx-editor-menu>
+  <ngx-editor
+    [editor]="editor"
+    [ngModel]="html"
+    (ngModelChange)="onChange($event)"
+    [disabled]="false"
+    [placeholder]="'Type here...'"
+    *ngIf="editor"
+  ></ngx-editor>
+</div>

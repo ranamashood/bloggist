@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BlogsService } from '../../blogs.service';
+import { EditorComponent } from '../../editor/editor.component';
+import { EditorService } from '../../editor.service';
 
 @Component({
   selector: 'app-add-blog',
-  imports: [FormsModule],
+  imports: [FormsModule, EditorComponent],
   templateUrl: './add-blog.component.html',
 })
 export class AddBlogComponent {
-  constructor(private readonly blogService: BlogsService) {}
+  constructor(
+    private readonly blogService: BlogsService,
+    private readonly editorService: EditorService,
+  ) {}
 
   title = '';
-  desc = '';
 
   onAddBlog() {
     this.blogService
       .create({
         title: this.title,
-        desc: this.desc,
+        desc: this.editorService.getContent(),
       })
       .subscribe({
         next: () => {
           this.title = '';
-          this.desc = '';
+          this.editorService.setContent('');
         },
       });
   }

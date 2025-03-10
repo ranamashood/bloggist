@@ -14,7 +14,7 @@ import { User } from './app/server/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Comment } from './app/server/comment.model';
-import { BlogsResponse } from './app/response.models';
+import { BlogResponse, BlogsResponse } from './app/response.models';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -177,7 +177,32 @@ app.get('/api/blogs/ids', async (_req, res) => {
 app.get('/api/blogs/:id', async (req, res) => {
   const { id } = req.params;
 
-  const blog = await db.collection('blogs').findOne({ _id: new ObjectId(id) });
+  const blog = await db
+    .collection('blogs')
+    .aggregate<BlogResponse>([
+      { $match: { _id: new ObjectId(id) } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      {
+        $project: {
+          user: {
+            _id: 1,
+            email: 1,
+          },
+          title: 1,
+          desc: 1,
+          createdAt: 1,
+        },
+      },
+    ])
+    .next();
 
   res.status(200).json(blog);
 });

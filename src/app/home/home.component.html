@@ -1,6 +1,6 @@
-<div>
+<div class="d-flex flex-column gap-2">
   <a
-    class="d-block"
+    class="d-block rounded-3 text-reset text-decoration-none bg-body-tertiary p-3"
     *ngFor="let blog of blogs$ | async"
     [routerLink]="['/blog/', blog._id]"
   >

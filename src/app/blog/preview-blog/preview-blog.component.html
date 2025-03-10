@@ -1,2 +1,19 @@
-{{ blog.title }}
-{{ blog.desc }}
+<div class="d-flex gap-2">
+  <div
+    class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white mt-2"
+    style="width: 30px; height: 30px"
+  >
+    {{ blog.user.email.at(0)?.toUpperCase() }}
+  </div>
+  <div>
+    <div class="text-capitalize">
+      {{ blog.user.email }}
+    </div>
+    <div class="small">
+      {{ blog.createdAt | date }}
+    </div>
+    <div class="pt-2">
+      <h4>{{ blog.title }}</h4>
+    </div>
+  </div>
+</div>

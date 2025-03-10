@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { Blog } from '../../blog.model';
+import { BlogsResponse } from '../../response.models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-preview-blog',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './preview-blog.component.html',
 })
 export class PreviewBlogComponent {
-  @Input() blog: Blog = {} as Blog;
+  @Input() blog: BlogsResponse = {} as BlogsResponse;
 }

@@ -8,9 +8,19 @@
         </button>
       </li>
       @if (currentUser$ | async; as currentUser) {
-        <li class="nav-item">
-          <a class="nav-link">{{ currentUser.email }}</a>
-        </li>
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-secondary dropdown-toggle"
+            data-bs-toggle="dropdown"
+          >
+            {{ currentUser.email }}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="" (click)="onLogout()">Logout</a>
+            </li>
+          </ul>
+        </div>
       } @else {
         <li class="nav-item">
           <a class="nav-link" routerLink="/register">Register</a>

@@ -10,6 +10,7 @@ import {
 } from 'rxjs';
 import { User } from './user.model';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class UserService {
 
   constructor(
     private readonly http: HttpClient,
+    private readonly router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
@@ -39,6 +41,11 @@ export class UserService {
     return this.http
       .post<User>('/api/user/login', user)
       .pipe(tap((user) => this.setAuth(user)));
+  }
+
+  logout() {
+    this.purgeAuth();
+    this.router.navigate(['/']);
   }
 
   getCurrentUser(): Observable<User> {

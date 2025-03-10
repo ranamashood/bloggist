@@ -10,4 +10,10 @@ import { AsyncPipe } from '@angular/common';
 })
 export class HeaderComponent {
   currentUser$ = inject(UserService).currentUser;
+
+  constructor(private readonly userService: UserService) {}
+
+  onLogout() {
+    this.userService.logout();
+  }
 }

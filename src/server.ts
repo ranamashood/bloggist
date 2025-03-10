@@ -14,6 +14,7 @@ import { User } from './app/server/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Comment } from './app/server/comment.model';
+import { BlogsResponse } from './app/response.models';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -135,7 +136,30 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
 });
 
 app.get('/api/blogs', async (_req, res) => {
-  const blogs = await db.collection('blogs').find().toArray();
+  const blogs: BlogsResponse[] = await db
+    .collection('blogs')
+    .aggregate<BlogsResponse>([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      {
+        $project: {
+          user: {
+            _id: 1,
+            email: 1,
+          },
+          title: 1,
+          createdAt: 1,
+        },
+      },
+    ])
+    .toArray();
 
   res.status(200).json(blogs);
 });

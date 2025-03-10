@@ -76,6 +76,7 @@ app.post('/api/user/register', async (req, res) => {
   const newUser = {
     email: email,
     password: await bcrypt.hash(password, 10),
+    createdAt: new Date(),
   };
 
   await db.collection('users').insertOne(newUser);
@@ -125,6 +126,7 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
     title,
     desc,
     userId: new ObjectId(req.user!.id),
+    createdAt: new Date(),
   };
 
   await db.collection('blogs').insertOne(newBlog);
@@ -163,6 +165,7 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
     comment,
     blogId: new ObjectId(blogId),
     userId: new ObjectId(req.user!.id),
+    createdAt: new Date(),
   };
 
   await db.collection<Comment>('comments').insertOne(newComment);

@@ -72,9 +72,10 @@ function verifyTokenMiddleware(
  */
 
 app.post('/api/user/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   const newUser = {
+    name: name,
     email: email,
     password: await bcrypt.hash(password, 10),
     createdAt: new Date(),

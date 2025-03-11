@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './auth.component.html',
 })
 export class AuthComponent {
@@ -15,6 +16,7 @@ export class AuthComponent {
   ) {}
 
   authType = '';
+  name = '';
   email = '';
   password = '';
 
@@ -26,6 +28,7 @@ export class AuthComponent {
     const observable =
       this.authType === 'register'
         ? this.userService.register({
+            name: this.name,
             email: this.email,
             password: this.password,
           })

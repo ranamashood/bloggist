@@ -8,6 +8,7 @@ import { NgIf } from '@angular/common';
   selector: 'app-auth',
   imports: [FormsModule, NgIf],
   templateUrl: './auth.component.html',
+  styleUrl: './auth.component.css',
 })
 export class AuthComponent {
   constructor(

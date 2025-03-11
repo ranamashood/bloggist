@@ -1,4 +1,4 @@
-<div>
+<div class="bd-container mx-auto rounded-3 px-4 py-3 bg-body-tertiary">
   <div *ngIf="authType === 'register'" class="mb-3">
     <label for="name" class="form-label">Name</label>
     <input type="text" class="form-control" id="name" [(ngModel)]="name" />
@@ -18,7 +18,7 @@
   </div>
   <button
     type="submit"
-    class="btn btn-primary text-capitalize"
+    class="btn btn-primary w-100 text-capitalize"
     (click)="onSubmit()"
   >
     {{ authType }}

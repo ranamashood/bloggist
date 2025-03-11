@@ -1,9 +1,9 @@
-import { isPlatformBrowser, NgClass, NgFor } from '@angular/common';
+import { isPlatformBrowser, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-table-of-content',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, NgClass, NgIf],
   templateUrl: './table-of-content.component.html',
   styleUrl: './table-of-content.component.css',
 })

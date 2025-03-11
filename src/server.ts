@@ -157,7 +157,7 @@ app.get('/api/blogs', async (_req, res) => {
         $project: {
           user: {
             _id: 1,
-            email: 1,
+            name: 1,
           },
           title: 1,
           createdAt: 1,
@@ -199,7 +199,7 @@ app.get('/api/blogs/:id', async (req, res) => {
         $project: {
           user: {
             _id: 1,
-            email: 1,
+            name: 1,
           },
           title: 1,
           desc: 1,

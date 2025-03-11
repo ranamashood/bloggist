@@ -7,11 +7,11 @@
             class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
             style="width: 40px; height: 40px"
           >
-            {{ blog.user.email.at(0)?.toUpperCase() }}
+            {{ blog.user.name.at(0)?.toUpperCase() }}
           </div>
           <div>
             <div class="fw-bold text-capitalize">
-              {{ blog.user.email }}
+              {{ blog.user.name }}
             </div>
             <div class="small">
               {{ blog.createdAt | date }}

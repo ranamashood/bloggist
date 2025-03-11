@@ -1,6 +1,6 @@
 export interface BlogResponse {
   user: {
-    email: string;
+    name: string;
     _id: string;
   };
   title: string;
@@ -11,7 +11,7 @@ export interface BlogResponse {
 
 export interface BlogsResponse {
   user: {
-    email: string;
+    name: string;
     _id: string;
   };
   title: string;

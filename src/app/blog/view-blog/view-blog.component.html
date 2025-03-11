@@ -2,22 +2,11 @@
   <div class="flex-grow-1">
     <div class="pb-5">
       <div *ngIf="blog$ | async as blog">
-        <div class="d-flex align-items-center gap-2">
-          <div
-            class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
-            style="width: 40px; height: 40px"
-          >
-            {{ blog.user.name.at(0)?.toUpperCase() }}
-          </div>
-          <div>
-            <div class="fw-bold">
-              {{ blog.user.name }}
-            </div>
-            <div class="small">
-              {{ blog.createdAt | date }}
-            </div>
-          </div>
-        </div>
+        <app-view-avatar
+          [initials]="'MH'"
+          [name]="blog.user.name"
+          [date]="blog.createdAt | date"
+        ></app-view-avatar>
         <h1 class="py-3">{{ blog.title }}</h1>
         <div #blogContent [innerHTML]="blog.desc"></div>
       </div>

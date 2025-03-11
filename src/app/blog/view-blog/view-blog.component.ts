@@ -14,6 +14,7 @@ import { AddCommentComponent } from '../../comment/add-comment/add-comment.compo
 import { ViewCommentsComponent } from '../../comment/view-comments/view-comments.component';
 import { BlogResponse } from '../../response.models';
 import { TableOfContentComponent } from '../../table-of-content/table-of-content.component';
+import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
 
 @Component({
   selector: 'app-view-blog',
@@ -22,6 +23,7 @@ import { TableOfContentComponent } from '../../table-of-content/table-of-content
     AddCommentComponent,
     ViewCommentsComponent,
     TableOfContentComponent,
+    ViewAvatarComponent,
   ],
   templateUrl: './view-blog.component.html',
 })

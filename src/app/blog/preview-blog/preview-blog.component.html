@@ -1,19 +1,12 @@
-<div class="d-flex gap-2">
-  <div
-    class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white mt-2"
-    style="width: 30px; height: 30px"
-  >
-    {{ blog.user.name.at(0)?.toUpperCase() }}
+<div>
+  <div class="d-flex gap-2">
+    <app-view-avatar
+      [initials]="'MH'"
+      [name]="blog.user.name"
+      [date]="blog.createdAt | date"
+    ></app-view-avatar>
   </div>
-  <div>
-    <div>
-      {{ blog.user.name }}
-    </div>
-    <div class="small">
-      {{ blog.createdAt | date }}
-    </div>
-    <div class="pt-2">
-      <h4>{{ blog.title }}</h4>
-    </div>
+  <div class="mt-2 ms-5">
+    <h4>{{ blog.title }}</h4>
   </div>
 </div>

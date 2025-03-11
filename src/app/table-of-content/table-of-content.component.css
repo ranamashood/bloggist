@@ -8,14 +8,20 @@
   position: relative;
 }
 
-.active::before,
-.bd-navbar-link:hover::before {
+.bd-navbar-link::before {
   content: "";
   position: absolute;
   left: -10px;
   top: 50%;
   transform: translate(0, -50%);
   width: 3px;
-  height: 70%;
+  height: 0;
   background-color: var(--bs-secondary);
+  border-radius: 15px;
+  transition: height 300ms;
+}
+
+.active::before,
+.bd-navbar-link:hover::before {
+  height: 70%;
 }

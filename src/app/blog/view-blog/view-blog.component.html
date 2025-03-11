@@ -3,8 +3,7 @@
     <div class="pb-5">
       <div *ngIf="blog$ | async as blog">
         <app-view-avatar
-          [initials]="'MH'"
-          [name]="blog.user.name"
+          [user]="blog.user"
           [date]="blog.createdAt | date"
         ></app-view-avatar>
         <h1 class="py-3">{{ blog.title }}</h1>

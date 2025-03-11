@@ -1,6 +1,9 @@
 <div
-  class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
-  style="width: 40px; height: 40px"
+  class="bd-avatar d-flex align-items-center justify-content-center rounded-circle"
+  [ngStyle]="{
+    color: user.avatar.color,
+    'background-color': user.avatar.bgColor,
+  }"
 >
-  {{ initials }}
+  {{ user.avatar.initials }}
 </div>

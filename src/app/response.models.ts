@@ -1,8 +1,15 @@
-export interface BlogResponse {
-  user: {
-    name: string;
-    _id: string;
+export interface UserResponse {
+  name: string;
+  avatar: {
+    initials: string;
+    color: string;
+    bgColor: string;
   };
+  _id: string;
+}
+
+export interface BlogResponse {
+  user: UserResponse;
   title: string;
   desc: string;
   createdAt: string;
@@ -10,20 +17,14 @@ export interface BlogResponse {
 }
 
 export interface BlogsResponse {
-  user: {
-    name: string;
-    _id: string;
-  };
+  user: UserResponse;
   title: string;
   createdAt: string;
   _id: string;
 }
 
 export interface CommentResponse {
-  user: {
-    name: string;
-    _id: string;
-  };
+  user: UserResponse;
   blogId: string;
   comment: string;
   createdAt: string;

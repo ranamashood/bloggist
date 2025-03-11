@@ -75,13 +75,70 @@ function verifyTokenMiddleware(
  * ```
  */
 
+const getRandomColor = () => {
+  const colorCombos = [
+    { bgColor: '#FCEEE4', color: '#D94F4F' },
+    { bgColor: '#E3ECFA', color: '#276FBF' },
+    { bgColor: '#E8F6E0', color: '#3B7A57' },
+    { bgColor: '#FFE7D0', color: '#DA7746' },
+    { bgColor: '#DFF4FA', color: '#2D9CDB' },
+    { bgColor: '#E6E6FA', color: '#5F4B8B' },
+    { bgColor: '#E1F0E5', color: '#488C5C' },
+    { bgColor: '#F3E1FA', color: '#7E3F98' },
+    { bgColor: '#FBF0D6', color: '#A67C00' },
+    { bgColor: '#E8EBF5', color: '#5953A3' },
+    { bgColor: '#EDE6FA', color: '#6C3483' },
+    { bgColor: '#FFDCCF', color: '#E07A5F' },
+    { bgColor: '#DFF6ED', color: '#16A085' },
+    { bgColor: '#EDE1FA', color: '#8E44AD' },
+    { bgColor: '#FAE8D0', color: '#F39C12' },
+    { bgColor: '#DFDFFA', color: '#3F51B5' },
+    { bgColor: '#F4E3DF', color: '#A0522D' },
+    { bgColor: '#E0F0F0', color: '#008080' },
+    { bgColor: '#DFF7F3', color: '#00695C' },
+    { bgColor: '#FAE6C4', color: '#FF8C00' },
+    { bgColor: '#E0E8FA', color: '#1565C0' },
+    { bgColor: '#FFE8E0', color: '#BF360C' },
+    { bgColor: '#E8F5DA', color: '#2E7D32' },
+    { bgColor: '#E0F0FF', color: '#0D47A1' },
+    { bgColor: '#FFDCE6', color: '#C94D7F' },
+    { bgColor: '#FAE2E2', color: '#B71C1C' },
+    { bgColor: '#EBEBEB', color: '#37474F' },
+    { bgColor: '#E4E8FA', color: '#283593' },
+    { bgColor: '#F5E8DB', color: '#8D6E63' },
+    { bgColor: '#E5F8E5', color: '#2E8B57' },
+    { bgColor: '#FAE1E8', color: '#C2185B' },
+    { bgColor: '#E4F9E4', color: '#43A047' },
+  ];
+
+  return colorCombos[Math.floor(Math.random() * colorCombos.length)];
+};
+
+const getInitials = (fullName: string) => {
+  const allNames = fullName.trim().split(' ');
+  const initials = allNames.reduce((acc, curr, index) => {
+    if (index === 0 || index === allNames.length - 1) {
+      acc = `${acc}${curr.charAt(0).toUpperCase()}`;
+    }
+    return acc;
+  }, '');
+  return initials;
+};
+
 app.post('/api/user/register', async (req, res) => {
   const { name, email, password } = req.body;
+
+  const randomColor = getRandomColor();
 
   const newUser = {
     name: name,
     email: email,
     password: await bcrypt.hash(password, 10),
+    avatar: {
+      initials: getInitials(name),
+      color: randomColor.color,
+      bgColor: randomColor.bgColor,
+    },
     createdAt: new Date(),
   };
 
@@ -158,6 +215,11 @@ app.get('/api/blogs', async (_req, res) => {
           user: {
             _id: 1,
             name: 1,
+            avatar: {
+              initials: 1,
+              color: 1,
+              bgColor: 1,
+            },
           },
           title: 1,
           createdAt: 1,
@@ -200,6 +262,11 @@ app.get('/api/blogs/:id', async (req, res) => {
           user: {
             _id: 1,
             name: 1,
+            avatar: {
+              initials: 1,
+              color: 1,
+              bgColor: 1,
+            },
           },
           title: 1,
           desc: 1,
@@ -241,6 +308,11 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
         $project: {
           user: {
             name: 1,
+            avatar: {
+              initials: 1,
+              color: 1,
+              bgColor: 1,
+            },
             _id: 1,
           },
           blogId: 1,

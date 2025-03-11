@@ -9,12 +9,18 @@
       </li>
       @if (currentUser$ | async; as currentUser) {
         <div class="dropdown">
-          <button
-            class="btn btn-outline-secondary dropdown-toggle"
+          <app-preview-avatar
             data-bs-toggle="dropdown"
-          >
-            {{ currentUser.name }}
-          </button>
+            [user]="{
+              name: currentUser.name,
+              avatar: {
+                initials: currentUser.avatar.initials,
+                color: currentUser.avatar.color,
+                bgColor: currentUser.avatar.bgColor,
+              },
+              _id: currentUser._id!,
+            }"
+          ></app-preview-avatar>
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item" href="" (click)="onLogout()">Logout</a>

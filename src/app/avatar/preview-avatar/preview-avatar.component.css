@@ -1,4 +1,6 @@
 .bd-avatar {
   width: 40px;
   height: 40px;
+  user-select: none;
+  cursor: pointer;
 }

@@ -14,7 +14,11 @@ import { User } from './app/server/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Comment } from './app/server/comment.model';
-import { BlogResponse, BlogsResponse } from './app/response.models';
+import {
+  BlogResponse,
+  BlogsResponse,
+  CommentResponse,
+} from './app/response.models';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -218,9 +222,37 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
     createdAt: new Date(),
   };
 
-  await db.collection<Comment>('comments').insertOne(newComment);
+  const result = await db.collection<Comment>('comments').insertOne(newComment);
 
-  res.status(201).json(newComment);
+  const insertedComment = await db
+    .collection('comments')
+    .aggregate<CommentResponse>([
+      { $match: { _id: new ObjectId(result.insertedId) } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      {
+        $project: {
+          user: {
+            name: 1,
+            _id: 1,
+          },
+          blogId: 1,
+          comment: 1,
+          createdAt: 1,
+          _id: 1,
+        },
+      },
+    ])
+    .next();
+
+  res.status(201).json(insertedComment);
 });
 
 app.get('/api/comments/:blogId', async (req, res) => {

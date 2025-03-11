@@ -17,6 +17,7 @@ export class ViewCommentsComponent {
   comments$: Observable<Comment[]> = new Observable<Comment[]>();
 
   ngOnInit() {
-    this.comments$ = this.commentService.getAllByBlogId(this.blogId);
+    this.commentService.getComments(this.blogId);
+    this.comments$ = this.commentService.comments$;
   }
 }

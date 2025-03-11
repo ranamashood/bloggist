@@ -24,6 +24,11 @@ export class AddCommentComponent {
         comment: this.comment,
         blogId: this.blogId,
       })
-      .subscribe({ next: () => (this.comment = '') });
+      .subscribe({
+        next: (insertedComment) => {
+          this.comment = '';
+          this.commentService.addComment(insertedComment);
+        },
+      });
   }
 }

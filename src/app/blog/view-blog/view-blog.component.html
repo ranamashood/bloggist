@@ -12,7 +12,11 @@
     </div>
 
     <app-add-comment [blogId]="blogId"></app-add-comment>
-    <app-view-comments [blogId]="blogId"></app-view-comments>
+    <app-view-comments
+      *ngIf="blog$ | async as blog"
+      [blogId]="blogId"
+      [blog]="blog"
+    ></app-view-comments>
   </div>
   <div *ngIf="blog$ | async as blog">
     <app-table-of-content

@@ -1,0 +1,11 @@
+<div>
+  <div class="d-flex gap-2">
+    <app-view-avatar
+      [user]="blog.user"
+      [date]="comment.createdAt | date"
+    ></app-view-avatar>
+  </div>
+  <div class="mt-2 ms-5">
+    {{ comment.comment }}
+  </div>
+</div>

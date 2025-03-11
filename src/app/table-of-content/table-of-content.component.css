@@ -1,0 +1,21 @@
+.bd-navbar {
+  max-height: 80vh;
+  width: 300px;
+  top: 20px;
+}
+
+.bd-navbar-link {
+  position: relative;
+}
+
+.active::before,
+.bd-navbar-link:hover::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 3px;
+  height: 70%;
+  background-color: var(--bs-secondary);
+}

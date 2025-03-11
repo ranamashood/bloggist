@@ -1,25 +1,35 @@
-<div class="pb-5">
-  <div *ngIf="blog$ | async as blog">
-    <div class="d-flex align-items-center gap-2">
-      <div
-        class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
-        style="width: 40px; height: 40px"
-      >
-        {{ blog.user.email.at(0)?.toUpperCase() }}
-      </div>
-      <div>
-        <div class="fw-bold text-capitalize">
-          {{ blog.user.email }}
+<div class="d-flex gap-5">
+  <div class="flex-grow-1">
+    <div class="pb-5">
+      <div *ngIf="blog$ | async as blog">
+        <div class="d-flex align-items-center gap-2">
+          <div
+            class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
+            style="width: 40px; height: 40px"
+          >
+            {{ blog.user.email.at(0)?.toUpperCase() }}
+          </div>
+          <div>
+            <div class="fw-bold text-capitalize">
+              {{ blog.user.email }}
+            </div>
+            <div class="small">
+              {{ blog.createdAt | date }}
+            </div>
+          </div>
         </div>
-        <div class="small">
-          {{ blog.createdAt | date }}
-        </div>
+        <h1 class="py-3">{{ blog.title }}</h1>
+        <div #blogContent [innerHTML]="blog.desc"></div>
       </div>
     </div>
-    <h1 class="py-3">{{ blog.title }}</h1>
-    <div [innerHTML]="blog.desc"></div>
+
+    <app-add-comment [blogId]="blogId"></app-add-comment>
+    <app-view-comments [blogId]="blogId"></app-view-comments>
+  </div>
+  <div *ngIf="blog$ | async as blog">
+    <app-table-of-content
+      [blogId]="blogId"
+      [html]="blog.desc"
+    ></app-table-of-content>
   </div>
 </div>
-
-<app-add-comment [blogId]="blogId"></app-add-comment>
-<app-view-comments [blogId]="blogId"></app-view-comments>

@@ -17,11 +17,11 @@ import { Router } from '@angular/router';
 })
 export class UserService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser = this.currentUserSubject
+  public currentUser$ = this.currentUserSubject
     .asObservable()
     .pipe(distinctUntilChanged());
 
-  public isAuthenticated = this.currentUser.pipe(
+  public isAuthenticated = this.currentUser$.pipe(
     map((user: User | null) => !!user),
   );
 

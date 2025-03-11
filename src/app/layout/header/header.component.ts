@@ -10,7 +10,7 @@ import { PreviewAvatarComponent } from '../../avatar/preview-avatar/preview-avat
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  currentUser$ = inject(UserService).currentUser;
+  currentUser$ = inject(UserService).currentUser$;
 
   constructor(private readonly userService: UserService) {}
 

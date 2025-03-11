@@ -151,16 +151,21 @@ app.post('/api/user/login', async (req, res) => {
   const { email, password } = req.body;
 
   const user = await db.collection<User>('users').findOne({ email });
+
+  if (!user) {
+    return res.status(401).json(null);
+  }
+
   const passwordMatched = user
     ? await bcrypt.compare(password, user.password)
     : false;
 
-  const token = jwt.sign({ id: user?._id }, process.env['TOKEN_SECRET']!, {
+  user.token = jwt.sign({ id: user?._id }, process.env['TOKEN_SECRET']!, {
     expiresIn: '1d',
   });
 
-  passwordMatched
-    ? res.status(200).json({ token })
+  return passwordMatched
+    ? res.status(200).json(user)
     : res.status(401).json(null);
 });
 

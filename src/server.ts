@@ -345,11 +345,40 @@ app.get('/api/comments/:blogId', async (req, res) => {
   const { blogId } = req.params;
 
   const comments = await db
-    .collection<Comment>('comments')
-    .find({ blogId: new ObjectId(blogId) })
+    .collection('comments')
+    .aggregate<CommentResponse>([
+      { $match: { blogId: new ObjectId(blogId) } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      {
+        $project: {
+          user: {
+            name: 1,
+            avatar: {
+              initials: 1,
+              color: 1,
+              bgColor: 1,
+            },
+            _id: 1,
+          },
+          blogId: 1,
+          comment: 1,
+          replyId: 1,
+          createdAt: 1,
+          _id: 1,
+        },
+      },
+    ])
     .toArray();
 
-  const getNestedComments = async (comments: Comment[]) => {
+  const getNestedComments = async (comments: CommentResponse[]) => {
     const commentMap = new Map(
       comments.map((comment) => [
         comment._id?.toString(),

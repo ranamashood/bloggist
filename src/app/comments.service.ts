@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { Comment } from './comment.model';
+import { CommentResponse } from './response.models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,25 +10,45 @@ import { Comment } from './comment.model';
 export class CommentsService {
   constructor(private readonly http: HttpClient) {}
 
-  private commentsSubject = new BehaviorSubject<Comment[]>([]);
+  private commentsSubject = new BehaviorSubject<CommentResponse[]>([]);
   public comments$ = this.commentsSubject.asObservable();
 
-  create(comment: Partial<Comment>): Observable<Comment> {
-    return this.http.post<Comment>('/api/comments', comment);
+  create(comment: Partial<Comment>): Observable<CommentResponse> {
+    return this.http.post<CommentResponse>('/api/comments', comment);
   }
 
-  getAllByBlogId(blogId: string): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`/api/comments/${blogId}`);
+  getAllByBlogId(blogId: string): Observable<CommentResponse[]> {
+    return this.http.get<CommentResponse[]>(`/api/comments/${blogId}`);
   }
 
-  async addComment(newComment: Comment) {
-    const currentComments = await firstValueFrom(this.comments$);
-    this.commentsSubject.next([...currentComments, newComment]);
+  async addComment(newComment: CommentResponse) {
+    const comments = await firstValueFrom(this.comments$);
+
+    if (!newComment.replyId) {
+      return this.commentsSubject.next([...comments, newComment]);
+    }
+
+    const addReply = (comments: CommentResponse[]): CommentResponse[] => {
+      return comments.map((comment) => {
+        if (comment._id === newComment.replyId) {
+          return {
+            ...comment,
+            replies: [...(comment.replies ?? []), newComment],
+          };
+        } else if (comment?.replies.length) {
+          return { ...comment, replies: addReply(comment.replies) };
+        }
+
+        return comment;
+      });
+    };
+
+    return this.commentsSubject.next(addReply(comments));
   }
 
   getComments(blogId: string) {
-    this.getAllByBlogId(blogId).subscribe((comments) =>
-      this.commentsSubject.next(comments),
-    );
+    this.getAllByBlogId(blogId).subscribe((comments) => {
+      return this.commentsSubject.next(comments);
+    });
   }
 }

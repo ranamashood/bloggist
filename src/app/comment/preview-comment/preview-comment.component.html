@@ -1,11 +1,51 @@
-<div class="border rounded-3 p-3">
+<div
+  class="border rounded-3 p-3 mb-2"
+  [style]="'margin-left: ' + indent * 30 + 'px'"
+>
   <div class="d-flex gap-2">
     <app-view-avatar
       [user]="blog.user"
       [date]="comment.createdAt | date"
     ></app-view-avatar>
   </div>
-  <div class="mt-2 ms-5">
-    {{ comment.comment }}
+  <div class="d-flex flex-column gap-2 mt-2 ms-5">
+    <div>
+      {{ comment.comment }}
+    </div>
+    <div *ngIf="!isReplying">
+      <button class="btn btn-outline-primary" (click)="isReplying = true">
+        Reply
+      </button>
+    </div>
+
+    <div *ngIf="isReplying">
+      <div class="mb-3">
+        <textarea
+          class="form-control"
+          id="comment"
+          placeholder="Write reply..."
+          [(ngModel)]="reply"
+        ></textarea>
+      </div>
+      <div class="mb-3 d-flex gap-2">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="onCancelReply()"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="onAddReply()">
+          Reply
+        </button>
+      </div>
+    </div>
   </div>
 </div>
+
+<app-preview-comment
+  *ngFor="let reply of comment.replies"
+  [indent]="indent + 1"
+  [comment]="reply"
+  [blog]="blog"
+></app-preview-comment>

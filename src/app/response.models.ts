@@ -27,6 +27,8 @@ export interface CommentResponse {
   user: UserResponse;
   blogId: string;
   comment: string;
+  replyId: string;
+  replies: CommentResponse[];
   createdAt: string;
   _id: string;
 }

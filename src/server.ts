@@ -285,7 +285,11 @@ app.get('/api/blogs/:id', async (req, res) => {
 });
 
 app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
-  const { comment, blogId }: { comment: string; blogId: string } = req.body;
+  const {
+    comment,
+    blogId,
+    replyId,
+  }: { comment: string; blogId: string; replyId: string } = req.body;
 
   const newComment: Comment = {
     comment,
@@ -293,6 +297,10 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
     userId: new ObjectId(req.user!.id),
     createdAt: new Date(),
   };
+
+  if (replyId) {
+    newComment.replyId = new ObjectId(replyId);
+  }
 
   const result = await db.collection<Comment>('comments').insertOne(newComment);
 
@@ -322,6 +330,7 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
           },
           blogId: 1,
           comment: 1,
+          replyId: 1,
           createdAt: 1,
           _id: 1,
         },
@@ -340,7 +349,33 @@ app.get('/api/comments/:blogId', async (req, res) => {
     .find({ blogId: new ObjectId(blogId) })
     .toArray();
 
-  res.status(200).json(comments);
+  const getNestedComments = async (comments: Comment[]) => {
+    const commentMap = new Map(
+      comments.map((comment) => [
+        comment._id?.toString(),
+        { ...comment, replies: [] },
+      ]),
+    );
+
+    const nestedComments: CommentResponse[] = [];
+
+    comments.forEach((comment) => {
+      if (comment.replyId) {
+        const parent = commentMap.get(comment.replyId.toString());
+        if (parent) {
+          parent.replies.push(commentMap.get(comment._id?.toString()) as never);
+        }
+      } else {
+        nestedComments.push(commentMap.get(comment._id?.toString()) as never);
+      }
+    });
+
+    return nestedComments;
+  };
+
+  const nestedComments = await getNestedComments(comments);
+
+  res.status(200).json(nestedComments);
 });
 
 /**

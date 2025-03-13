@@ -18,10 +18,9 @@
       [blog]="blog"
     ></app-view-comments>
   </div>
-  <div *ngIf="blog$ | async as blog">
-    <app-table-of-content
-      [blogId]="blogId"
-      [html]="blog.desc"
-    ></app-table-of-content>
-  </div>
+  <app-table-of-content
+    *ngIf="blog$ | async as blog"
+    [blogId]="blogId"
+    [html]="blog.desc"
+  ></app-table-of-content>
 </div>

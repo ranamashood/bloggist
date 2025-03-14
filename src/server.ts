@@ -284,6 +284,20 @@ app.get('/api/blogs/:id', async (req, res) => {
   res.status(200).json(blog);
 });
 
+app.delete('/api/blogs/:id', verifyTokenMiddleware, async (req, res) => {
+  const { id } = req.params;
+
+  const deletedBlog = await db
+    .collection('blogs')
+    .deleteOne({ _id: new ObjectId(id) });
+
+  if (!deletedBlog) {
+    return res.json({ message: 'Blog not found' });
+  }
+
+  return res.json({ message: 'Blog deleted' });
+});
+
 app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
   const {
     comment,

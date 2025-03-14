@@ -1,20 +1,22 @@
 import {
   Component,
   ElementRef,
+  inject,
   Inject,
   PLATFORM_ID,
   Renderer2,
   ViewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { BlogsService } from '../../blogs.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddCommentComponent } from '../../comment/add-comment/add-comment.component';
 import { ViewCommentsComponent } from '../../comment/view-comments/view-comments.component';
 import { BlogResponse } from '../../response.models';
 import { TableOfContentComponent } from '../../table-of-content/table-of-content.component';
 import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-view-blog',
@@ -31,17 +33,29 @@ export class ViewBlogComponent {
   @ViewChild('blogContent', { static: false }) blogContent!: ElementRef;
   blog$: Observable<BlogResponse> = new Observable();
   blogId = '';
+  currentUser$ = inject(UserService).currentUser$;
+  isAuthor = false;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly blogService: BlogsService,
     private readonly renderer: Renderer2,
+    private readonly userService: UserService,
+    private readonly router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.route.paramMap.subscribe((params) => {
       this.blogId = params.get('id')!;
       this.blog$ = this.blogService.getById(this.blogId);
     });
+  }
+
+  ngOnInit() {
+    combineLatest([this.currentUser$, this.blog$]).subscribe(
+      ([currentUser, blog]) => {
+        this.isAuthor = currentUser?._id === blog.user._id;
+      },
+    );
   }
 
   ngAfterViewChecked() {
@@ -62,5 +76,11 @@ export class ViewBlogComponent {
       const id = heading.textContent!.toLowerCase().replace(/\s+/g, '-');
       this.renderer.setAttribute(heading, 'id', id);
     });
+  }
+
+  onDeleteBlog() {
+    this.blogService
+      .delete(this.blogId)
+      .subscribe({ next: () => this.router.navigate(['/']) });
   }
 }

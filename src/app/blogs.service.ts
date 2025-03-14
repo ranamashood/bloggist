@@ -25,4 +25,8 @@ export class BlogsService {
   getAllIds(): Observable<{ _id: string }[]> {
     return this.http.get<{ _id: string }[]>('/api/blogs/ids');
   }
+
+  delete(id: string) {
+    return this.http.delete<Blog>(`/api/blogs/${id}`);
+  }
 }

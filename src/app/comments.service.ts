@@ -51,4 +51,21 @@ export class CommentsService {
       return this.commentsSubject.next(comments);
     });
   }
+
+  delete(id: string): Observable<CommentResponse> {
+    return this.http.delete<CommentResponse>(`/api/comments/${id}`);
+  }
+
+  async deleteComment(id: string) {
+    const comments = await firstValueFrom(this.comments$);
+
+    const deleteHelper = (comments: CommentResponse[]): CommentResponse[] =>
+      comments.map((comment) => ({
+        ...comment,
+        replies: comment.replies ? deleteHelper(comment.replies) : [],
+        ...(comment._id === id ? { comment: '', isDeleted: true } : {}),
+      }));
+
+    return this.commentsSubject.next(deleteHelper(comments));
+  }
 }

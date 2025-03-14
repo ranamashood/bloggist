@@ -3,6 +3,7 @@ export interface Comment {
   blogId: string;
   replyId?: string;
   comment: string;
+  isDeleted: boolean;
   createdAt: Date;
   _id?: string;
 }

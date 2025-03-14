@@ -309,6 +309,7 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
     comment,
     blogId: new ObjectId(blogId),
     userId: new ObjectId(req.user!.id),
+    isDeleted: false,
     createdAt: new Date(),
   };
 
@@ -385,6 +386,7 @@ app.get('/api/comments/:blogId', async (req, res) => {
           blogId: 1,
           comment: 1,
           replyId: 1,
+          isDeleted: 1,
           createdAt: 1,
           _id: 1,
         },
@@ -419,6 +421,23 @@ app.get('/api/comments/:blogId', async (req, res) => {
   const nestedComments = await getNestedComments(comments);
 
   res.status(200).json(nestedComments);
+});
+
+app.delete('/api/comments/:id', verifyTokenMiddleware, async (req, res) => {
+  const { id } = req.params;
+
+  const deletedComment = await db
+    .collection('comments')
+    .updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { comment: '', isDeleted: true } },
+    );
+
+  if (!deletedComment) {
+    return res.json({ message: 'Comment not found' });
+  }
+
+  return res.json({ message: 'Comment deleted' });
 });
 
 /**

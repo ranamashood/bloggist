@@ -29,6 +29,7 @@ export interface CommentResponse {
   comment: string;
   replyId: string;
   replies: CommentResponse[];
+  isDeleted: boolean;
   createdAt: string;
   _id: string;
 }

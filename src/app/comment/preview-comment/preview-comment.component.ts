@@ -1,9 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
 import { BlogResponse, CommentResponse } from '../../response.models';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommentsService } from '../../comments.service';
+import { combineLatest } from 'rxjs';
+import { UserService } from '../../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-preview-comment',
@@ -16,8 +19,19 @@ export class PreviewCommentComponent {
   @Input() indent = 0;
   reply = '';
   isReplying = false;
+  currentUser$ = inject(UserService).currentUser$;
+  isAuthor = false;
 
-  constructor(private readonly commentService: CommentsService) {}
+  constructor(
+    private readonly commentService: CommentsService,
+    private readonly router: Router,
+  ) {}
+
+  ngOnInit() {
+    this.currentUser$.subscribe((currentUser) => {
+      this.isAuthor = currentUser?._id === this.comment.user._id;
+    });
+  }
 
   onCancelReply() {
     this.reply = '';
@@ -37,5 +51,11 @@ export class PreviewCommentComponent {
           this.commentService.addComment(insertedComment);
         },
       });
+  }
+
+  onDeleteComment() {
+    this.commentService.delete(this.comment._id).subscribe({
+      next: () => this.commentService.deleteComment(this.comment._id),
+    });
   }
 }

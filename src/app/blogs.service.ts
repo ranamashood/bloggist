@@ -26,7 +26,7 @@ export class BlogsService {
     return this.http.get<{ _id: string }[]>('/api/blogs/ids');
   }
 
-  delete(id: string) {
+  delete(id: string): Observable<Blog> {
     return this.http.delete<Blog>(`/api/blogs/${id}`);
   }
 }

@@ -2,16 +2,26 @@
   class="border rounded-3 p-3 mb-2"
   [style]="'margin-left: ' + indent * 30 + 'px'"
 >
-  <div class="d-flex gap-2">
+  <div class="d-flex justify-content-between">
     <app-view-avatar
       [user]="comment.user"
-      [date]="comment.createdAt | date"
+      [date]="blog.createdAt | date"
     ></app-view-avatar>
+    <div
+      class="d-flex bg-danger-subtle rounded-3"
+      *ngIf="isAuthor && !comment.isDeleted"
+    >
+      <button class="btn" (click)="onDeleteComment()">Delete</button>
+    </div>
   </div>
   <div class="d-flex flex-column gap-2 mt-2 ms-5">
-    <div>
-      {{ comment.comment }}
-    </div>
+    @if (comment.isDeleted) {
+      <div class="fst-italic">Comment deleted by user</div>
+    } @else {
+      <div>
+        {{ comment.comment }}
+      </div>
+    }
     <div *ngIf="!isReplying">
       <button class="btn btn-outline-primary" (click)="isReplying = true">
         Reply

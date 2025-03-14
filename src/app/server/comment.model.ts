@@ -5,6 +5,7 @@ export interface Comment {
   blogId: ObjectId;
   replyId?: ObjectId;
   comment: string;
+  isDeleted: boolean;
   createdAt: Date;
   _id?: ObjectId;
 }

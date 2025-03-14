@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BlogsService } from '../../blogs.service';
 import { EditorComponent } from '../../editor/editor.component';
 import { EditorService } from '../../editor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-blog',
@@ -13,6 +14,7 @@ export class AddBlogComponent {
   constructor(
     private readonly blogService: BlogsService,
     private readonly editorService: EditorService,
+    private readonly router: Router,
   ) {}
 
   title = '';
@@ -27,6 +29,7 @@ export class AddBlogComponent {
         next: () => {
           this.title = '';
           this.editorService.setContent('');
+          this.router.navigate(['/']);
         },
       });
   }

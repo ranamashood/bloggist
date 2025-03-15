@@ -12,6 +12,7 @@ export interface BlogResponse {
   user: UserResponse;
   title: string;
   desc: string;
+  totalLikes: number;
   createdAt: string;
   _id: string;
 }

@@ -8,7 +8,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { combineLatest, Observable } from 'rxjs';
+import {
+  combineLatest,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  withLatestFrom,
+} from 'rxjs';
 import { BlogsService } from '../../blogs.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddCommentComponent } from '../../comment/add-comment/add-comment.component';
@@ -82,5 +90,18 @@ export class ViewBlogComponent {
     this.blogService
       .delete(this.blogId)
       .subscribe({ next: () => this.router.navigate(['/']) });
+  }
+
+  onToggleLike() {
+    this.blogService
+      .toggleLike(this.blogId)
+      .pipe(
+        withLatestFrom(this.blog$),
+        map(([{ liked }, blog]) => ({
+          ...blog,
+          totalLikes: liked ? blog.totalLikes + 1 : blog.totalLikes - 1,
+        })),
+      )
+      .subscribe((updatedBlog) => (this.blog$ = of(updatedBlog)));
   }
 }

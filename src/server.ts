@@ -193,6 +193,7 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   const newBlog = {
     title,
     desc,
+    totalLikes: 0,
     userId: new ObjectId(req.user!.id),
     createdAt: new Date(),
   };
@@ -275,6 +276,7 @@ app.get('/api/blogs/:id', async (req, res) => {
           },
           title: 1,
           desc: 1,
+          totalLikes: 1,
           createdAt: 1,
         },
       },
@@ -296,6 +298,27 @@ app.delete('/api/blogs/:id', verifyTokenMiddleware, async (req, res) => {
   }
 
   return res.json({ message: 'Blog deleted' });
+});
+
+app.post('/api/blogs/likes', verifyTokenMiddleware, async (req, res) => {
+  const blogId = new ObjectId(req.body.id as string);
+  const userId = new ObjectId(req.user!.id);
+
+  const isLiked = await db.collection('likes').findOne({ userId, blogId });
+
+  if (isLiked) {
+    await db.collection('likes').deleteOne({ _id: isLiked._id });
+    await db
+      .collection('blogs')
+      .updateOne({ _id: blogId }, { $inc: { totalLikes: -1 } });
+    return res.json({ liked: false });
+  } else {
+    await db.collection('likes').insertOne({ userId, blogId });
+    await db
+      .collection('blogs')
+      .updateOne({ _id: blogId }, { $inc: { totalLikes: 1 } });
+    return res.json({ liked: true });
+  }
 });
 
 app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {

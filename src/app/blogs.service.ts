@@ -29,4 +29,8 @@ export class BlogsService {
   delete(id: string): Observable<Blog> {
     return this.http.delete<Blog>(`/api/blogs/${id}`);
   }
+
+  toggleLike(id: string) {
+    return this.http.post<{ liked: boolean }>('/api/blogs/likes', { id });
+  }
 }

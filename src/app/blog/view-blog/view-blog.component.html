@@ -1,4 +1,9 @@
 <div class="d-flex">
+  <div>
+    <button class="btn" (click)="onToggleLike()" *ngIf="blog$ | async as blog">
+      {{ blog.totalLikes }} Like
+    </button>
+  </div>
   <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
     <div class="pb-5">
       <div *ngIf="blog$ | async as blog">

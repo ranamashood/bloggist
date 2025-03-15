@@ -8,7 +8,7 @@
             [date]="blog.createdAt | date"
           ></app-view-avatar>
           <div class="d-flex bg-danger-subtle rounded-3" *ngIf="isAuthor">
-            <button class="btn" (click)="onDeleteBlog()">Delete</button>
+            <button class="btn btn-sm" (click)="onDeleteBlog()">Delete</button>
           </div>
         </div>
         <h1 class="py-3">{{ blog.title }}</h1>

@@ -31,6 +31,7 @@ export interface CommentResponse {
   replyId: string;
   replies: CommentResponse[];
   isDeleted: boolean;
+  totalLikes: number;
   createdAt: string;
   _id: string;
 }

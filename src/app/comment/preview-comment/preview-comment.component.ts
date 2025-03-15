@@ -58,4 +58,12 @@ export class PreviewCommentComponent {
       next: () => this.commentService.deleteComment(this.comment._id),
     });
   }
+
+  onToggleLike() {
+    this.commentService
+      .toggleLike(this.comment._id)
+      .subscribe(({ liked }) =>
+        liked ? this.comment.totalLikes++ : this.comment.totalLikes--,
+      );
+  }
 }

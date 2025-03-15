@@ -68,4 +68,8 @@ export class CommentsService {
 
     return this.commentsSubject.next(deleteHelper(comments));
   }
+
+  toggleLike(id: string) {
+    return this.http.post<{ liked: boolean }>('/api/comments/likes', { id });
+  }
 }

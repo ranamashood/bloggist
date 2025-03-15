@@ -4,6 +4,7 @@ export interface Comment {
   replyId?: string;
   comment: string;
   isDeleted: boolean;
+  totalLikes: number;
   createdAt: Date;
   _id?: string;
 }

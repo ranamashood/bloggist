@@ -22,7 +22,10 @@
         {{ comment.comment }}
       </div>
     }
-    <div *ngIf="!isReplying">
+    <div class="d-flex gap-2" *ngIf="!isReplying">
+      <button class="btn btn-outline-primary" (click)="onToggleLike()">
+        {{ comment.totalLikes }} Like
+      </button>
       <button class="btn btn-outline-primary" (click)="isReplying = true">
         Reply
       </button>

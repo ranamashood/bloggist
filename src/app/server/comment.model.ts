@@ -6,6 +6,7 @@ export interface Comment {
   replyId?: ObjectId;
   comment: string;
   isDeleted: boolean;
+  totalLikes: number;
   createdAt: Date;
   _id?: ObjectId;
 }

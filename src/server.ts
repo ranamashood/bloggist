@@ -194,6 +194,7 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
     title,
     desc,
     totalLikes: 0,
+    totalComments: 0,
     userId: new ObjectId(req.user!.id),
     createdAt: new Date(),
   };
@@ -228,6 +229,8 @@ app.get('/api/blogs', async (_req, res) => {
             },
           },
           title: 1,
+          totalLikes: 1,
+          totalComments: 1,
           createdAt: 1,
         },
       },
@@ -277,6 +280,7 @@ app.get('/api/blogs/:id', async (req, res) => {
           title: 1,
           desc: 1,
           totalLikes: 1,
+          totalComments: 1,
           createdAt: 1,
         },
       },
@@ -377,6 +381,10 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
       },
     ])
     .next();
+
+  await db
+    .collection('blogs')
+    .updateOne({ _id: new ObjectId(blogId) }, { $inc: { totalComments: 1 } });
 
   res.status(201).json(insertedComment);
 });

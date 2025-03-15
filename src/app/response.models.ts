@@ -13,6 +13,7 @@ export interface BlogResponse {
   title: string;
   desc: string;
   totalLikes: number;
+  totalComments: number;
   createdAt: string;
   _id: string;
 }
@@ -20,6 +21,8 @@ export interface BlogResponse {
 export interface BlogsResponse {
   user: UserResponse;
   title: string;
+  totalLikes: number;
+  totalComments: number;
   createdAt: string;
   _id: string;
 }

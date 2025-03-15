@@ -35,7 +35,7 @@ export class CommentsService {
             ...comment,
             replies: [...(comment.replies ?? []), newComment],
           };
-        } else if (comment?.replies.length) {
+        } else if (comment?.replies?.length) {
           return { ...comment, replies: addReply(comment.replies) };
         }
 

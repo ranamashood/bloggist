@@ -10,11 +10,10 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   combineLatest,
+  firstValueFrom,
   map,
   Observable,
   of,
-  switchMap,
-  take,
   withLatestFrom,
 } from 'rxjs';
 import { BlogsService } from '../../blogs.service';
@@ -25,6 +24,7 @@ import { BlogResponse } from '../../response.models';
 import { TableOfContentComponent } from '../../table-of-content/table-of-content.component';
 import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
 import { UserService } from '../../user.service';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-view-blog',
@@ -34,6 +34,7 @@ import { UserService } from '../../user.service';
     ViewCommentsComponent,
     TableOfContentComponent,
     ViewAvatarComponent,
+    NgIcon,
   ],
   templateUrl: './view-blog.component.html',
 })
@@ -54,11 +55,12 @@ export class ViewBlogComponent {
   ) {
     this.route.paramMap.subscribe((params) => {
       this.blogId = params.get('id')!;
-      this.blog$ = this.blogService.getById(this.blogId);
     });
   }
 
   ngOnInit() {
+    this.blog$ = this.blogService.getById(this.blogId);
+
     combineLatest([this.currentUser$, this.blog$]).subscribe(
       ([currentUser, blog]) => {
         this.isAuthor = currentUser?._id === blog.user._id;
@@ -99,6 +101,7 @@ export class ViewBlogComponent {
         withLatestFrom(this.blog$),
         map(([{ liked }, blog]) => ({
           ...blog,
+          isLiked: liked,
           totalLikes: liked ? blog.totalLikes + 1 : blog.totalLikes - 1,
         })),
       )

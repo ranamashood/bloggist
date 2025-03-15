@@ -14,6 +14,7 @@ export interface BlogResponse {
   desc: string;
   totalLikes: number;
   totalComments: number;
+  isLiked: boolean;
   createdAt: string;
   _id: string;
 }
@@ -23,6 +24,7 @@ export interface BlogsResponse {
   title: string;
   totalLikes: number;
   totalComments: number;
+  isLiked: boolean;
   createdAt: string;
   _id: string;
 }
@@ -35,6 +37,7 @@ export interface CommentResponse {
   replies: CommentResponse[];
   isDeleted: boolean;
   totalLikes: number;
+  isLiked: boolean;
   createdAt: string;
   _id: string;
 }

@@ -22,12 +22,27 @@
         {{ comment.comment }}
       </div>
     }
-    <div class="d-flex gap-2" *ngIf="!isReplying">
-      <button class="btn btn-outline-primary" (click)="onToggleLike()">
-        {{ comment.totalLikes }} Like
+    <div class="d-flex" *ngIf="!isReplying">
+      <button
+        class="btn d-flex align-items-center gap-2"
+        (click)="onToggleLike()"
+      >
+        <ng-icon
+          class="text-danger"
+          [class]="comment.isLiked ? 'text-danger' : 'text-body'"
+          [name]="comment.isLiked ? 'bootstrapHeartFill' : 'bootstrapHeart'"
+        ></ng-icon>
+        <div *ngIf="comment.totalLikes">
+          {{ comment.totalLikes }}
+          {{ comment.totalLikes > 1 ? "Likes" : "Like" }}
+        </div>
       </button>
-      <button class="btn btn-outline-primary" (click)="isReplying = true">
-        Reply
+      <button
+        class="btn d-flex align-items-center gap-2"
+        (click)="isReplying = true"
+      >
+        <ng-icon name="bootstrapReply"></ng-icon>
+        <div>Reply</div>
       </button>
     </div>
 

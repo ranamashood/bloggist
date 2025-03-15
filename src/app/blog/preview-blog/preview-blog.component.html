@@ -6,8 +6,23 @@
   <div class="mt-2 ms-5">
     <h4>{{ blog.title }}</h4>
     <div class="d-flex gap-3">
-      <div>{{ blog.totalLikes }} Likes</div>
-      <div>{{ blog.totalComments }} Comments</div>
+      <div class="d-flex align-items-center gap-2">
+        <ng-icon
+          class="text-danger"
+          [name]="blog.isLiked ? 'bootstrapHeartFill' : 'bootstrapHeart'"
+        ></ng-icon>
+        <div>
+          {{ blog.totalLikes }}
+          {{ blog.totalLikes > 1 ? "Likes" : "Like" }}
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <ng-icon name="bootstrapChat"></ng-icon>
+        <div>
+          {{ blog.totalComments }}
+          {{ blog.totalComments > 1 ? "Comments" : "Comment" }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

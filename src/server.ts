@@ -204,7 +204,9 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   res.status(201).json(newBlog);
 });
 
-app.get('/api/blogs', async (_req, res) => {
+app.get('/api/blogs', verifyTokenMiddleware, async (req, res) => {
+  const userId = new ObjectId(req.user!.id);
+
   const blogs: BlogsResponse[] = await db
     .collection('blogs')
     .aggregate<BlogsResponse>([
@@ -217,6 +219,15 @@ app.get('/api/blogs', async (_req, res) => {
         },
       },
       { $unwind: '$user' },
+      {
+        $lookup: {
+          from: 'likes',
+          localField: '_id',
+          foreignField: 'blogId',
+          as: 'isLiked',
+          pipeline: [{ $match: { userId } }],
+        },
+      },
       {
         $project: {
           user: {
@@ -231,6 +242,7 @@ app.get('/api/blogs', async (_req, res) => {
           title: 1,
           totalLikes: 1,
           totalComments: 1,
+          isLiked: { $toBool: { $size: '$isLiked' } },
           createdAt: 1,
         },
       },
@@ -250,8 +262,9 @@ app.get('/api/blogs/ids', async (_req, res) => {
   res.status(200).json(blogs);
 });
 
-app.get('/api/blogs/:id', async (req, res) => {
+app.get('/api/blogs/:id', verifyTokenMiddleware, async (req, res) => {
   const { id } = req.params;
+  const userId = new ObjectId(req.user!.id);
 
   const blog = await db
     .collection('blogs')
@@ -267,6 +280,15 @@ app.get('/api/blogs/:id', async (req, res) => {
       },
       { $unwind: '$user' },
       {
+        $lookup: {
+          from: 'likes',
+          localField: '_id',
+          foreignField: 'blogId',
+          as: 'isLiked',
+          pipeline: [{ $match: { userId } }],
+        },
+      },
+      {
         $project: {
           user: {
             _id: 1,
@@ -281,6 +303,7 @@ app.get('/api/blogs/:id', async (req, res) => {
           desc: 1,
           totalLikes: 1,
           totalComments: 1,
+          isLiked: { $toBool: { $size: '$isLiked' } },
           createdAt: 1,
         },
       },
@@ -389,8 +412,9 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
   res.status(201).json(insertedComment);
 });
 
-app.get('/api/comments/:blogId', async (req, res) => {
+app.get('/api/comments/:blogId', verifyTokenMiddleware, async (req, res) => {
   const { blogId } = req.params;
+  const userId = new ObjectId(req.user!.id);
 
   const comments = await db
     .collection('comments')
@@ -405,6 +429,15 @@ app.get('/api/comments/:blogId', async (req, res) => {
         },
       },
       { $unwind: '$user' },
+      {
+        $lookup: {
+          from: 'likes',
+          localField: '_id',
+          foreignField: 'commentId',
+          as: 'isLiked',
+          pipeline: [{ $match: { userId } }],
+        },
+      },
       {
         $project: {
           user: {
@@ -421,6 +454,7 @@ app.get('/api/comments/:blogId', async (req, res) => {
           replyId: 1,
           isDeleted: 1,
           totalLikes: 1,
+          isLiked: { $toBool: { $size: '$isLiked' } },
           createdAt: 1,
           _id: 1,
         },

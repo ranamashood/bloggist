@@ -4,13 +4,12 @@ import { BlogResponse, CommentResponse } from '../../response.models';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommentsService } from '../../comments.service';
-import { combineLatest } from 'rxjs';
 import { UserService } from '../../user.service';
-import { Router } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-preview-comment',
-  imports: [ViewAvatarComponent, DatePipe, FormsModule, NgIf, NgFor],
+  imports: [ViewAvatarComponent, DatePipe, FormsModule, NgIf, NgFor, NgIcon],
   templateUrl: './preview-comment.component.html',
 })
 export class PreviewCommentComponent {
@@ -22,10 +21,7 @@ export class PreviewCommentComponent {
   currentUser$ = inject(UserService).currentUser$;
   isAuthor = false;
 
-  constructor(
-    private readonly commentService: CommentsService,
-    private readonly router: Router,
-  ) {}
+  constructor(private readonly commentService: CommentsService) {}
 
   ngOnInit() {
     this.currentUser$.subscribe((currentUser) => {
@@ -60,10 +56,9 @@ export class PreviewCommentComponent {
   }
 
   onToggleLike() {
-    this.commentService
-      .toggleLike(this.comment._id)
-      .subscribe(({ liked }) =>
-        liked ? this.comment.totalLikes++ : this.comment.totalLikes--,
-      );
+    this.commentService.toggleLike(this.comment._id).subscribe(({ liked }) => {
+      this.comment.isLiked = liked;
+      liked ? this.comment.totalLikes++ : this.comment.totalLikes--;
+    });
   }
 }

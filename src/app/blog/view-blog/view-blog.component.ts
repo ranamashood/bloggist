@@ -107,4 +107,8 @@ export class ViewBlogComponent {
       )
       .subscribe((updatedBlog) => (this.blog$ = of(updatedBlog)));
   }
+
+  scroll(element: HTMLElement) {
+    element.scrollIntoView();
+  }
 }

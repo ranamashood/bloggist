@@ -13,6 +13,14 @@
         ></ng-icon>
         <div class="fs-6">{{ blog.totalLikes }}</div>
       </button>
+      <button
+        class="btn d-flex flex-column gap-2"
+        (click)="scroll(comments)"
+        *ngIf="blog$ | async as blog"
+      >
+        <ng-icon class="fs-4" name="bootstrapChat"></ng-icon>
+        <div class="fs-6">{{ blog.totalComments }}</div>
+      </button>
     </div>
   </div>
   <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
@@ -32,6 +40,8 @@
       </div>
     </div>
 
+    <hr #comments />
+    <h3 class="fw-bold">Comments</h3>
     <app-add-comment [blogId]="blogId"></app-add-comment>
     <app-view-comments
       *ngIf="blog$ | async as blog"

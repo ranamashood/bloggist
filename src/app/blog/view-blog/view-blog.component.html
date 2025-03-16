@@ -35,7 +35,7 @@
             <button class="btn btn-sm" (click)="onDeleteBlog()">Delete</button>
           </div>
         </div>
-        <h1 class="py-3">{{ blog.title }}</h1>
+        <h1 class="py-3 fw-bold text-capitalize">{{ blog.title }}</h1>
         <div #blogContent [innerHTML]="blog.desc"></div>
       </div>
     </div>

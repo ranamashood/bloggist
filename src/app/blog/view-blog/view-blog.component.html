@@ -36,7 +36,23 @@
       </div>
 
       <hr #comments />
-      <h3 class="fw-bold">Comments</h3>
+      <div class="fs-3 fw-bold">
+        Comments
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn fs-5" id="dropdownBasic1" ngbDropdownToggle>
+            <ng-icon name="bootstrapSortDown"></ng-icon>
+          </button>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem (click)="sortComments('top')">Top</button>
+            <button ngbDropdownItem (click)="sortComments('latest')">
+              Latest
+            </button>
+            <button ngbDropdownItem (click)="sortComments('oldest')">
+              Oldest
+            </button>
+          </div>
+        </div>
+      </div>
       <app-add-comment [blogId]="blogId"></app-add-comment>
       <app-view-comments [blogId]="blogId" [blog]="blog"></app-view-comments>
     </div>

@@ -9,6 +9,7 @@ import {
   bootstrapHeartFill,
   bootstrapReply,
   bootstrapChat,
+  bootstrapSortDown,
 } from '@ng-icons/bootstrap-icons';
 
 @Component({
@@ -21,6 +22,7 @@ import {
       bootstrapHeartFill,
       bootstrapReply,
       bootstrapChat,
+      bootstrapSortDown,
     }),
   ],
 })

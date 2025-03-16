@@ -72,4 +72,23 @@ export class CommentsService {
   toggleLike(id: string) {
     return this.http.post<{ liked: boolean }>('/api/comments/likes', { id });
   }
+
+  sort(type: 'top' | 'latest' | 'oldest') {
+    let sortedComments: CommentResponse[] = [];
+
+    this.comments$.subscribe(
+      (comments) =>
+        (sortedComments = comments.sort((a, b) => {
+          if (type === 'top') {
+            return b.totalLikes - a.totalLikes;
+          } else if (type === 'latest') {
+            return b.createdAt.localeCompare(a.createdAt);
+          } else {
+            return a.createdAt.localeCompare(b.createdAt);
+          }
+        })),
+    );
+
+    return this.commentsSubject.next(sortedComments);
+  }
 }

@@ -2,4 +2,8 @@ $primary: #6d4aff;
 $focus-ring-color: $primary;
 $focus-ring-width: 2px;
 
+.dropdown button::after {
+  display: none;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

@@ -8,6 +8,7 @@ import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
   styleUrl: './table-of-content.component.css',
 })
 export class TableOfContentComponent {
+  @Input() contentLoaded = true;
   @Input() blogId = '';
   @Input() html = '';
   headings: { indent: string; id: string; text: string }[] = [];

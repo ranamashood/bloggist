@@ -1,16 +1,32 @@
-<ul
-  class="bd-navbar navbar-nav overflow-y-auto sticky-top bg-body rounded-3 ms-4 px-3 py-1 z-1"
-  *ngIf="headings.length"
->
-  <li class="nav-item" *ngFor="let heading of headings">
-    <a
-      class="bd-navbar-link nav-link"
-      [ngClass]="{ active: activeHeading === heading.id }"
-      [style]="'margin-left: ' + heading.indent"
-      [href]="heading.id"
-      (click)="setActive(heading.id)"
-    >
-      {{ heading.text }}
-    </a>
-  </li>
-</ul>
+<ng-container *ngIf="contentLoaded; else skeleton">
+  <ul
+    class="bd-navbar navbar-nav overflow-y-auto sticky-top bg-body rounded-3 ms-4 px-3 py-1 z-1"
+    *ngIf="headings.length"
+  >
+    <li class="nav-item" *ngFor="let heading of headings">
+      <a
+        class="bd-navbar-link nav-link"
+        [ngClass]="{ active: activeHeading === heading.id }"
+        [style]="'margin-left: ' + heading.indent"
+        [href]="heading.id"
+        (click)="setActive(heading.id)"
+      >
+        {{ heading.text }}
+      </a>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-template #skeleton>
+  <div
+    class="bd-navbar d-flex flex-column gap-3 sticky-top bg-body rounded-3 ms-4 px-3 py-3 z-1"
+  >
+    <div class="placeholder" style="width: 90%"></div>
+    <div class="placeholder" style="width: 95%"></div>
+    <div class="placeholder" style="width: 75%"></div>
+    <div class="placeholder" style="width: 85%"></div>
+    <div class="placeholder" style="width: 89%"></div>
+    <div class="placeholder" style="width: 83%"></div>
+    <div class="placeholder" style="width: 94%"></div>
+  </div>
+</ng-template>

@@ -1,57 +1,97 @@
-<div class="d-flex">
-  <div>
-    <div class="sticky-top pt-5 pe-4">
-      <button
-        class="btn d-flex flex-column gap-2"
-        (click)="onToggleLike()"
-        *ngIf="blog$ | async as blog"
-      >
-        <ng-icon
-          class="fs-4 text-danger"
-          [class]="blog.isLiked ? 'text-danger' : 'text-body'"
-          [name]="blog.isLiked ? 'bootstrapHeartFill' : 'bootstrapHeart'"
-        ></ng-icon>
-        <div class="fs-6">{{ blog.totalLikes }}</div>
-      </button>
-      <button
-        class="btn d-flex flex-column gap-2"
-        (click)="scroll(comments)"
-        *ngIf="blog$ | async as blog"
-      >
-        <ng-icon class="fs-4" name="bootstrapChat"></ng-icon>
-        <div class="fs-6">{{ blog.totalComments }}</div>
-      </button>
-    </div>
-  </div>
-  <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
-    <div class="pb-5">
-      <div *ngIf="blog$ | async as blog">
-        <div class="d-flex justify-content-between">
-          <app-view-avatar
-            [user]="blog.user"
-            [date]="blog.createdAt | date"
-          ></app-view-avatar>
-          <div class="d-flex bg-danger-subtle rounded-3" *ngIf="isAuthor">
-            <button class="btn btn-sm" (click)="onDeleteBlog()">Delete</button>
-          </div>
-        </div>
-        <h1 class="py-3 fw-bold text-capitalize">{{ blog.title }}</h1>
-        <div #blogContent [innerHTML]="blog.desc"></div>
+<div *ngIf="blog$ | async as blog; else skeleton">
+  <div class="d-flex">
+    <div>
+      <div class="sticky-top pt-5 pe-4">
+        <button class="btn d-flex flex-column gap-2" (click)="onToggleLike()">
+          <ng-icon
+            class="fs-4 text-danger"
+            [class]="blog.isLiked ? 'text-danger' : 'text-body'"
+            [name]="blog.isLiked ? 'bootstrapHeartFill' : 'bootstrapHeart'"
+          ></ng-icon>
+          <div class="fs-6">{{ blog.totalLikes }}</div>
+        </button>
+        <button class="btn d-flex flex-column gap-2" (click)="scroll(comments)">
+          <ng-icon class="fs-4" name="bootstrapChat"></ng-icon>
+          <div class="fs-6">{{ blog.totalComments }}</div>
+        </button>
       </div>
     </div>
+    <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
+      <div class="pb-5">
+        <div>
+          <div class="d-flex justify-content-between">
+            <app-view-avatar
+              [user]="blog.user"
+              [date]="blog.createdAt | date"
+            ></app-view-avatar>
+            <div class="d-flex bg-danger-subtle rounded-3" *ngIf="isAuthor">
+              <button class="btn btn-sm" (click)="onDeleteBlog()">
+                Delete
+              </button>
+            </div>
+          </div>
+          <h1 class="py-3 fw-bold text-capitalize">{{ blog.title }}</h1>
+          <div #blogContent [innerHTML]="blog.desc"></div>
+        </div>
+      </div>
 
-    <hr #comments />
-    <h3 class="fw-bold">Comments</h3>
-    <app-add-comment [blogId]="blogId"></app-add-comment>
-    <app-view-comments
-      *ngIf="blog$ | async as blog"
+      <hr #comments />
+      <h3 class="fw-bold">Comments</h3>
+      <app-add-comment [blogId]="blogId"></app-add-comment>
+      <app-view-comments [blogId]="blogId" [blog]="blog"></app-view-comments>
+    </div>
+    <app-table-of-content
       [blogId]="blogId"
-      [blog]="blog"
-    ></app-view-comments>
+      [html]="blog.desc"
+    ></app-table-of-content>
   </div>
-  <app-table-of-content
-    *ngIf="blog$ | async as blog"
-    [blogId]="blogId"
-    [html]="blog.desc"
-  ></app-table-of-content>
 </div>
+
+<ng-template #skeleton>
+  <div class="d-flex placeholder-glow">
+    <div>
+      <div class="sticky-top d-flex flex-column gap-4 pt-5 pe-4">
+        <div
+          class="placeholder rounded-2"
+          style="width: 50px; height: 50px"
+        ></div>
+        <div
+          class="placeholder rounded-2"
+          style="width: 50px; height: 50px"
+        ></div>
+      </div>
+    </div>
+    <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
+      <div class="pb-5">
+        <div>
+          <div class="d-flex justify-content-between align-items-center">
+            <app-view-avatar [contentLoaded]="false"></app-view-avatar>
+            <div
+              class="placeholder rounded-2"
+              style="width: 60px; height: 45px"
+            ></div>
+          </div>
+          <div class="d-flex flex-column gap-2 py-4">
+            <div class="placeholder" style="width: 90%; height: 30px"></div>
+            <div class="placeholder" style="width: 30%; height: 30px"></div>
+          </div>
+          <div class="d-flex flex-column gap-2 pt-2">
+            <div class="placeholder" style="width: 95%"></div>
+            <div class="placeholder" style="width: 100%"></div>
+            <div class="placeholder" style="width: 90%"></div>
+            <div class="placeholder" style="width: 99%"></div>
+            <div class="placeholder" style="width: 93%"></div>
+            <div class="placeholder" style="width: 94%"></div>
+            <div class="placeholder mt-3" style="width: 95%"></div>
+            <div class="placeholder" style="width: 100%"></div>
+            <div class="placeholder" style="width: 90%"></div>
+            <div class="placeholder" style="width: 99%"></div>
+            <div class="placeholder" style="width: 93%"></div>
+            <div class="placeholder" style="width: 94%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-table-of-content [contentLoaded]="false"></app-table-of-content>
+  </div>
+</ng-template>

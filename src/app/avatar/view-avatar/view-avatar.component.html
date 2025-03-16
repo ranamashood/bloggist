@@ -1,4 +1,7 @@
-<div class="d-flex align-items-center gap-2">
+<div
+  class="d-flex align-items-center gap-2"
+  *ngIf="contentLoaded; else skeleton"
+>
   <app-preview-avatar [user]="user"></app-preview-avatar>
   <div>
     <div class="fw-bold">
@@ -9,3 +12,13 @@
     </div>
   </div>
 </div>
+
+<ng-template #skeleton>
+  <div class="d-flex align-items-center gap-2">
+    <app-preview-avatar [contentLoaded]="false"></app-preview-avatar>
+    <div class="d-flex flex-column gap-2">
+      <div class="placeholder" style="width: 200px"></div>
+      <div class="placeholder" style="width: 80px"></div>
+    </div>
+  </div>
+</ng-template>

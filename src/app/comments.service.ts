@@ -1,13 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import {
+  BehaviorSubject,
+  firstValueFrom,
+  Observable,
+  switchMap,
+  take,
+} from 'rxjs';
 import { Comment } from './comment.model';
 import { CommentResponse } from './response.models';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentsService {
+  currentUser$ = inject(UserService).currentUser$;
+
   constructor(private readonly http: HttpClient) {}
 
   private commentsSubject = new BehaviorSubject<CommentResponse[]>([]);
@@ -18,7 +27,14 @@ export class CommentsService {
   }
 
   getAllByBlogId(blogId: string): Observable<CommentResponse[]> {
-    return this.http.get<CommentResponse[]>(`/api/comments/${blogId}`);
+    return this.currentUser$.pipe(
+      take(1),
+      switchMap((user) =>
+        this.http.get<CommentResponse[]>(
+          `/api/comments/${blogId}${user?._id ? `?userId=${user?._id}` : ''}`,
+        ),
+      ),
+    );
   }
 
   async addComment(newComment: CommentResponse) {

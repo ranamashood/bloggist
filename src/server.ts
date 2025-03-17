@@ -204,8 +204,8 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   res.status(201).json(newBlog);
 });
 
-app.get('/api/blogs', verifyTokenMiddleware, async (req, res) => {
-  const userId = new ObjectId(req.user!.id);
+app.get('/api/blogs', async (req, res) => {
+  const userId = new ObjectId(req.query['userId'] as string);
 
   const blogs: BlogsResponse[] = await db
     .collection('blogs')
@@ -262,9 +262,9 @@ app.get('/api/blogs/ids', async (_req, res) => {
   res.status(200).json(blogs);
 });
 
-app.get('/api/blogs/:id', verifyTokenMiddleware, async (req, res) => {
+app.get('/api/blogs/:id', async (req, res) => {
   const { id } = req.params;
-  const userId = new ObjectId(req.user!.id);
+  const userId = new ObjectId(req.query['userId'] as string);
 
   const blog = await db
     .collection('blogs')
@@ -412,9 +412,9 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
   res.status(201).json(insertedComment);
 });
 
-app.get('/api/comments/:blogId', verifyTokenMiddleware, async (req, res) => {
+app.get('/api/comments/:blogId', async (req, res) => {
   const { blogId } = req.params;
-  const userId = new ObjectId(req.user!.id);
+  const userId = new ObjectId(req.query['userId'] as string);
 
   const comments = await db
     .collection('comments')

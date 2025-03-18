@@ -134,7 +134,7 @@ app.post('/api/user/register', async (req, res) => {
 
   const randomColor = getRandomColor();
 
-  const newUser = {
+  const newUser: User = {
     name: name,
     email: email,
     password: await bcrypt.hash(password, 10),
@@ -146,7 +146,15 @@ app.post('/api/user/register', async (req, res) => {
     createdAt: new Date(),
   };
 
-  await db.collection('users').insertOne(newUser);
+  const insertedUser = await db.collection('users').insertOne(newUser);
+
+  newUser.token = jwt.sign(
+    { id: insertedUser.insertedId },
+    process.env['TOKEN_SECRET']!,
+    {
+      expiresIn: '1d',
+    },
+  );
 
   res.status(201).json(newUser);
 });

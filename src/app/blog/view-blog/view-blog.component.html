@@ -18,6 +18,19 @@
           <ng-icon class="fs-4" name="bootstrapChat"></ng-icon>
           <div class="fs-6">{{ blog.totalComments }}</div>
         </button>
+        <button
+          class="btn d-flex flex-column gap-2"
+          (click)="onToggleBookmark()"
+        >
+          <ng-icon
+            class="fs-4"
+            [ngClass]="{ 'text-primary': blog.isBookmarked }"
+            [name]="
+              blog.isBookmarked ? 'bootstrapBookmarkFill' : 'bootstrapBookmark'
+            "
+          ></ng-icon>
+          <div class="fs-6">{{ blog.totalBookmarks }}</div>
+        </button>
       </div>
     </div>
     <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
@@ -71,6 +84,10 @@
   <div class="d-flex placeholder-glow">
     <div>
       <div class="sticky-top d-flex flex-column gap-4 pt-5 pe-4">
+        <div
+          class="placeholder rounded-2"
+          style="width: 50px; height: 50px"
+        ></div>
         <div
           class="placeholder rounded-2"
           style="width: 50px; height: 50px"

@@ -10,6 +10,8 @@ import {
   bootstrapReply,
   bootstrapChat,
   bootstrapSortDown,
+  bootstrapBookmark,
+  bootstrapBookmarkFill,
 } from '@ng-icons/bootstrap-icons';
 import { NotificationComponent } from './notification/notification.component';
 
@@ -30,6 +32,8 @@ import { NotificationComponent } from './notification/notification.component';
       bootstrapReply,
       bootstrapChat,
       bootstrapSortDown,
+      bootstrapBookmark,
+      bootstrapBookmarkFill,
     }),
   ],
 })

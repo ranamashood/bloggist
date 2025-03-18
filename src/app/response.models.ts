@@ -14,7 +14,9 @@ export interface BlogResponse {
   desc: string;
   totalLikes: number;
   totalComments: number;
+  totalBookmarks: number;
   isLiked: boolean;
+  isBookmarked: boolean;
   createdAt: string;
   _id: string;
 }

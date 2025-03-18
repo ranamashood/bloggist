@@ -50,4 +50,10 @@ export class BlogsService {
   toggleLike(id: string) {
     return this.http.post<{ liked: boolean }>('/api/blogs/likes', { id });
   }
+
+  toggleBookmark(id: string) {
+    return this.http.post<{ bookmarked: boolean }>('/api/blogs/bookmarks', {
+      id,
+    });
+  }
 }

@@ -206,6 +206,7 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
     title,
     desc,
     totalLikes: 0,
+    totalBookmarks: 0,
     totalComments: 0,
     userId: new ObjectId(req.user!.id),
     createdAt: new Date(),
@@ -301,6 +302,15 @@ app.get('/api/blogs/:id', async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'bookmarks',
+          localField: '_id',
+          foreignField: 'blogId',
+          as: 'isBookmarked',
+          pipeline: [{ $match: { userId } }],
+        },
+      },
+      {
         $project: {
           user: {
             _id: 1,
@@ -314,8 +324,10 @@ app.get('/api/blogs/:id', async (req, res) => {
           title: 1,
           desc: 1,
           totalLikes: 1,
+          totalBookmarks: 1,
           totalComments: 1,
           isLiked: { $toBool: { $size: '$isLiked' } },
+          isBookmarked: { $toBool: { $size: '$isBookmarked' } },
           createdAt: 1,
         },
       },
@@ -357,6 +369,29 @@ app.post('/api/blogs/likes', verifyTokenMiddleware, async (req, res) => {
       .collection('blogs')
       .updateOne({ _id: blogId }, { $inc: { totalLikes: 1 } });
     return res.json({ liked: true });
+  }
+});
+
+app.post('/api/blogs/bookmarks', verifyTokenMiddleware, async (req, res) => {
+  const blogId = new ObjectId(req.body.id as string);
+  const userId = new ObjectId(req.user!.id);
+
+  const isBookmarked = await db
+    .collection('bookmarks')
+    .findOne({ userId, blogId });
+
+  if (isBookmarked) {
+    await db.collection('bookmarks').deleteOne({ _id: isBookmarked._id });
+    await db
+      .collection('blogs')
+      .updateOne({ _id: blogId }, { $inc: { totalBookmarks: -1 } });
+    return res.json({ bookmarked: false });
+  } else {
+    await db.collection('bookmarks').insertOne({ userId, blogId });
+    await db
+      .collection('blogs')
+      .updateOne({ _id: blogId }, { $inc: { totalBookmarks: 1 } });
+    return res.json({ bookmarked: true });
   }
 });
 

@@ -120,4 +120,20 @@ export class ViewBlogComponent {
   sortComments(sortType: 'top' | 'latest' | 'oldest') {
     this.commentService.sort(sortType);
   }
+
+  onToggleBookmark() {
+    this.blogService
+      .toggleBookmark(this.blogId)
+      .pipe(
+        withLatestFrom(this.blog$),
+        map(([{ bookmarked }, blog]) => ({
+          ...blog,
+          isBookmarked: bookmarked,
+          totalBookmarks: bookmarked
+            ? blog.totalBookmarks + 1
+            : blog.totalBookmarks - 1,
+        })),
+      )
+      .subscribe((updatedBlog) => (this.blog$ = of(updatedBlog)));
+  }
 }

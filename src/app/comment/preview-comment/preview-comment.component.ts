@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
 import { BlogResponse, CommentResponse } from '../../response.models';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommentsService } from '../../comments.service';
 import { UserService } from '../../user.service';
@@ -9,7 +9,15 @@ import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-preview-comment',
-  imports: [ViewAvatarComponent, DatePipe, FormsModule, NgIf, NgFor, NgIcon],
+  imports: [
+    ViewAvatarComponent,
+    DatePipe,
+    FormsModule,
+    NgIf,
+    NgFor,
+    NgIcon,
+    NgStyle,
+  ],
   templateUrl: './preview-comment.component.html',
 })
 export class PreviewCommentComponent {

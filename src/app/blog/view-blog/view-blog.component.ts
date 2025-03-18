@@ -7,7 +7,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgStyle } from '@angular/common';
 import {
   combineLatest,
   firstValueFrom,
@@ -38,6 +38,7 @@ import { CommentsService } from '../../comments.service';
     ViewAvatarComponent,
     NgIcon,
     NgbDropdownModule,
+    NgStyle,
   ],
   templateUrl: './view-blog.component.html',
 })

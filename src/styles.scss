@@ -6,4 +6,9 @@ $focus-ring-width: 2px;
   display: none;
 }
 
+.btn:focus,
+.btn:active {
+  border-color: transparent !important;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

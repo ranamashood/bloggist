@@ -1,0 +1,8 @@
+<ng-container *ngIf="notification$ | async as notification">
+  <ngb-toast
+    [header]="notification.header"
+    class="bg-danger-subtle position-fixed top-0 end-0 m-3 z-3"
+  >
+    {{ notification.message }}
+  </ngb-toast>
+</ng-container>

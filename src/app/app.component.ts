@@ -11,10 +11,17 @@ import {
   bootstrapChat,
   bootstrapSortDown,
 } from '@ng-icons/bootstrap-icons';
+import { NotificationComponent } from './notification/notification.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgbModule, HeaderComponent, NgxEditorModule],
+  imports: [
+    RouterOutlet,
+    NgbModule,
+    HeaderComponent,
+    NgxEditorModule,
+    NotificationComponent,
+  ],
   templateUrl: './app.component.html',
   viewProviders: [
     provideIcons({

@@ -19,6 +19,7 @@ import {
 import { UserService } from './user.service';
 import { EMPTY } from 'rxjs';
 import { tokenInterceptor } from './token.interceptor';
+import { errorInterceptor } from './error.interceptor';
 
 export function initAuth(userService: UserService) {
   return () => (userService.getToken() ? userService.getCurrentUser() : EMPTY);
@@ -29,7 +30,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([tokenInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([tokenInterceptor, errorInterceptor]),
+    ),
     provideAppInitializer(() => {
       const userService = inject(UserService);
       return initAuth(userService)();

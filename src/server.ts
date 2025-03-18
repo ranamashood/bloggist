@@ -45,7 +45,11 @@ function verifyTokenMiddleware(
   const token = req.headers['authorization'];
 
   if (!token) {
-    res.status(403).json({ message: 'No token provided' });
+    res.status(403).json({
+      type: 'authentication',
+      header: 'Authentication Error',
+      message: 'Login or Register first',
+    });
     return;
   }
 

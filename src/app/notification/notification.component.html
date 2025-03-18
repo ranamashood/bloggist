@@ -5,4 +5,12 @@
   >
     {{ notification.message }}
   </ngb-toast>
+
+  <ng-container *ngIf="notification.type === 'authentication'">
+    <div
+      class="position-fixed top-0 start-0 w-100 h-100 bg-secondary bg-opacity-75 z-2"
+      style="backdrop-filter: blur(5px)"
+    ></div>
+    <app-auth [popup]="true"></app-auth>
+  </ng-container>
 </ng-container>

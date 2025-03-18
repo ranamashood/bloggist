@@ -1,7 +1,7 @@
 <div *ngIf="blog$ | async as blog; else skeleton">
   <div class="d-flex">
     <div>
-      <div class="sticky-top pt-5 pe-4">
+      <div class="sticky-top pt-5 pe-4 z-1">
         <button class="btn d-flex flex-column gap-2" (click)="onToggleLike()">
           <ng-icon
             class="fs-4 text-danger"

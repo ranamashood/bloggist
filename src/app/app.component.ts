@@ -12,8 +12,10 @@ import {
   bootstrapSortDown,
   bootstrapBookmark,
   bootstrapBookmarkFill,
+  bootstrapArrowUp,
 } from '@ng-icons/bootstrap-icons';
 import { NotificationComponent } from './notification/notification.component';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,7 @@ import { NotificationComponent } from './notification/notification.component';
     HeaderComponent,
     NgxEditorModule,
     NotificationComponent,
+    ScrollToTopComponent,
   ],
   templateUrl: './app.component.html',
   viewProviders: [
@@ -34,6 +37,7 @@ import { NotificationComponent } from './notification/notification.component';
       bootstrapSortDown,
       bootstrapBookmark,
       bootstrapBookmarkFill,
+      bootstrapArrowUp,
     }),
   ],
 })

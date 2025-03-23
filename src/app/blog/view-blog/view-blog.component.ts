@@ -28,6 +28,7 @@ import { NgIcon } from '@ng-icons/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsService } from '../../comments.service';
 import { LatestBlogsComponent } from '../latest-blogs/latest-blogs.component';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-view-blog',
@@ -58,6 +59,7 @@ export class ViewBlogComponent {
     private readonly renderer: Renderer2,
     private readonly userService: UserService,
     private readonly router: Router,
+    private readonly notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
@@ -136,5 +138,12 @@ export class ViewBlogComponent {
         })),
       )
       .subscribe((updatedBlog) => (this.blog$ = of(updatedBlog)));
+  }
+
+  shareBlog() {
+    this.notificationService.set({
+      header: 'Link Copied!',
+      message: 'Share the link with anyone by pasting it',
+    });
   }
 }

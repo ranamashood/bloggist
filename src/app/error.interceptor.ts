@@ -11,12 +11,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError(({ error }) => {
       const notification: Notification = {
-        type: error?.type,
+        type: error.type,
         header: error.header,
         message: error.message,
       };
 
-      notificationService.set(notification);
+      notificationService.set(notification, true);
 
       return throwError(() => error);
     }),

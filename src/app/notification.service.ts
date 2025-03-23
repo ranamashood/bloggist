@@ -11,7 +11,8 @@ export class NotificationService {
 
   constructor() {}
 
-  set(notification: Notification) {
+  set(notification: Notification, isError: boolean = false) {
+    notification.className = isError ? 'bg-danger-subtle' : 'bg-primary-subtle';
     this.notificationSubject.next(notification);
 
     if (notification.type !== 'authentication') {

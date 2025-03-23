@@ -81,6 +81,20 @@
       <app-view-comments [blogId]="blogId" [blog]="blog"></app-view-comments>
     </div>
     <div class="ms-4" style="min-width: 350px; max-width: 350px">
+      <div class="d-flex flex-column gap-1 bg-body rounded-3 px-3 py-3">
+        <app-view-avatar [user]="blog.user"></app-view-avatar>
+        <app-follow-button-user
+          class="my-2"
+          [followingId]="blog.user._id"
+        ></app-follow-button-user>
+        <div>
+          <b>Joined</b>
+          <div>
+            {{ blog.user.createdAt | date }}
+          </div>
+        </div>
+      </div>
+      <div class="mb-4"></div>
       <app-latest-blogs
         [userId]="blog.user._id"
         [blogId]="blogId"

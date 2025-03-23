@@ -244,6 +244,43 @@ app.get('/api/users/:userId/blogs', async (req, res) => {
   res.status(200).json(blogs);
 });
 
+app.post('/api/followers', verifyTokenMiddleware, async (req, res) => {
+  const followingId = new ObjectId(req.body.followingId as string);
+  const followerId = new ObjectId(req.user?.id);
+
+  const newFollower = {
+    followerId,
+    followingId,
+  };
+
+  const isFollowed = await db.collection('followers').findOne(newFollower);
+
+  if (isFollowed) {
+    await db.collection('followers').deleteOne({ _id: isFollowed._id });
+    return res.json({ followed: false });
+  } else {
+    await db.collection('followers').insertOne(newFollower);
+    return res.json({ followed: true });
+  }
+});
+
+app.get(
+  '/api/followers/:followingId',
+  verifyTokenMiddleware,
+  async (req, res) => {
+    const followingId = new ObjectId(req.params['followingId'] as string);
+    const followerId = new ObjectId(req.user?.id as string);
+
+    const isFollowed = await db
+      .collection('followers')
+      .findOne({ followerId, followingId });
+
+    return isFollowed
+      ? res.json({ followed: true })
+      : res.json({ followed: false });
+  },
+);
+
 app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   const { title, desc } = req.body;
 
@@ -296,6 +333,7 @@ app.get('/api/blogs', async (req, res) => {
               color: 1,
               bgColor: 1,
             },
+            createdAt: 1,
           },
           title: 1,
           totalLikes: 1,
@@ -366,6 +404,7 @@ app.get('/api/blogs/:id', async (req, res) => {
               color: 1,
               bgColor: 1,
             },
+            createdAt: 1,
           },
           title: 1,
           desc: 1,

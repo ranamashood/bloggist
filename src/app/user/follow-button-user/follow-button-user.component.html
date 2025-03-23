@@ -1,0 +1,7 @@
+<button
+  class="btn btn-primary w-100"
+  (click)="toggleFollow()"
+  *ngIf="userId !== followingId"
+>
+  {{ isFollowed ? "Following" : "Follow" }}
+</button>

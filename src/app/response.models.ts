@@ -5,6 +5,7 @@ export interface UserResponse {
     color: string;
     bgColor: string;
   };
+  createdAt?: string;
   _id: string;
 }
 

@@ -77,4 +77,16 @@ export class UserService {
     }
     return null;
   }
+
+  toggleFollow(followingId: string) {
+    return this.http.post<{ followed: boolean }>('/api/followers', {
+      followingId,
+    });
+  }
+
+  isFollowing(followingId: string) {
+    return this.http.get<{ followed: boolean }>(
+      `/api/followers/${followingId}`,
+    );
+  }
 }

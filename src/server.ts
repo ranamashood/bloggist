@@ -304,6 +304,7 @@ app.get('/api/blogs', async (req, res) => {
           createdAt: 1,
         },
       },
+      { $sort: { createdAt: -1 } },
     ])
     .toArray();
 

@@ -2,7 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, switchMap, take } from 'rxjs';
 import { Blog } from './blog.model';
 import { HttpClient } from '@angular/common/http';
-import { BlogResponse, BlogsResponse } from './response.models';
+import {
+  BlogResponse,
+  BlogsResponse,
+  LatestBlogsResponse,
+} from './response.models';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -41,6 +45,15 @@ export class BlogsService {
 
   getAllIds(): Observable<{ _id: string }[]> {
     return this.http.get<{ _id: string }[]>('/api/blogs/ids');
+  }
+
+  getLatestUserBlogs(
+    userId: string,
+    openedBlogId: string = '',
+  ): Observable<LatestBlogsResponse[]> {
+    return this.http.get<LatestBlogsResponse[]>(
+      `/api/users/${userId}/blogs${openedBlogId ? `?openedBlogId=${openedBlogId}` : ''}`,
+    );
   }
 
   delete(id: string): Observable<Blog> {

@@ -1,0 +1,15 @@
+<div
+  class="d-flex flex-column gap-2 bg-body rounded-3 px-3 py-3"
+  *ngIf="blogs$ | async as blogs"
+>
+  <h5 class="fw-bold">
+    More from <span class="text-primary">{{ blogs[0].user.name }}</span>
+  </h5>
+  <a
+    class="bd-link text-body d-block link-underline link-underline-opacity-0"
+    [routerLink]="'/blog/' + blog._id"
+    *ngFor="let blog of blogs"
+  >
+    {{ blog.title }}
+  </a>
+</div>

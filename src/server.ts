@@ -18,6 +18,7 @@ import {
   BlogResponse,
   BlogsResponse,
   CommentResponse,
+  LatestBlogsResponse,
 } from './app/response.models';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
@@ -197,6 +198,50 @@ app.get('/api/user', verifyTokenMiddleware, async (req, res) => {
   user.token = req.user.token;
 
   return res.json(user);
+});
+
+app.get('/api/users/:userId/blogs', async (req, res) => {
+  const userId = new ObjectId(req.params['userId']);
+  const limit = parseInt(req.query['limit'] as string) || 3;
+  const openedBlogId = req.query['openedBlogId'] as string;
+
+  const blogs: LatestBlogsResponse[] = await db
+    .collection('blogs')
+    .aggregate<LatestBlogsResponse>([
+      {
+        $match: {
+          userId,
+          ...(openedBlogId
+            ? {
+                _id: { $ne: new ObjectId(openedBlogId) },
+              }
+            : {}),
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      {
+        $project: {
+          user: {
+            name: 1,
+          },
+          title: 1,
+          _id: 1,
+        },
+      },
+    ])
+    .toArray();
+
+  res.status(200).json(blogs);
 });
 
 app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {

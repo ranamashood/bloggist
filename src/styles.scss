@@ -11,4 +11,9 @@ $focus-ring-width: 2px;
   border-color: transparent !important;
 }
 
+.bd-link:hover {
+  color: $primary !important;
+  transition: color 200ms;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

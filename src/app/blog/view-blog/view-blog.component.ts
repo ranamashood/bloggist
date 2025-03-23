@@ -27,6 +27,7 @@ import { UserService } from '../../user.service';
 import { NgIcon } from '@ng-icons/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsService } from '../../comments.service';
+import { LatestBlogsComponent } from '../latest-blogs/latest-blogs.component';
 
 @Component({
   selector: 'app-view-blog',
@@ -39,6 +40,7 @@ import { CommentsService } from '../../comments.service';
     NgIcon,
     NgbDropdownModule,
     NgStyle,
+    LatestBlogsComponent,
   ],
   templateUrl: './view-blog.component.html',
 })
@@ -57,14 +59,13 @@ export class ViewBlogComponent {
     private readonly userService: UserService,
     private readonly router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-  ) {
-    this.route.paramMap.subscribe((params) => {
-      this.blogId = params.get('id')!;
-    });
-  }
+  ) {}
 
   ngOnInit() {
-    this.blog$ = this.blogService.getById(this.blogId);
+    this.route.paramMap.subscribe((params) => {
+      this.blogId = params.get('id')!;
+      this.blog$ = this.blogService.getById(this.blogId);
+    });
 
     combineLatest([this.currentUser$, this.blog$]).subscribe(
       ([currentUser, blog]) => {

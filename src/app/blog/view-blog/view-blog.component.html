@@ -73,10 +73,17 @@
       <app-add-comment [blogId]="blogId"></app-add-comment>
       <app-view-comments [blogId]="blogId" [blog]="blog"></app-view-comments>
     </div>
-    <app-table-of-content
-      [blogId]="blogId"
-      [html]="blog.desc"
-    ></app-table-of-content>
+    <div class="ms-4" style="min-width: 350px; max-width: 350px">
+      <app-latest-blogs
+        [userId]="blog.user._id"
+        [blogId]="blogId"
+      ></app-latest-blogs>
+      <div class="mb-4"></div>
+      <app-table-of-content
+        [blogId]="blogId"
+        [html]="blog.desc"
+      ></app-table-of-content>
+    </div>
   </div>
 </div>
 
@@ -129,6 +136,8 @@
         </div>
       </div>
     </div>
-    <app-table-of-content [contentLoaded]="false"></app-table-of-content>
+    <div class="ms-4" style="min-width: 350px; max-width: 350px">
+      <app-table-of-content [contentLoaded]="false"></app-table-of-content>
+    </div>
   </div>
 </ng-template>

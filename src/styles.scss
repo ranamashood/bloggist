@@ -16,4 +16,9 @@ $focus-ring-width: 2px;
   transition: color 200ms;
 }
 
+.bd-blog-content img {
+  max-width: 100%;
+  border-radius: 0.7rem;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

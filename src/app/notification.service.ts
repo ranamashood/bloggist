@@ -13,6 +13,10 @@ export class NotificationService {
 
   set(notification: Notification) {
     this.notificationSubject.next(notification);
+
+    if (notification.type !== 'authentication') {
+      setTimeout(() => this.delete(), 5000);
+    }
   }
 
   delete() {

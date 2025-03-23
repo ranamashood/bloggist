@@ -18,10 +18,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       notificationService.set(notification);
 
-      if (notification.type !== 'authentication') {
-        setTimeout(() => notificationService.delete(), 5000);
-      }
-
       return throwError(() => error);
     }),
   );

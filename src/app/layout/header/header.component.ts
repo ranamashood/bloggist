@@ -3,10 +3,16 @@ import { RouterLink } from '@angular/router';
 import { UserService } from '../../user.service';
 import { AsyncPipe } from '@angular/common';
 import { PreviewAvatarComponent } from '../../avatar/preview-avatar/preview-avatar.component';
+import { ToggleThemeComponent } from '../../toggle-theme/toggle-theme.component';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, AsyncPipe, PreviewAvatarComponent],
+  imports: [
+    RouterLink,
+    AsyncPipe,
+    PreviewAvatarComponent,
+    ToggleThemeComponent,
+  ],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

@@ -14,6 +14,8 @@ import {
   bootstrapBookmarkFill,
   bootstrapArrowUp,
   bootstrapShare,
+  bootstrapSun,
+  bootstrapMoon,
 } from '@ng-icons/bootstrap-icons';
 import { NotificationComponent } from './notification/notification.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
@@ -40,6 +42,8 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
       bootstrapBookmarkFill,
       bootstrapArrowUp,
       bootstrapShare,
+      bootstrapSun,
+      bootstrapMoon,
     }),
   ],
 })

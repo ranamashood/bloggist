@@ -4,7 +4,6 @@
   <div class="container">
     <a class="navbar-brand" routerLink="/">Bloggist</a>
     <ul class="navbar-nav">
-      <app-toggle-theme></app-toggle-theme>
       @if (currentUser$ | async; as currentUser) {
         <li class="nav-item">
           <button class="btn btn-outline-primary mx-3" routerLink="/blog/add">
@@ -25,8 +24,18 @@
             }"
           ></app-preview-avatar>
           <ul class="dropdown-menu">
+            <li style="cursor: pointer">
+              <app-toggle-theme
+                class="dropdown-item user-select-none"
+              ></app-toggle-theme>
+            </li>
             <li>
-              <a class="dropdown-item" href="" (click)="onLogout()">Logout</a>
+              <a
+                class="dropdown-item d-flex align-items-center gap-2"
+                href=""
+                (click)="onLogout()"
+                >Logout</a
+              >
             </li>
           </ul>
         </div>

@@ -1,5 +1,6 @@
-<button class="btn" (click)="toggleTheme()">
+<div class="d-flex align-items-center gap-2" (click)="toggleTheme()">
   <ng-icon
-    [name]="theme === 'dark' ? 'bootstrapMoon' : 'bootstrapSun'"
+    [name]="theme === 'light' ? 'bootstrapSun' : 'bootstrapMoon'"
   ></ng-icon>
-</button>
+  {{ theme === "light" ? "Light" : "Dark" }}
+</div>

@@ -4,6 +4,7 @@ import { UserService } from '../../user.service';
 import { AsyncPipe } from '@angular/common';
 import { PreviewAvatarComponent } from '../../avatar/preview-avatar/preview-avatar.component';
 import { ToggleThemeComponent } from '../../toggle-theme/toggle-theme.component';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,7 @@ import { ToggleThemeComponent } from '../../toggle-theme/toggle-theme.component'
     AsyncPipe,
     PreviewAvatarComponent,
     ToggleThemeComponent,
+    NgIcon,
   ],
   templateUrl: './header.component.html',
 })

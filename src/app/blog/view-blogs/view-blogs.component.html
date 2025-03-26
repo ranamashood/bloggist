@@ -1,0 +1,6 @@
+<div class="d-flex flex-column gap-2">
+  <app-preview-blog
+    *ngFor="let blog of blogs$ | async"
+    [blog]="blog"
+  ></app-preview-blog>
+</div>

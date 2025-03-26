@@ -78,6 +78,10 @@ export class UserService {
     return null;
   }
 
+  getAllIds(): Observable<{ _id: string }[]> {
+    return this.http.get<{ _id: string }[]>('/api/users/ids');
+  }
+
   toggleFollow(followingId: string) {
     return this.http.post<{ followed: boolean }>('/api/followers', {
       followingId,

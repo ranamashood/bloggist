@@ -1,4 +1,7 @@
-<div>
+<a
+  class="d-block rounded-3 text-reset text-decoration-none bg-body p-3 focus-ring"
+  [routerLink]="['/blog/', blog._id]"
+>
   <app-view-avatar
     [user]="blog.user"
     [date]="blog.createdAt | date"
@@ -25,4 +28,4 @@
       </div>
     </div>
   </div>
-</div>
+</a>

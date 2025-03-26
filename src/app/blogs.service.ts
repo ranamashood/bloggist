@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, switchMap, take } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, take } from 'rxjs';
 import { Blog } from './blog.model';
 import { HttpClient } from '@angular/common/http';
 import {
@@ -13,6 +13,9 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class BlogsService {
+  private blogsSubject = new BehaviorSubject<BlogsResponse[]>([]);
+  public blogs$ = this.blogsSubject.asObservable();
+
   currentUser$ = inject(UserService).currentUser$;
 
   constructor(private readonly http: HttpClient) {}
@@ -54,6 +57,18 @@ export class BlogsService {
     return this.http.get<LatestBlogsResponse[]>(
       `/api/users/${userId}/blogs${openedBlogId ? `?openedBlogId=${openedBlogId}` : ''}`,
     );
+  }
+
+  getAllBlogs() {
+    this.getAll().subscribe((blogs) => {
+      this.blogsSubject.next(blogs);
+    });
+  }
+
+  getAllByUserId(userId: string) {
+    this.http
+      .get<BlogsResponse[]>(`/api/users/${userId}/blogs`)
+      .subscribe((blogs) => this.blogsSubject.next(blogs));
   }
 
   delete(id: string): Observable<Blog> {

@@ -1,9 +1,1 @@
-<div class="d-flex flex-column gap-2">
-  <a
-    class="d-block rounded-3 text-reset text-decoration-none bg-body p-3 focus-ring"
-    *ngFor="let blog of blogs$ | async"
-    [routerLink]="['/blog/', blog._id]"
-  >
-    <app-preview-blog [blog]="blog"></app-preview-blog>
-  </a>
-</div>
+<app-view-blogs></app-view-blogs>

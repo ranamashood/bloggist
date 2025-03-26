@@ -78,7 +78,7 @@
         </div>
       </div>
       <app-add-comment [blogId]="blogId"></app-add-comment>
-      <app-view-comments [blogId]="blogId" [blog]="blog"></app-view-comments>
+      <app-view-comments [blogId]="blogId"></app-view-comments>
     </div>
     <div class="ms-4" style="min-width: 350px; max-width: 350px">
       <div class="d-flex flex-column gap-2 bg-body rounded-3 px-3 py-3">
@@ -94,10 +94,7 @@
         </div>
       </div>
       <div class="mb-4"></div>
-      <app-latest-blogs
-        [userId]="blog.user._id"
-        [blogId]="blogId"
-      ></app-latest-blogs>
+      <app-latest-blogs [user]="blog.user" [blogId]="blogId"></app-latest-blogs>
       <div class="mb-4"></div>
       <app-table-of-content
         [blogId]="blogId"

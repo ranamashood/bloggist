@@ -33,9 +33,6 @@ export interface BlogsResponse {
 }
 
 export interface LatestBlogsResponse {
-  user: {
-    name: string;
-  };
   title: string;
   _id: string;
 }

@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
-import { BlogResponse, CommentResponse } from '../../response.models';
-import { DatePipe, NgFor, NgIf, NgStyle } from '@angular/common';
+import { CommentResponse } from '../../response.models';
+import { DatePipe, NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommentsService } from '../../comments.service';
 import { UserService } from '../../user.service';
@@ -17,12 +17,13 @@ import { NgIcon } from '@ng-icons/core';
     NgFor,
     NgIcon,
     NgStyle,
+    NgClass,
   ],
   templateUrl: './preview-comment.component.html',
 })
 export class PreviewCommentComponent {
   @Input() comment: CommentResponse = {} as CommentResponse;
-  @Input() blog: BlogResponse = {} as BlogResponse;
+  @Input() blogId: string | null = '';
   @Input() indent = 0;
   reply = '';
   isReplying = false;
@@ -46,7 +47,7 @@ export class PreviewCommentComponent {
     this.commentService
       .create({
         comment: this.reply,
-        blogId: this.blog._id,
+        blogId: this.blogId!,
         replyId: this.comment._id,
       })
       .subscribe({

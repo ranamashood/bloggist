@@ -232,9 +232,16 @@ app.get('/api/users/:userId/blogs', async (req, res) => {
       {
         $project: {
           user: {
+            _id: 1,
             name: 1,
+            avatar: {
+              initials: 1,
+              color: 1,
+              bgColor: 1,
+            },
           },
           title: 1,
+          createdAt: 1,
           _id: 1,
         },
       },
@@ -242,6 +249,57 @@ app.get('/api/users/:userId/blogs', async (req, res) => {
     .toArray();
 
   res.status(200).json(blogs);
+});
+
+app.get('/api/users/:userId/comments', async (req, res) => {
+  const userId = new ObjectId(req.params['userId']);
+
+  const comments: CommentResponse[] = await db
+    .collection('comments')
+    .aggregate<CommentResponse>([
+      {
+        $match: { userId },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      {
+        $project: {
+          user: {
+            _id: 1,
+            name: 1,
+            avatar: {
+              initials: 1,
+              color: 1,
+              bgColor: 1,
+            },
+          },
+          comment: 1,
+          createdAt: 1,
+          _id: 1,
+        },
+      },
+      { $sort: { createdAt: -1 } },
+    ])
+    .toArray();
+
+  res.status(200).json(comments);
+});
+
+app.get('/api/users/ids', async (_req, res) => {
+  const users = await db
+    .collection('users')
+    .find()
+    .project({ _id: 1 })
+    .toArray();
+
+  res.status(200).json(users);
 });
 
 app.post('/api/followers', verifyTokenMiddleware, async (req, res) => {

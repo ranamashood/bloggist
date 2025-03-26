@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LatestBlogsResponse } from '../../response.models';
+import { LatestBlogsResponse, UserResponse } from '../../response.models';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { BlogsService } from '../../blogs.service';
 import { RouterLink } from '@angular/router';
@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './latest-blogs.component.html',
 })
 export class LatestBlogsComponent {
-  @Input() userId = '';
+  @Input() user: UserResponse = {} as UserResponse;
   @Input() blogId = '';
   blogs$: Observable<LatestBlogsResponse[]> = new Observable<
     LatestBlogsResponse[]
@@ -20,6 +20,9 @@ export class LatestBlogsComponent {
   constructor(private readonly blogService: BlogsService) {}
 
   ngOnInit() {
-    this.blogs$ = this.blogService.getLatestUserBlogs(this.userId, this.blogId);
+    this.blogs$ = this.blogService.getLatestUserBlogs(
+      this.user._id,
+      this.blogId,
+    );
   }
 }

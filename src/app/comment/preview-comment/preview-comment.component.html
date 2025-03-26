@@ -1,5 +1,6 @@
 <div
-  class="border rounded-3 p-3 mb-2"
+  class="rounded-3 p-3 mb-2"
+  [ngClass]="{ border: blogId, 'bg-body': !blogId }"
   [style]="'margin-left: ' + indent * 30 + 'px'"
 >
   <div class="d-flex justify-content-between">
@@ -9,7 +10,7 @@
     ></app-view-avatar>
     <div
       class="d-flex bg-danger-subtle rounded-3"
-      *ngIf="isAuthor && !comment.isDeleted"
+      *ngIf="blogId && isAuthor && !comment.isDeleted"
     >
       <button class="btn btn-sm" (click)="onDeleteComment()">Delete</button>
     </div>
@@ -22,7 +23,7 @@
         {{ comment.comment }}
       </div>
     }
-    <div class="d-flex" *ngIf="!isReplying">
+    <div class="d-flex" *ngIf="blogId && !isReplying">
       <button class="btn d-flex gap-2" (click)="onToggleLike()">
         <div class="position-relative d-flex align-items-center">
           <ng-icon class="text-body" name="bootstrapHeart"></ng-icon>
@@ -76,5 +77,5 @@
   *ngFor="let reply of comment.replies"
   [indent]="indent + 1"
   [comment]="reply"
-  [blog]="blog"
+  [blogId]="blogId"
 ></app-preview-comment>

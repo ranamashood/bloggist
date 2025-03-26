@@ -62,7 +62,13 @@ export class CommentsService {
     return this.commentsSubject.next(addReply(comments));
   }
 
-  getComments(blogId: string) {
+  getAllByUserId(userId: string) {
+    this.http
+      .get<CommentResponse[]>(`/api/users/${userId}/comments`)
+      .subscribe((comments) => this.commentsSubject.next(comments));
+  }
+
+  getCommentsByBlogId(blogId: string) {
     this.getAllByBlogId(blogId).subscribe((comments) => {
       return this.commentsSubject.next(comments);
     });

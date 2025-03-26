@@ -4,8 +4,17 @@
 >
   <app-preview-avatar [user]="user"></app-preview-avatar>
   <div>
-    <div class="fw-bold">
-      {{ user.name }}
+    <div
+      class="position-relative fw-bold cursor"
+      (mouseover)="showUserPopup = true"
+      (mouseleave)="showUserPopup = false"
+    >
+      <div class="bd-link">{{ user.name }}</div>
+      <app-preview-user
+        class="bd-preview-user position-absolute bottom-0 rounded-3 border shadow-sm z-3"
+        [user]="user"
+        *ngIf="showUserPopup"
+      ></app-preview-user>
     </div>
     <div class="small">
       {{ date }}

@@ -11,6 +11,13 @@ $focus-ring-width: 2px;
   border-color: transparent !important;
 }
 
+.bd-link {
+  color: var(--bs-body-color);
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .bd-link:hover {
   color: $primary !important;
   transition: color 200ms;

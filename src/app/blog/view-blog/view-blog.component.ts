@@ -29,7 +29,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentsService } from '../../comments.service';
 import { LatestBlogsComponent } from '../latest-blogs/latest-blogs.component';
 import { NotificationService } from '../../notification.service';
-import { FollowButtonUserComponent } from '../../user/follow-button-user/follow-button-user.component';
+import { PreviewUserComponent } from '../../user/preview-user/preview-user.component';
 
 @Component({
   selector: 'app-view-blog',
@@ -43,7 +43,7 @@ import { FollowButtonUserComponent } from '../../user/follow-button-user/follow-
     NgbDropdownModule,
     NgStyle,
     LatestBlogsComponent,
-    FollowButtonUserComponent,
+    PreviewUserComponent,
   ],
   templateUrl: './view-blog.component.html',
 })

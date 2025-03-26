@@ -1,0 +1,13 @@
+<div class="d-flex flex-column gap-2 fw-normal bg-body rounded-3 px-3 py-3">
+  <div class="d-flex align-items-center gap-2">
+    <app-preview-avatar [user]="user"></app-preview-avatar>
+    <a class="bd-link" [routerLink]="'/user/' + user._id">{{ user.name }}</a>
+  </div>
+  <app-follow-button-user [followingId]="user._id"></app-follow-button-user>
+  <div>
+    <b>Joined</b>
+    <div>
+      {{ user.createdAt | date }}
+    </div>
+  </div>
+</div>

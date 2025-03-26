@@ -637,6 +637,7 @@ app.get('/api/comments/:blogId', async (req, res) => {
               color: 1,
               bgColor: 1,
             },
+            createdAt: 1,
             _id: 1,
           },
           blogId: 1,

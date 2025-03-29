@@ -296,6 +296,10 @@ app.get('/api/users/:userId/comments', async (req, res) => {
               color: 1,
               bgColor: 1,
             },
+            settings: {
+              headline: 1,
+              banner: 1,
+            },
             createdAt: 1,
           },
           comment: 1,

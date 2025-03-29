@@ -9,6 +9,7 @@ import {
   NgbNavLinkButton,
   NgbNavOutlet,
 } from '@ng-bootstrap/ng-bootstrap';
+import { SortButtonComponent } from '../../sort-button/sort-button.component';
 
 @Component({
   selector: 'app-view-user',
@@ -20,6 +21,7 @@ import {
     NgbNavItem,
     NgbNavLinkButton,
     NgbNavContent,
+    SortButtonComponent,
   ],
   templateUrl: './view-user.component.html',
 })

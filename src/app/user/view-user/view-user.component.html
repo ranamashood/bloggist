@@ -2,12 +2,14 @@
   <li ngbNavItem>
     <button ngbNavLink>Blogs</button>
     <ng-template ngbNavContent>
+      <app-sort-button item="blog"></app-sort-button>
       <app-view-blogs [userId]="userId"></app-view-blogs>
     </ng-template>
   </li>
   <li ngbNavItem>
     <button ngbNavLink>Comments</button>
     <ng-template ngbNavContent>
+      <app-sort-button item="comment"></app-sort-button>
       <app-view-comments [userId]="userId"></app-view-comments>
     </ng-template>
   </li>

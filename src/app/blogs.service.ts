@@ -84,4 +84,23 @@ export class BlogsService {
       id,
     });
   }
+
+  sort(type: string) {
+    let sortedBlogs: BlogsResponse[] = [];
+
+    this.blogs$.subscribe(
+      (blogs) =>
+        (sortedBlogs = blogs.sort((a, b) => {
+          if (type === 'top') {
+            return b.totalLikes - a.totalLikes;
+          } else if (type === 'new') {
+            return b.createdAt.localeCompare(a.createdAt);
+          } else {
+            return a.createdAt.localeCompare(b.createdAt);
+          }
+        })),
+    );
+
+    return this.blogsSubject.next(sortedBlogs);
+  }
 }

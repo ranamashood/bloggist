@@ -1,0 +1,10 @@
+<div ngbDropdown class="d-inline-block">
+  <button class="btn text-capitalize" id="dropdownBasic1" ngbDropdownToggle>
+    {{ type }}
+  </button>
+  <div ngbDropdownMenu>
+    <button ngbDropdownItem (click)="sort('top')">Top</button>
+    <button ngbDropdownItem (click)="sort('new')">New</button>
+    <button ngbDropdownItem (click)="sort('old')">Old</button>
+  </div>
+</div>

@@ -95,7 +95,7 @@ export class CommentsService {
     return this.http.post<{ liked: boolean }>('/api/comments/likes', { id });
   }
 
-  sort(type: 'top' | 'latest' | 'oldest') {
+  sort(type: string) {
     let sortedComments: CommentResponse[] = [];
 
     this.comments$.subscribe(
@@ -103,7 +103,7 @@ export class CommentsService {
         (sortedComments = comments.sort((a, b) => {
           if (type === 'top') {
             return b.totalLikes - a.totalLikes;
-          } else if (type === 'latest') {
+          } else if (type === 'new') {
             return b.createdAt.localeCompare(a.createdAt);
           } else {
             return a.createdAt.localeCompare(b.createdAt);

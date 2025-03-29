@@ -25,11 +25,10 @@ import { TableOfContentComponent } from '../../table-of-content/table-of-content
 import { ViewAvatarComponent } from '../../avatar/view-avatar/view-avatar.component';
 import { UserService } from '../../user.service';
 import { NgIcon } from '@ng-icons/core';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommentsService } from '../../comments.service';
 import { LatestBlogsComponent } from '../latest-blogs/latest-blogs.component';
 import { NotificationService } from '../../notification.service';
 import { PreviewUserComponent } from '../../user/preview-user/preview-user.component';
+import { SortButtonComponent } from '../../sort-button/sort-button.component';
 
 @Component({
   selector: 'app-view-blog',
@@ -40,10 +39,10 @@ import { PreviewUserComponent } from '../../user/preview-user/preview-user.compo
     TableOfContentComponent,
     ViewAvatarComponent,
     NgIcon,
-    NgbDropdownModule,
     NgStyle,
     LatestBlogsComponent,
     PreviewUserComponent,
+    SortButtonComponent,
   ],
   templateUrl: './view-blog.component.html',
 })
@@ -57,7 +56,6 @@ export class ViewBlogComponent {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly blogService: BlogsService,
-    private readonly commentService: CommentsService,
     private readonly renderer: Renderer2,
     private readonly userService: UserService,
     private readonly router: Router,
@@ -120,10 +118,6 @@ export class ViewBlogComponent {
 
   scroll(element: HTMLElement) {
     element.scrollIntoView();
-  }
-
-  sortComments(sortType: 'top' | 'latest' | 'oldest') {
-    this.commentService.sort(sortType);
   }
 
   onToggleBookmark() {

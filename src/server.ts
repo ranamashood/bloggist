@@ -609,6 +609,11 @@ app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {
               color: 1,
               bgColor: 1,
             },
+            settings: {
+              headline: 1,
+              banner: 1,
+            },
+            createdAt: 1,
             _id: 1,
           },
           blogId: 1,
@@ -663,6 +668,10 @@ app.get('/api/comments/:blogId', async (req, res) => {
               initials: 1,
               color: 1,
               bgColor: 1,
+            },
+            settings: {
+              headline: 1,
+              banner: 1,
             },
             createdAt: 1,
             _id: 1,

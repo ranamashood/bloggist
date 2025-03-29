@@ -5,6 +5,10 @@ export interface UserResponse {
     color: string;
     bgColor: string;
   };
+  settings: {
+    headline: string;
+    banner: string;
+  };
   createdAt?: string;
   _id: string;
 }

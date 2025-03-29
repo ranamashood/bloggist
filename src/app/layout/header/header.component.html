@@ -20,6 +20,10 @@
                 color: currentUser.avatar.color,
                 bgColor: currentUser.avatar.bgColor,
               },
+              settings: {
+                headline: currentUser.settings.headline,
+                banner: currentUser.settings.banner,
+              },
               _id: currentUser._id!,
             }"
           ></app-preview-avatar>
@@ -28,6 +32,15 @@
               <app-toggle-theme
                 class="dropdown-item user-select-none"
               ></app-toggle-theme>
+            </li>
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center gap-2"
+                [routerLink]="'/user/' + currentUser._id + '/settings'"
+              >
+                <ng-icon name="bootstrapGear"></ng-icon>
+                Settings
+              </a>
             </li>
             <li>
               <a

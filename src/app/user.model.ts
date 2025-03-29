@@ -7,6 +7,10 @@ export interface User {
     color: string;
     bgColor: string;
   };
+  settings: {
+    headline: string;
+    banner: string;
+  };
   token?: string;
   createdAt: Date;
   _id?: string;

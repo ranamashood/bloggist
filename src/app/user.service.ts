@@ -82,6 +82,10 @@ export class UserService {
     return this.http.get<{ _id: string }[]>('/api/users/ids');
   }
 
+  update(userData: Partial<User>) {
+    return this.http.patch('/api/users', userData);
+  }
+
   toggleFollow(followingId: string) {
     return this.http.post<{ followed: boolean }>('/api/followers', {
       followingId,

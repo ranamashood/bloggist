@@ -144,6 +144,10 @@ app.post('/api/user/register', async (req, res) => {
       color: randomColor.color,
       bgColor: randomColor.bgColor,
     },
+    settings: {
+      headline: '',
+      banner: '',
+    },
     createdAt: new Date(),
   };
 
@@ -200,6 +204,14 @@ app.get('/api/user', verifyTokenMiddleware, async (req, res) => {
   return res.json(user);
 });
 
+app.patch('/api/users', verifyTokenMiddleware, async (req, res) => {
+  const id = new ObjectId(req.user?.id);
+
+  await db.collection('users').updateOne({ _id: id }, { $set: req.body });
+
+  res.status(200).json({ message: 'User updated' });
+});
+
 app.get('/api/users/:userId/blogs', async (req, res) => {
   const userId = new ObjectId(req.params['userId']);
   const limit = parseInt(req.query['limit'] as string) || 3;
@@ -238,6 +250,10 @@ app.get('/api/users/:userId/blogs', async (req, res) => {
               initials: 1,
               color: 1,
               bgColor: 1,
+            },
+            settings: {
+              headline: 1,
+              banner: 1,
             },
             createdAt: 1,
           },
@@ -394,6 +410,10 @@ app.get('/api/blogs', async (req, res) => {
               color: 1,
               bgColor: 1,
             },
+            settings: {
+              headline: 1,
+              banner: 1,
+            },
             createdAt: 1,
           },
           title: 1,
@@ -464,6 +484,10 @@ app.get('/api/blogs/:id', async (req, res) => {
               initials: 1,
               color: 1,
               bgColor: 1,
+            },
+            settings: {
+              headline: 1,
+              banner: 1,
             },
             createdAt: 1,
           },

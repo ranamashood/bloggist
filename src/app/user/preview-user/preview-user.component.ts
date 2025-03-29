@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
     RouterLink,
   ],
   templateUrl: './preview-user.component.html',
+  styleUrl: './preview-user.component.css',
 })
 export class PreviewUserComponent {
   @Input() user: UserResponse = {} as UserResponse;

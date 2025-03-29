@@ -686,6 +686,7 @@ app.get('/api/comments/:blogId', async (req, res) => {
           _id: 1,
         },
       },
+      { $sort: { createdAt: -1 } },
     ])
     .toArray();
 

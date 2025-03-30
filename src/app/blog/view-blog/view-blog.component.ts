@@ -29,6 +29,7 @@ import { LatestBlogsComponent } from '../latest-blogs/latest-blogs.component';
 import { NotificationService } from '../../notification.service';
 import { PreviewUserComponent } from '../../user/preview-user/preview-user.component';
 import { SortButtonComponent } from '../../sort-button/sort-button.component';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-blog',
@@ -43,6 +44,7 @@ import { SortButtonComponent } from '../../sort-button/sort-button.component';
     LatestBlogsComponent,
     PreviewUserComponent,
     SortButtonComponent,
+    NgbTooltip,
   ],
   templateUrl: './view-blog.component.html',
 })

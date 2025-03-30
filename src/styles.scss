@@ -2,11 +2,6 @@ $primary: #6d4aff;
 $focus-ring-color: $primary;
 $focus-ring-width: 2px;
 
-.btn:focus,
-.btn:active {
-  border-color: transparent !important;
-}
-
 .bd-link {
   color: var(--bs-body-color);
   font-weight: bold;

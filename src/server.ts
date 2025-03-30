@@ -212,6 +212,14 @@ app.patch('/api/users', verifyTokenMiddleware, async (req, res) => {
   res.status(200).json({ message: 'User updated' });
 });
 
+app.get('/api/users/:id', async (req, res) => {
+  const id = new ObjectId(req.params['id']);
+
+  const user = await db.collection<User>('users').findOne({ _id: id });
+
+  res.status(200).json(user);
+});
+
 app.get('/api/users/:userId/blogs', async (req, res) => {
   const userId = new ObjectId(req.params['userId']);
   const limit = parseInt(req.query['limit'] as string) || 3;

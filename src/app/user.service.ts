@@ -11,6 +11,7 @@ import {
 import { User } from './user.model';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserResponse } from './response.models';
 
 @Injectable({
   providedIn: 'root',
@@ -80,6 +81,10 @@ export class UserService {
 
   getAllIds(): Observable<{ _id: string }[]> {
     return this.http.get<{ _id: string }[]>('/api/users/ids');
+  }
+
+  getById(id: string) {
+    return this.http.get<UserResponse>(`/api/users/${id}`);
   }
 
   update(userData: Partial<User>) {

@@ -1,0 +1,4 @@
+.bd-link:hover {
+  background-color: var(--bs-primary) !important;
+  color: white !important;
+}

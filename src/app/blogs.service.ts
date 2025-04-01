@@ -71,6 +71,10 @@ export class BlogsService {
       .subscribe((blogs) => this.blogsSubject.next(blogs));
   }
 
+  getByTitle(title: string) {
+    return this.http.get<BlogsResponse[]>(`/api/blogs?title=${title}&limit=5`);
+  }
+
   delete(id: string): Observable<Blog> {
     return this.http.delete<Blog>(`/api/blogs/${id}`);
   }

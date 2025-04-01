@@ -5,6 +5,7 @@ import { AsyncPipe } from '@angular/common';
 import { PreviewAvatarComponent } from '../../avatar/preview-avatar/preview-avatar.component';
 import { ToggleThemeComponent } from '../../toggle-theme/toggle-theme.component';
 import { NgIcon } from '@ng-icons/core';
+import { SearchBarComponent } from '../../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { NgIcon } from '@ng-icons/core';
     PreviewAvatarComponent,
     ToggleThemeComponent,
     NgIcon,
+    SearchBarComponent,
   ],
   templateUrl: './header.component.html',
 })

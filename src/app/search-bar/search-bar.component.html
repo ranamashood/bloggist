@@ -1,0 +1,25 @@
+<div class="position-relative">
+  <input
+    type="text"
+    class="form-control w-100"
+    placeholder="Search..."
+    [formControl]="searchControl"
+    (focus)="isInputFocused = true"
+    (blur)="isInputFocused = false"
+  />
+  <div
+    class="position-absolute w-100 rounded-3 border overflow-hidden"
+    *ngIf="isInputFocused || isLinkHovered"
+  >
+    <a
+      class="bd-link d-block bg-body p-3"
+      [routerLink]="['/blog/', blog._id]"
+      (mouseover)="isLinkHovered = true"
+      (mouseleave)="isLinkHovered = false"
+      (click)="isLinkHovered = false"
+      *ngFor="let blog of blogs$ | async"
+    >
+      {{ blog.title }}
+    </a>
+  </div>
+</div>

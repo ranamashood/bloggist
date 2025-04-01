@@ -2,7 +2,10 @@
   class="position-sticky top-0 navbar navbar-expand-lg bg-body shadow-sm z-3"
 >
   <div class="container">
-    <a class="navbar-brand" routerLink="/">Bloggist</a>
+    <div class="d-flex w-50">
+      <a class="navbar-brand" routerLink="/">Bloggist</a>
+      <app-search-bar class="flex-grow-1"></app-search-bar>
+    </div>
     <ul class="navbar-nav">
       @if (currentUser$ | async; as currentUser) {
         <li class="nav-item">

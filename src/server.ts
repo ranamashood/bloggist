@@ -390,10 +390,15 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
 
 app.get('/api/blogs', async (req, res) => {
   const userId = new ObjectId(req.query['userId'] as string);
+  const title = (req.query['title'] as string) || '';
+  const limit = parseInt(req.query['limit'] as string) || 0;
 
   const blogs: BlogsResponse[] = await db
     .collection('blogs')
     .aggregate<BlogsResponse>([
+      ...(title
+        ? [{ $match: { title: { $regex: new RegExp(title, 'i') } } }]
+        : []),
       {
         $lookup: {
           from: 'users',
@@ -436,6 +441,7 @@ app.get('/api/blogs', async (req, res) => {
         },
       },
       { $sort: { createdAt: -1 } },
+      ...(limit > 0 ? [{ $limit: limit }] : []),
     ])
     .toArray();
 

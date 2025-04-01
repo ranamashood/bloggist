@@ -24,4 +24,9 @@ $focus-ring-width: 2px;
   border-radius: 0.7rem;
 }
 
+.dropdown-menu {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

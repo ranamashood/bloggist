@@ -212,6 +212,16 @@ app.patch('/api/users', verifyTokenMiddleware, async (req, res) => {
   res.status(200).json({ message: 'User updated' });
 });
 
+app.get('/api/users/ids', async (_req, res) => {
+  const users = await db
+    .collection('users')
+    .find()
+    .project({ _id: 1 })
+    .toArray();
+
+  res.status(200).json(users);
+});
+
 app.get('/api/users/:id', async (req, res) => {
   const id = new ObjectId(req.params['id']);
 
@@ -321,16 +331,6 @@ app.get('/api/users/:userId/comments', async (req, res) => {
     .toArray();
 
   res.status(200).json(comments);
-});
-
-app.get('/api/users/ids', async (_req, res) => {
-  const users = await db
-    .collection('users')
-    .find()
-    .project({ _id: 1 })
-    .toArray();
-
-  res.status(200).json(users);
 });
 
 app.post('/api/followers', verifyTokenMiddleware, async (req, res) => {

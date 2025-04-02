@@ -2,6 +2,12 @@ $primary: #6d4aff;
 $focus-ring-color: $primary;
 $focus-ring-width: 2px;
 
+$body-bg: #f6f6f6;
+$body-secondary-bg: white;
+
+$body-bg-dark: black;
+$body-secondary-bg-dark: #171717;
+
 .bd-btn:focus,
 .bd-btn:active {
   border-color: transparent !important;

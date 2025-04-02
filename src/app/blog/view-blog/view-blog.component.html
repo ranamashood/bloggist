@@ -53,7 +53,7 @@
         </button>
       </div>
     </div>
-    <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
+    <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body-secondary">
       <div class="pb-5">
         <div>
           <div class="d-flex justify-content-between">
@@ -67,10 +67,12 @@
               </button>
             </div>
           </div>
-          <h1 class="py-3 fw-bold text-capitalize">{{ blog.title }}</h1>
+          <h1 class="py-3 fw-bold text-body-emphasis text-capitalize">
+            {{ blog.title }}
+          </h1>
           <div
             #blogContent
-            class="bd-blog-content"
+            class="text-body-emphasis"
             [innerHTML]="blog.desc"
           ></div>
         </div>
@@ -115,7 +117,7 @@
         ></div>
       </div>
     </div>
-    <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body">
+    <div class="flex-grow-1 rounded-3 px-5 py-4 bg-body-secondary">
       <div class="pb-5">
         <div>
           <div class="d-flex justify-content-between align-items-center">

@@ -1,5 +1,5 @@
 <a
-  class="d-block rounded-3 text-reset text-decoration-none bg-body p-3 focus-ring"
+  class="d-block rounded-3 text-reset text-decoration-none bg-body-secondary p-3 focus-ring"
   [routerLink]="['/blog/', blog._id]"
 >
   <app-view-avatar
@@ -7,7 +7,7 @@
     [date]="blog.createdAt | date"
   ></app-view-avatar>
   <div class="mt-2 ms-5">
-    <h4 class="fw-bold text-capitalize">{{ blog.title }}</h4>
+    <h4 class="fw-bold text-body-emphasis text-capitalize">{{ blog.title }}</h4>
     <div class="d-flex gap-3">
       <div class="d-flex align-items-center gap-2">
         <ng-icon

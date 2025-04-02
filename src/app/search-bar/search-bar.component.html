@@ -13,7 +13,7 @@
       *ngIf="(isInputFocused || isLinkHovered) && blogs.length"
     >
       <a
-        class="bd-link d-block bg-body p-3"
+        class="bd-link d-block bg-body-secondary p-3"
         [routerLink]="['/blog/', blog._id]"
         (mouseover)="isLinkHovered = true"
         (mouseleave)="isLinkHovered = false"

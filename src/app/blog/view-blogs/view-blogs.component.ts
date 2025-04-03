@@ -11,6 +11,7 @@ import { AsyncPipe, NgFor } from '@angular/common';
 export class ViewBlogsComponent {
   @Input() userId: string | null = '';
   @Input() isBookmarked: string = 'false';
+  @Input() isFollowing: string = 'false';
 
   constructor(private readonly blogService: BlogsService) {}
 
@@ -20,7 +21,10 @@ export class ViewBlogsComponent {
     if (this.userId) {
       this.blogService.getAllByUserId(this.userId);
     } else {
-      this.blogService.getAllBlogs({ isBookmarked: this.isBookmarked });
+      this.blogService.getAllBlogs({
+        isBookmarked: this.isBookmarked,
+        isFollowing: this.isFollowing,
+      });
     }
   }
 }

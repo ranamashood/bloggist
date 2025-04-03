@@ -392,6 +392,7 @@ app.get('/api/blogs', async (req, res) => {
   const userId = new ObjectId(req.query['userId'] as string);
   const title = (req.query['title'] as string) || '';
   const isBookmarked = req.query['isBookmarked'] === 'true';
+  const isFollowing = req.query['isFollowing'] === 'true';
   const limit = parseInt(req.query['limit'] as string) || 0;
 
   const blogs: BlogsResponse[] = await db
@@ -437,6 +438,30 @@ app.get('/api/blogs', async (req, res) => {
               },
             },
             { $unwind: '$isBookmarked' },
+          ]
+        : []),
+      ...(isFollowing
+        ? [
+            {
+              $lookup: {
+                from: 'followers',
+                let: { authorId: '$user._id' },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $and: [
+                          { $eq: ['$followerId', userId] },
+                          { $eq: ['$followingId', '$$authorId'] },
+                        ],
+                      },
+                    },
+                  },
+                ],
+                as: 'isFollowing',
+              },
+            },
+            { $match: { isFollowing: { $ne: [] } } },
           ]
         : []),
       {

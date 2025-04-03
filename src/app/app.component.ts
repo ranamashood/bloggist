@@ -20,6 +20,7 @@ import {
   bootstrapGear,
   bootstrapHouseDoor,
   bootstrapPersonAdd,
+  bootstrapFileText,
 } from '@ng-icons/bootstrap-icons';
 import { NotificationComponent } from './notification/notification.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
@@ -52,6 +53,7 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
       bootstrapGear,
       bootstrapHouseDoor,
       bootstrapPersonAdd,
+      bootstrapFileText,
     }),
   ],
 })

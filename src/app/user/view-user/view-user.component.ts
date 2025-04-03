@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { UserResponse } from '../../response.models';
 import { UserService } from '../../user.service';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-view-user',
@@ -30,6 +31,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
     PreviewUserComponent,
     NgIf,
     AsyncPipe,
+    NgIcon,
   ],
   templateUrl: './view-user.component.html',
 })

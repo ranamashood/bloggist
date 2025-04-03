@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap, take } from 'rxjs';
 import { Blog } from './blog.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   BlogResponse,
   BlogsResponse,
@@ -35,14 +35,21 @@ export class BlogsService {
     );
   }
 
-  getAll(): Observable<BlogsResponse[]> {
+  getAll(params: Record<string, string>): Observable<BlogsResponse[]> {
     return this.currentUser$.pipe(
       take(1),
-      switchMap((user) =>
-        this.http.get<BlogsResponse[]>(
-          `/api/blogs${user?._id ? `?userId=${user?._id}` : ''}`,
-        ),
-      ),
+      switchMap((user) => {
+        const httpParams = new HttpParams({
+          fromObject: {
+            ...params,
+            ...(user?._id ? { userId: user?._id } : {}),
+          },
+        });
+
+        return this.http.get<BlogsResponse[]>('/api/blogs', {
+          params: httpParams,
+        });
+      }),
     );
   }
 
@@ -59,8 +66,8 @@ export class BlogsService {
     );
   }
 
-  getAllBlogs() {
-    this.getAll().subscribe((blogs) => {
+  getAllBlogs(params: Record<string, string> = {}) {
+    this.getAll(params).subscribe((blogs) => {
       this.blogsSubject.next(blogs);
     });
   }

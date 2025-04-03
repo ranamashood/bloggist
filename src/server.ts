@@ -391,6 +391,7 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
 app.get('/api/blogs', async (req, res) => {
   const userId = new ObjectId(req.query['userId'] as string);
   const title = (req.query['title'] as string) || '';
+  const isBookmarked = req.query['isBookmarked'] === 'true';
   const limit = parseInt(req.query['limit'] as string) || 0;
 
   const blogs: BlogsResponse[] = await db
@@ -417,6 +418,27 @@ app.get('/api/blogs', async (req, res) => {
           pipeline: [{ $match: { userId } }],
         },
       },
+      ...(isBookmarked
+        ? [
+            {
+              $lookup: {
+                from: 'bookmarks',
+                let: { blogId: '$_id' },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: { $eq: ['$blogId', '$$blogId'] },
+                      ...(isBookmarked ? { userId } : {}),
+                    },
+                  },
+                  { $project: { createdAt: 1 } },
+                ],
+                as: 'isBookmarked',
+              },
+            },
+            { $unwind: '$isBookmarked' },
+          ]
+        : []),
       {
         $project: {
           user: {
@@ -437,7 +459,7 @@ app.get('/api/blogs', async (req, res) => {
           totalLikes: 1,
           totalComments: 1,
           isLiked: { $toBool: { $size: '$isLiked' } },
-          createdAt: 1,
+          createdAt: { $ifNull: ['$isBookmarked.createdAt', '$createdAt'] },
         },
       },
       { $sort: { createdAt: -1 } },
@@ -575,7 +597,9 @@ app.post('/api/blogs/bookmarks', verifyTokenMiddleware, async (req, res) => {
       .updateOne({ _id: blogId }, { $inc: { totalBookmarks: -1 } });
     return res.json({ bookmarked: false });
   } else {
-    await db.collection('bookmarks').insertOne({ userId, blogId });
+    await db
+      .collection('bookmarks')
+      .insertOne({ userId, blogId, createdAt: new Date() });
     await db
       .collection('blogs')
       .updateOne({ _id: blogId }, { $inc: { totalBookmarks: 1 } });

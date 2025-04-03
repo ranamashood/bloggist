@@ -1,1 +1,30 @@
-<app-view-blogs></app-view-blogs>
+<div class="d-flex gap-4">
+  <div>
+    <div
+      ngbNav
+      #nav="ngbNav"
+      class="bd-sidebar nav-pills"
+      orientation="vertical"
+    >
+      <ng-container ngbNavItem>
+        <button ngbNavLink>
+          <ng-icon name="bootstrapHouseDoor"></ng-icon>
+          Home
+        </button>
+        <ng-template ngbNavContent>
+          <app-view-blogs></app-view-blogs>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem>
+        <button ngbNavLink>
+          <ng-icon name="bootstrapBookmark"></ng-icon>
+          Bookmarks
+        </button>
+        <ng-template ngbNavContent>
+          <app-view-blogs isBookmarked="true"></app-view-blogs>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+  <div class="flex-grow-1" [ngbNavOutlet]="nav"></div>
+</div>

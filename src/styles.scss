@@ -35,4 +35,25 @@ $body-secondary-bg-dark: #171717;
   overflow: hidden;
 }
 
+div:has(> .bd-sidebar) {
+  width: 15%;
+}
+
+.bd-sidebar {
+  position: sticky;
+  top: 5rem;
+}
+
+.nav-link {
+  display: flex !important;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--bs-body-color) !important;
+}
+
+.nav-link.active {
+  background-color: var(--bs-secondary-bg) !important;
+  box-shadow: var(--bs-box-shadow-sm);
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

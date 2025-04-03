@@ -3,7 +3,10 @@
   *ngIf="blogs$ | async as blogs"
 >
   <h5 class="fw-bold">
-    More from <span class="text-primary">{{ user.name }}</span>
+    More from
+    <a class="bd-link text-primary" [routerLink]="['/user/', user._id]">{{
+      user.name
+    }}</a>
   </h5>
   <a
     class="bd-link d-block"

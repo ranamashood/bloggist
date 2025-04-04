@@ -599,7 +599,9 @@ app.post('/api/blogs/likes', verifyTokenMiddleware, async (req, res) => {
       .updateOne({ _id: blogId }, { $inc: { totalLikes: -1 } });
     return res.json({ liked: false });
   } else {
-    await db.collection('likes').insertOne({ userId, blogId });
+    await db
+      .collection('likes')
+      .insertOne({ userId, blogId, createdAt: new Date() });
     await db
       .collection('blogs')
       .updateOne({ _id: blogId }, { $inc: { totalLikes: 1 } });

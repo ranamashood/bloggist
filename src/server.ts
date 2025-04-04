@@ -509,6 +509,10 @@ app.get('/api/blogs/:id', async (req, res) => {
   const { id } = req.params;
   const userId = new ObjectId(req.query['userId'] as string);
 
+  await db
+    .collection('blogs')
+    .updateOne({ _id: new ObjectId(id) }, { $inc: { reads: 1 } });
+
   const blog = await db
     .collection('blogs')
     .aggregate<BlogResponse>([

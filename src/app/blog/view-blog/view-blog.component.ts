@@ -14,6 +14,7 @@ import {
   map,
   Observable,
   of,
+  shareReplay,
   withLatestFrom,
 } from 'rxjs';
 import { BlogsService } from '../../blogs.service';
@@ -66,10 +67,12 @@ export class ViewBlogComponent {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      this.blogId = params.get('id')!;
-      this.blog$ = this.blogService.getById(this.blogId);
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.paramMap.subscribe((params) => {
+        this.blogId = params.get('id')!;
+        this.blog$ = this.blogService.getById(this.blogId).pipe(shareReplay(1));
+      });
+    }
 
     combineLatest([this.currentUser$, this.blog$]).subscribe(
       ([currentUser, blog]) => {

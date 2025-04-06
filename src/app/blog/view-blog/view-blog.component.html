@@ -60,6 +60,7 @@
             <app-view-avatar
               [user]="blog.user"
               [date]="blog.createdAt | date"
+              [blogReadingTime]="blog.readTime"
             ></app-view-avatar>
             <div class="d-flex bg-danger-subtle rounded-3" *ngIf="isAuthor">
               <button class="btn btn-sm" (click)="onDeleteBlog()">

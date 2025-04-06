@@ -373,9 +373,17 @@ app.get(
 app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
   const { title, desc } = req.body;
 
+  const getBlogReadingTime = () => {
+    const wpm = 225;
+    const words = desc.trim().split(/\s+/).length;
+
+    return Math.ceil(words / wpm);
+  };
+
   const newBlog = {
     title,
     desc,
+    readTime: getBlogReadingTime(),
     totalLikes: 0,
     totalBookmarks: 0,
     totalComments: 0,
@@ -481,6 +489,7 @@ app.get('/api/blogs', async (req, res) => {
             createdAt: 1,
           },
           title: 1,
+          readTime: 1,
           totalLikes: 1,
           totalComments: 1,
           isLiked: { $toBool: { $size: '$isLiked' } },
@@ -562,6 +571,7 @@ app.get('/api/blogs/:id', async (req, res) => {
           },
           title: 1,
           desc: 1,
+          readTime: 1,
           totalLikes: 1,
           totalBookmarks: 1,
           totalComments: 1,

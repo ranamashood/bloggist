@@ -14,5 +14,6 @@ export class ViewAvatarComponent {
   @Input() contentLoaded = true;
   @Input() user: UserResponse = {} as UserResponse;
   @Input() date: string | null = '';
+  @Input() blogReadingTime: number = 0;
   showUserPopup = false;
 }

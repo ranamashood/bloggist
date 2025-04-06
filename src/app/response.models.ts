@@ -17,6 +17,7 @@ export interface BlogResponse {
   user: UserResponse;
   title: string;
   desc: string;
+  readTime: number;
   totalLikes: number;
   totalComments: number;
   totalBookmarks: number;
@@ -29,6 +30,7 @@ export interface BlogResponse {
 export interface BlogsResponse {
   user: UserResponse;
   title: string;
+  readTime: number;
   totalLikes: number;
   totalComments: number;
   isLiked: boolean;

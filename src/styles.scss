@@ -51,7 +51,7 @@ div:has(> .bd-sidebar) {
   color: var(--bs-body-color) !important;
 }
 
-.nav-link.active {
+.bd-sidebar .nav-link.active {
   background-color: var(--bs-secondary-bg) !important;
   box-shadow: var(--bs-box-shadow-sm);
 }

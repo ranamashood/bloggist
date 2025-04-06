@@ -8,6 +8,10 @@ $body-secondary-bg: white;
 $body-bg-dark: black;
 $body-secondary-bg-dark: #171717;
 
+::selection {
+  background-color: $primary;
+}
+
 .bd-btn:focus,
 .bd-btn:active {
   border-color: transparent !important;

@@ -56,4 +56,66 @@ div:has(> .bd-sidebar) {
   box-shadow: var(--bs-box-shadow-sm);
 }
 
+.NgxEditor__Wrapper {
+  border: var(--bs-border-width) solid var(--bs-border-color) !important;
+  border-radius: var(--bs-border-radius) !important;
+  overflow-x: hidden;
+}
+
+.NgxEditor__MenuBar {
+  background-color: var(--bs-body-bg) !important;
+  user-select: none;
+
+  input[type="text"],
+  input[type="url"] {
+    @extend .form-control;
+  }
+
+  input[type="checkbox"] {
+    accent-color: $primary !important;
+  }
+}
+
+.NgxEditor__Popup {
+  background-color: var(--bs-secondary-bg) !important;
+
+  button {
+    @extend .btn;
+    @extend .btn-primary;
+    @extend .btn-sm;
+    width: 100%;
+  }
+}
+
+.NgxEditor__MenuItem--Icon:hover,
+.NgxEditor__Dropdown--Text:hover {
+  color: $primary !important;
+}
+
+.NgxEditor__MenuItem--Icon:focus,
+.NgxEditor__Dropdown--Text:focus {
+  outline-color: var(--bs-outline-color) !important;
+}
+
+.NgxEditor__MenuItem--Active,
+.NgxEditor__Dropdown--Selected {
+  background-color: #e8e3fd !important;
+  color: $primary !important;
+}
+
+.NgxEditor__Dropdown--Item {
+  background-color: var(--bs-body-bg) !important;
+}
+
+.NgxEditor__Dropdown--Item:hover {
+  background-color: var(--bs-secondary-bg) !important;
+}
+
+[data-bs-theme="dark"] {
+  .NgxEditor {
+    background-color: var(--bs-secondary-bg) !important;
+    color: white;
+  }
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

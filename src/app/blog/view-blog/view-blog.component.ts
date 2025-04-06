@@ -83,6 +83,11 @@ export class ViewBlogComponent {
 
   ngAfterViewChecked() {
     if (isPlatformBrowser(this.platformId)) {
+      this.blogService.setBlogDivider(
+        this.blogContent?.nativeElement.scrollHeight +
+          this.blogContent?.nativeElement.offsetTop,
+      );
+
       this.assignIdsToHeadings();
     }
   }

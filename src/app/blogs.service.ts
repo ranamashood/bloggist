@@ -16,6 +16,9 @@ export class BlogsService {
   private blogsSubject = new BehaviorSubject<BlogsResponse[]>([]);
   public blogs$ = this.blogsSubject.asObservable();
 
+  private blogDividerSubject = new BehaviorSubject<number>(0);
+  public blogDivider$ = this.blogDividerSubject.asObservable();
+
   currentUser$ = inject(UserService).currentUser$;
 
   constructor(private readonly http: HttpClient) {}
@@ -113,5 +116,9 @@ export class BlogsService {
     );
 
     return this.blogsSubject.next(sortedBlogs);
+  }
+
+  setBlogDivider(value: number) {
+    this.blogDividerSubject.next(value);
   }
 }

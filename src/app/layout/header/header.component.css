@@ -1,0 +1,8 @@
+div:has(> .bd-scroll-indicator),
+.bd-scroll-indicator {
+  height: 5px;
+}
+
+.bd-scroll-indicator {
+  width: 0;
+}

@@ -1,5 +1,6 @@
 <nav
-  class="position-sticky top-0 navbar navbar-expand-lg bg-body-secondary shadow-sm z-3"
+  class="d-flex flex-column gap-2 position-sticky top-0 navbar navbar-expand-lg bg-body-secondary shadow-sm z-3"
+  [ngClass]="{ 'pb-0': isBlogRoute }"
 >
   <div class="container">
     <div class="d-flex w-50">
@@ -66,5 +67,8 @@
         </li>
       }
     </ul>
+  </div>
+  <div class="w-100" *ngIf="isBlogRoute">
+    <div class="bd-scroll-indicator bg-primary" #scrollIndicator></div>
   </div>
 </nav>

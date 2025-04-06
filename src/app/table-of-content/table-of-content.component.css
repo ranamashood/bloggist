@@ -15,12 +15,17 @@
   transform: translate(0, -50%);
   width: 3px;
   height: 0;
-  background-color: var(--bs-secondary);
+  background-color: var(--bs-primary);
   border-radius: 15px;
   transition: height 300ms;
 }
 
-.active::before,
+.bd-navbar-link.active::before,
 .bd-navbar-link:hover::before {
   height: 70%;
+}
+
+.bd-navbar-link.active,
+.bd-navbar-link:hover {
+  color: var(--bs-primary) !important;
 }

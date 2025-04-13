@@ -39,6 +39,10 @@ $body-secondary-bg-dark: #171717;
   overflow: hidden;
 }
 
+.dropdown-toggle.hide-arrow::after {
+  display: none !important;
+}
+
 div:has(> .bd-sidebar) {
   min-width: 15%;
 }
@@ -119,6 +123,48 @@ div:has(> .bd-sidebar) {
   .NgxEditor {
     background-color: var(--bs-secondary-bg) !important;
     color: white;
+  }
+}
+
+[data-bs-theme="light"] {
+  .btn-secondary {
+    --bs-secondary: #b3b3b3;
+
+    --bs-btn-bg: var(--bs-secondary);
+    --bs-btn-border-color: var(--bs-secondary);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--bs-secondary), black 15%);
+    --bs-btn-hover-border-color: color-mix(
+      in srgb,
+      var(--bs-secondary),
+      black 15%
+    );
+    --bs-btn-active-bg: color-mix(in srgb, var(--bs-secondary), black 20%);
+    --bs-btn-active-border-color: color-mix(
+      in srgb,
+      var(--bs-secondary),
+      black 20%
+    );
+  }
+}
+
+[data-bs-theme="dark"] {
+  .btn-secondary {
+    --bs-secondary: #404040;
+
+    --bs-btn-bg: var(--bs-secondary);
+    --bs-btn-border-color: var(--bs-secondary);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--bs-secondary), black 15%);
+    --bs-btn-hover-border-color: color-mix(
+      in srgb,
+      var(--bs-secondary),
+      black 15%
+    );
+    --bs-btn-active-bg: color-mix(in srgb, var(--bs-secondary), black 20%);
+    --bs-btn-active-border-color: color-mix(
+      in srgb,
+      var(--bs-secondary),
+      black 20%
+    );
   }
 }
 

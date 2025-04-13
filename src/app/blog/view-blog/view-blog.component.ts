@@ -30,7 +30,7 @@ import { LatestBlogsComponent } from '../latest-blogs/latest-blogs.component';
 import { NotificationService } from '../../notification.service';
 import { PreviewUserComponent } from '../../user/preview-user/preview-user.component';
 import { SortButtonComponent } from '../../sort-button/sort-button.component';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-blog',
@@ -47,6 +47,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
     SortButtonComponent,
     NgbTooltip,
     RouterLink,
+    NgbDropdownModule,
   ],
   templateUrl: './view-blog.component.html',
 })
@@ -105,6 +106,10 @@ export class ViewBlogComponent {
       const id = heading.textContent!.toLowerCase().replace(/\s+/g, '-');
       this.renderer.setAttribute(heading, 'id', id);
     });
+  }
+
+  onEditBlog() {
+    this.router.navigate(['/blog', this.blogId, 'edit']);
   }
 
   onDeleteBlog() {

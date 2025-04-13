@@ -522,11 +522,14 @@ app.get('/api/blogs/ids', async (_req, res) => {
 
 app.get('/api/blogs/:id', async (req, res) => {
   const { id } = req.params;
+  const isEdit = req.query['isEdit'] === 'true';
   const userId = new ObjectId(req.query['userId'] as string);
 
-  await db
-    .collection('blogs')
-    .updateOne({ _id: new ObjectId(id) }, { $inc: { reads: 1 } });
+  if (!isEdit) {
+    await db
+      .collection('blogs')
+      .updateOne({ _id: new ObjectId(id) }, { $inc: { reads: 1 } });
+  }
 
   const blog = await db
     .collection('blogs')
@@ -591,6 +594,15 @@ app.get('/api/blogs/:id', async (req, res) => {
     .next();
 
   res.status(200).json(blog);
+});
+
+app.patch('/api/blogs', verifyTokenMiddleware, async (req, res) => {
+  const id = new ObjectId(req.body.id as string);
+  const blog = req.body.blog;
+
+  await db.collection('blogs').updateOne({ _id: id }, { $set: blog });
+
+  res.status(200).json({ message: 'Blog updated' });
 });
 
 app.delete('/api/blogs/:id', verifyTokenMiddleware, async (req, res) => {

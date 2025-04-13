@@ -27,14 +27,25 @@ export class BlogsService {
     return this.http.post<Blog>('/api/blogs', blog);
   }
 
-  getById(id: string): Observable<BlogResponse> {
+  update(id: string, blog: Partial<Blog>): Observable<Blog> {
+    return this.http.patch<Blog>('/api/blogs', { id, blog });
+  }
+
+  getById(id: string, isEdit = false): Observable<BlogResponse> {
     return this.currentUser$.pipe(
       take(1),
-      switchMap((user) =>
-        this.http.get<BlogResponse>(
-          `/api/blogs/${id}${user?._id ? `?userId=${user?._id}` : ''}`,
-        ),
-      ),
+      switchMap((user) => {
+        const httpParams = new HttpParams({
+          fromObject: {
+            ...(user?._id && { userId: user._id }),
+            ...(isEdit && { isEdit: true }),
+          },
+        });
+
+        return this.http.get<BlogResponse>(`/api/blogs/${id}`, {
+          params: httpParams,
+        });
+      }),
     );
   }
 

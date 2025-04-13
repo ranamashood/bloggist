@@ -1,5 +1,5 @@
 import { isPlatformBrowser, NgIf } from '@angular/common';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Editor, NgxEditorModule, Toolbar } from 'ngx-editor';
 import { EditorService } from '../editor.service';
@@ -11,7 +11,7 @@ import { EditorService } from '../editor.service';
 })
 export class EditorComponent {
   editor!: Editor;
-  html = '';
+  @Input() html = '';
   toolbar: Toolbar = [
     // default value
     ['bold', 'italic'],

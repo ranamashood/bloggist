@@ -37,10 +37,14 @@
   </div>
   <div class="mb-3">
     <label for="desc" class="form-label">Description</label>
-    <app-editor></app-editor>
+    <app-editor [html]="desc"></app-editor>
   </div>
-  <button type="submit" class="btn btn-primary" (click)="onAddBlog()">
-    Publish
+  <button
+    type="submit"
+    class="btn btn-primary"
+    (click)="blogId ? onEditBlog() : onAddBlog()"
+  >
+    {{ blogId ? "Update" : "Publish" }}
   </button>
 </div>
 

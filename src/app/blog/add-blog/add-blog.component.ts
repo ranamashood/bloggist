@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BlogsService } from '../../blogs.service';
 import { EditorComponent } from '../../editor/editor.component';
 import { EditorService } from '../../editor.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TagsService } from '../../tags.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -31,6 +31,8 @@ export class AddBlogComponent {
   tags: string[] = [];
   selectedTags: string[] = [];
   hoveredTag: string = '';
+  blogId: string | null = '';
+  desc = '';
 
   @ViewChild('instance', { static: true }) instance!: NgbTypeahead;
 
@@ -43,12 +45,28 @@ export class AddBlogComponent {
     private readonly editorService: EditorService,
     private readonly notificationService: NotificationService,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
-    this.tagService
-      .getAll()
-      .subscribe((tags) => (this.tags = tags.map((tag) => tag.name)));
+    this.route.paramMap.subscribe((params) => {
+      this.blogId = params.get('id');
+
+      if (!this.blogId) {
+        return;
+      }
+
+      this.blogService.getById(this.blogId, true).subscribe((blog) => {
+        this.title = blog.title;
+        this.desc = blog.desc;
+        this.selectedTags = blog.tags;
+      });
+    });
+
+    this.tagService.getAll().subscribe((tags) => {
+      this.tags = tags.map((tag) => tag.name);
+      this.tags = this.tags.filter((tag) => !this.selectedTags.includes(tag));
+    });
   }
 
   onAddBlog() {
@@ -63,6 +81,22 @@ export class AddBlogComponent {
           this.title = '';
           this.editorService.setContent('');
           this.router.navigate(['/']);
+        },
+      });
+  }
+
+  onEditBlog() {
+    this.blogService
+      .update(this.blogId!, {
+        title: this.title,
+        desc: this.editorService.getContent(),
+        tags: this.selectedTags,
+      })
+      .subscribe({
+        next: () => {
+          this.title = '';
+          this.editorService.setContent('');
+          this.router.navigate(['/blog', this.blogId]);
         },
       });
   }

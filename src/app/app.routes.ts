@@ -15,5 +15,6 @@ export const routes: Routes = [
   { path: 'user/:id/settings', component: UserSettingsComponent },
   { path: 'blog/add', component: AddBlogComponent },
   { path: 'blog/:id', component: ViewBlogComponent },
+  { path: 'blog/:id/edit', component: AddBlogComponent },
   { path: 'tag/:tagName', component: ViewTagComponent },
 ];

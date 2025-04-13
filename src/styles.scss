@@ -40,7 +40,7 @@ $body-secondary-bg-dark: #171717;
 }
 
 div:has(> .bd-sidebar) {
-  width: 15%;
+  min-width: 15%;
 }
 
 .bd-sidebar {

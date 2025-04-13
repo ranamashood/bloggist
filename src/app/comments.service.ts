@@ -26,6 +26,13 @@ export class CommentsService {
     return this.http.post<CommentResponse>('/api/comments', comment);
   }
 
+  update({ id, comment }: { id: string; comment: string }) {
+    return this.http.patch<Comment>('/api/comments', {
+      id,
+      comment,
+    });
+  }
+
   getAllByBlogId(blogId: string): Observable<CommentResponse[]> {
     return this.currentUser$.pipe(
       take(1),
@@ -60,6 +67,15 @@ export class CommentsService {
     };
 
     return this.commentsSubject.next(addReply(comments));
+  }
+
+  updateComment(id: string, updatedComment: string) {
+    const comments = this.commentsSubject.getValue();
+    this.commentsSubject.next(
+      comments.map((comment) =>
+        comment._id === id ? { ...comment, comment: updatedComment } : comment,
+      ),
+    );
   }
 
   getAllByUserId(userId: string) {

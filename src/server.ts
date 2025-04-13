@@ -821,6 +821,15 @@ app.get('/api/comments/:blogId', async (req, res) => {
   res.status(200).json(nestedComments);
 });
 
+app.patch('/api/comments', verifyTokenMiddleware, async (req, res) => {
+  const id = new ObjectId(req.body.id as string);
+  const comment = req.body.comment;
+
+  await db.collection('comments').updateOne({ _id: id }, { $set: { comment } });
+
+  res.status(200).json({ message: 'Comment updated' });
+});
+
 app.delete('/api/comments/:id', verifyTokenMiddleware, async (req, res) => {
   const { id } = req.params;
 

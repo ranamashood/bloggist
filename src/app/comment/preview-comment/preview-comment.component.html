@@ -12,19 +12,40 @@
       [date]="comment.createdAt | date"
     ></app-view-avatar>
     <div
-      class="d-flex bg-danger-subtle rounded-3"
+      ngbDropdown
+      placement="bottom-end"
+      class="d-inline-block"
       *ngIf="blogId && isAuthor && !comment.isDeleted"
     >
-      <button class="btn btn-sm" (click)="onDeleteComment()">Delete</button>
+      <button
+        class="btn btn-secondary fs-5 px-2 py-1 text-capitalize hide-arrow d-flex"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+        *ngIf="isAuthor"
+      >
+        <ng-icon name="bootstrapThreeDots"></ng-icon>
+      </button>
+      <div ngbDropdownMenu>
+        <button ngbDropdownItem (click)="isEditing = true">Edit</button>
+        <button ngbDropdownItem (click)="onDeleteComment()">Delete</button>
+      </div>
     </div>
   </div>
   <div class="d-flex flex-column gap-2 mt-2 ms-5">
     @if (comment.isDeleted) {
       <div class="fst-italic">Comment deleted by user</div>
     } @else {
-      <div>
-        {{ comment.comment }}
-      </div>
+      @if (isEditing) {
+        <app-add-comment
+          [comment]="comment.comment"
+          [commentId]="comment._id"
+          [(isEditing)]="isEditing"
+        ></app-add-comment>
+      } @else {
+        <div>
+          {{ comment.comment }}
+        </div>
+      }
     }
     <div class="d-flex" *ngIf="blogId && !isReplying">
       <button class="btn d-flex gap-2" (click)="onToggleLike()">

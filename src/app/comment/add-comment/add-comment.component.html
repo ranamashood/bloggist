@@ -15,8 +15,12 @@
     >
       Cancel
     </button>
-    <button type="submit" class="btn btn-primary" (click)="onAddComment()">
-      Comment
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="isEditing ? onUpdateComment() : onAddComment()"
+    >
+      {{ isEditing ? "Update" : "Comment" }}
     </button>
   </div>
 </div>

@@ -33,6 +33,15 @@
           <app-view-blogs isFollowing="true"></app-view-blogs>
         </ng-template>
       </ng-container>
+      <ng-container ngbNavItem>
+        <button ngbNavLink>
+          <ng-icon name="bootstrapTags"></ng-icon>
+          Tags
+        </button>
+        <ng-template ngbNavContent>
+          <app-view-tags></app-view-tags>
+        </ng-template>
+      </ng-container>
     </div>
   </div>
   <div class="flex-grow-1" [ngbNavOutlet]="nav"></div>

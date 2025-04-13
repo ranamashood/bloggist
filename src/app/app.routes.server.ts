@@ -3,6 +3,7 @@ import { BlogsService } from './blogs.service';
 import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UserService } from './user.service';
+import { TagsService } from './tags.service';
 
 export const serverRoutes: ServerRoute[] = [
   {
@@ -23,6 +24,16 @@ export const serverRoutes: ServerRoute[] = [
       const blogs = await firstValueFrom(blogService.getAllIds());
 
       return blogs.map((blog) => ({ id: blog._id }));
+    },
+  },
+  {
+    path: 'tag/:tagName',
+    renderMode: RenderMode.Prerender,
+    getPrerenderParams: async () => {
+      const tagService = inject(TagsService);
+      const tags = await firstValueFrom(tagService.getAllNames());
+
+      return tags.map((tag) => ({ tagName: tag.name }));
     },
   },
   {

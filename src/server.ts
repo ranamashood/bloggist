@@ -20,6 +20,8 @@ import {
   CommentResponse,
   LatestBlogsResponse,
 } from './app/response.models';
+import { Tag } from './app/server/tag.model';
+import { Blog } from './app/server/blog.model';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -371,7 +373,7 @@ app.get(
 );
 
 app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
-  const { title, desc } = req.body;
+  const { title, desc, tags } = req.body;
 
   const getBlogReadingTime = () => {
     const wpm = 225;
@@ -380,9 +382,10 @@ app.post('/api/blogs', verifyTokenMiddleware, async (req, res) => {
     return Math.ceil(words / wpm);
   };
 
-  const newBlog = {
+  const newBlog: Blog = {
     title,
     desc,
+    tags,
     readTime: getBlogReadingTime(),
     totalLikes: 0,
     totalBookmarks: 0,
@@ -401,6 +404,7 @@ app.get('/api/blogs', async (req, res) => {
   const title = (req.query['title'] as string) || '';
   const isBookmarked = req.query['isBookmarked'] === 'true';
   const isFollowing = req.query['isFollowing'] === 'true';
+  const tag = req.query['tag'];
   const limit = parseInt(req.query['limit'] as string) || 0;
 
   const blogs: BlogsResponse[] = await db
@@ -472,6 +476,7 @@ app.get('/api/blogs', async (req, res) => {
             { $match: { isFollowing: { $ne: [] } } },
           ]
         : []),
+      ...(tag ? [{ $match: { tags: tag } }] : []),
       {
         $project: {
           user: {
@@ -489,6 +494,7 @@ app.get('/api/blogs', async (req, res) => {
             createdAt: 1,
           },
           title: 1,
+          tags: 1,
           readTime: 1,
           totalLikes: 1,
           totalComments: 1,
@@ -571,6 +577,7 @@ app.get('/api/blogs/:id', async (req, res) => {
           },
           title: 1,
           desc: 1,
+          tags: 1,
           readTime: 1,
           totalLikes: 1,
           totalBookmarks: 1,
@@ -838,6 +845,22 @@ app.post('/api/comments/likes', verifyTokenMiddleware, async (req, res) => {
       .updateOne({ _id: commentId }, { $inc: { totalLikes: 1 } });
     return res.json({ liked: true });
   }
+});
+
+app.get('/api/tags/names', async (_req, res) => {
+  const tags = await db
+    .collection('tags')
+    .find()
+    .project({ name: 1 })
+    .toArray();
+
+  res.status(200).json(tags);
+});
+
+app.get('/api/tags', async (_req, res) => {
+  const tags = await db.collection<Tag>('tags').find().toArray();
+
+  return res.json(tags);
 });
 
 /**

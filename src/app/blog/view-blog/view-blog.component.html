@@ -68,6 +68,15 @@
               </button>
             </div>
           </div>
+          <div>
+            <a
+              class="btn btn-sm bg-body-secondary"
+              [routerLink]="['/tag/', tag]"
+              *ngFor="let tag of blog.tags"
+            >
+              #{{ tag }}
+            </a>
+          </div>
           <h1 class="py-3 fw-bold text-body-emphasis text-capitalize">
             {{ blog.title }}
           </h1>

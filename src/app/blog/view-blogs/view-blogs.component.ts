@@ -12,6 +12,7 @@ export class ViewBlogsComponent {
   @Input() userId: string | null = '';
   @Input() isBookmarked: string = 'false';
   @Input() isFollowing: string = 'false';
+  @Input() tag: string = '';
 
   constructor(private readonly blogService: BlogsService) {}
 
@@ -24,6 +25,7 @@ export class ViewBlogsComponent {
       this.blogService.getAllBlogs({
         isBookmarked: this.isBookmarked,
         isFollowing: this.isFollowing,
+        tag: this.tag,
       });
     }
   }

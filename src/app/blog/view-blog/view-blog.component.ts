@@ -18,7 +18,7 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { BlogsService } from '../../blogs.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AddCommentComponent } from '../../comment/add-comment/add-comment.component';
 import { ViewCommentsComponent } from '../../comment/view-comments/view-comments.component';
 import { BlogResponse } from '../../response.models';
@@ -46,6 +46,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
     PreviewUserComponent,
     SortButtonComponent,
     NgbTooltip,
+    RouterLink,
   ],
   templateUrl: './view-blog.component.html',
 })

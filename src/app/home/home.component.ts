@@ -8,6 +8,7 @@ import {
   NgbNavOutlet,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { ViewTagsComponent } from '../tag/view-tags/view-tags.component';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ import { NgIcon } from '@ng-icons/core';
     NgbNavLinkButton,
     NgbNavContent,
     NgIcon,
+    ViewTagsComponent,
   ],
   templateUrl: './home.component.html',
 })

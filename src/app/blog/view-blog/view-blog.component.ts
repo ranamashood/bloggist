@@ -108,6 +108,10 @@ export class ViewBlogComponent {
     });
   }
 
+  onBlogAnalytics() {
+    this.router.navigate(['/blog', this.blogId, 'analytics']);
+  }
+
   onEditBlog() {
     this.router.navigate(['/blog', this.blogId, 'edit']);
   }

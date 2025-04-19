@@ -40,6 +40,21 @@ export interface BlogsResponse {
   _id: string;
 }
 
+export interface BlogAnalytics {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+  }[];
+  total: {
+    reads: number;
+    likes: number;
+    comments: number;
+  };
+}
+
 export interface LatestBlogsResponse {
   title: string;
   _id: string;

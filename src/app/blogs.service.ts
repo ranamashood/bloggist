@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, switchMap, take } from 'rxjs';
 import { Blog } from './blog.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
+  BlogAnalytics,
   BlogResponse,
   BlogsResponse,
   LatestBlogsResponse,
@@ -131,5 +132,11 @@ export class BlogsService {
 
   setBlogDivider(value: number) {
     this.blogDividerSubject.next(value);
+  }
+
+  getAnalytics(id: string, range: string) {
+    return this.http.get<BlogAnalytics>(
+      `/api/blogs/${id}/analytics?range=${range}`,
+    );
   }
 }

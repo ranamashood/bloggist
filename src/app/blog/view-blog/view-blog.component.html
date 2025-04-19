@@ -72,6 +72,9 @@
                 <ng-icon name="bootstrapThreeDots"></ng-icon>
               </button>
               <div ngbDropdownMenu>
+                <button ngbDropdownItem (click)="onBlogAnalytics()">
+                  Analytics
+                </button>
                 <button ngbDropdownItem (click)="onEditBlog()">Edit</button>
                 <button ngbDropdownItem (click)="onDeleteBlog()">Delete</button>
               </div>

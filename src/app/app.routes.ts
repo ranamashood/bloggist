@@ -6,6 +6,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ViewUserComponent } from './user/view-user/view-user.component';
 import { UserSettingsComponent } from './user/user-settings/user-settings.component';
 import { ViewTagComponent } from './tag/view-tag/view-tag.component';
+import { BlogAnalyticsComponent } from './blog/blog-analytics/blog-analytics.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path: 'blog/add', component: AddBlogComponent },
   { path: 'blog/:id', component: ViewBlogComponent },
   { path: 'blog/:id/edit', component: AddBlogComponent },
+  { path: 'blog/:id/analytics', component: BlogAnalyticsComponent },
   { path: 'tag/:tagName', component: ViewTagComponent },
 ];

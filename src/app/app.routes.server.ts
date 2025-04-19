@@ -27,6 +27,10 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
+    path: 'blog/:id/analytics',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'tag/:tagName',
     renderMode: RenderMode.Prerender,
     getPrerenderParams: async () => {

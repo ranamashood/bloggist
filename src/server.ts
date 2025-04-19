@@ -15,6 +15,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Comment } from './app/server/comment.model';
 import {
+  BlogAnalytics,
   BlogResponse,
   BlogsResponse,
   CommentResponse,
@@ -527,8 +528,8 @@ app.get('/api/blogs/:id', async (req, res) => {
 
   if (!isEdit) {
     await db
-      .collection('blogs')
-      .updateOne({ _id: new ObjectId(id) }, { $inc: { reads: 1 } });
+      .collection('reads')
+      .insertOne({ blogId: new ObjectId(id), userId, createdAt: new Date() });
   }
 
   const blog = await db
@@ -665,6 +666,120 @@ app.post('/api/blogs/bookmarks', verifyTokenMiddleware, async (req, res) => {
       .updateOne({ _id: blogId }, { $inc: { totalBookmarks: 1 } });
     return res.json({ bookmarked: true });
   }
+});
+
+app.get('/api/blogs/:id/analytics', verifyTokenMiddleware, async (req, res) => {
+  const getDateRange = (days: number) => {
+    const endDate = new Date();
+    const dates: string[] = [];
+
+    for (let i = 0; i < days; i++) {
+      const date = new Date(endDate);
+      date.setDate(date.getDate() - i);
+      dates.push(date.toISOString().split('T')[0]);
+    }
+    return dates.reverse();
+  };
+
+  const getCollectionAnalytics = async (
+    blogId: ObjectId,
+    collectionName: string,
+    dates: string[],
+  ): Promise<number[]> => {
+    const data = await db
+      .collection(collectionName)
+      .aggregate([
+        { $match: { blogId } },
+        {
+          $project: {
+            date: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          },
+        },
+        {
+          $match: {
+            date: { $in: dates },
+          },
+        },
+        {
+          $group: {
+            _id: '$date',
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ])
+      .toArray();
+
+    return dates.map(
+      (date) => data.find((item) => item['_id'] === date)?.['count'] ?? 0,
+    );
+  };
+
+  const id = new ObjectId(req.params['id']);
+  const range = req.query['range'] as string;
+
+  let numDays = 0;
+
+  if (range === 'weekly') {
+    numDays = 7;
+  } else if (range === 'monthly') {
+    numDays = 30;
+  } else {
+    const blog = await db.collection('blogs').findOne({ _id: id });
+    numDays =
+      Math.round(
+        (Date.now() - new Date(blog!['createdAt']).getTime()) /
+          (1000 * 60 * 60 * 24),
+      ) + 1;
+  }
+
+  const dateRange = getDateRange(numDays);
+
+  const [reads, likes, comments] = await Promise.all([
+    getCollectionAnalytics(id, 'reads', dateRange),
+    getCollectionAnalytics(id, 'likes', dateRange),
+    getCollectionAnalytics(id, 'comments', dateRange),
+  ]);
+
+  const datasets = [
+    {
+      label: 'Reads',
+      data: reads,
+      borderColor: '#9966FF',
+      backgroundColor: '#9966FF',
+    },
+    {
+      label: 'Likes',
+      data: likes,
+      borderColor: '#FF6384',
+      backgroundColor: '#FF6384',
+    },
+    {
+      label: 'Comments',
+      data: comments,
+      borderColor: '#36A2EB',
+      backgroundColor: '#36A2EB',
+    },
+  ];
+
+  const analytics: BlogAnalytics = {
+    labels: dateRange.map((dateString) => {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+
+      return `${day}/${month}/${year}`;
+    }),
+    datasets,
+    total: {
+      reads: reads.reduce((sum, count) => sum + count),
+      likes: likes.reduce((sum, count) => sum + count),
+      comments: comments.reduce((sum, count) => sum + count),
+    },
+  };
+
+  res.status(200).json(analytics);
 });
 
 app.post('/api/comments', verifyTokenMiddleware, async (req, res) => {

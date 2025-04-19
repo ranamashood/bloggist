@@ -1,0 +1,65 @@
+<div class="d-flex gap-4">
+  <div>
+    <div
+      ngbNav
+      #nav="ngbNav"
+      class="bd-sidebar nav-pills"
+      orientation="vertical"
+    >
+      <ng-container ngbNavItem>
+        <button ngbNavLink (click)="getAnalytics('weekly')">Weekly</button>
+        <ng-template ngbNavContent>
+          <ng-template
+            *ngTemplateOutlet="chart; context: { id: 'weekly' }"
+          ></ng-template>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem>
+        <button ngbNavLink (click)="getAnalytics('monthly')">Monthly</button>
+        <ng-template ngbNavContent>
+          <ng-template
+            *ngTemplateOutlet="chart; context: { id: 'monthly' }"
+          ></ng-template>
+        </ng-template>
+      </ng-container>
+      <ng-container ngbNavItem>
+        <button ngbNavLink (click)="getAnalytics('all-time')">All Time</button>
+        <ng-template ngbNavContent>
+          <ng-template
+            *ngTemplateOutlet="chart; context: { id: 'all-time' }"
+          ></ng-template>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="flex-grow-1" [ngbNavOutlet]="nav"></div>
+</div>
+
+<ng-template #chart let-id="id">
+  <div class="d-flex flex-column gap-3">
+    <div class="d-flex gap-3 text-body-emphasis fw-bold">
+      <div
+        class="flex-grow-1 d-flex flex-column align-items-center bg-body-secondary rounded-3 shadow-sm p-4"
+      >
+        <div class="fs-5">Reads</div>
+        <div class="fs-4">{{ totalReads }}</div>
+      </div>
+      <div
+        class="flex-grow-1 d-flex flex-column align-items-center bg-body-secondary rounded-3 shadow-sm p-4"
+      >
+        <div class="fs-5">Likes</div>
+        <div class="fs-4">{{ totalLikes }}</div>
+      </div>
+      <div
+        class="flex-grow-1 d-flex flex-column align-items-center bg-body-secondary rounded-3 shadow-sm p-4"
+      >
+        <div class="fs-5">Comments</div>
+        <div class="fs-4">{{ totalComments }}</div>
+      </div>
+    </div>
+    <div class="chart-container bg-body-secondary rounded-3 shadow-sm p-4">
+      <canvas [id]="id">{{ chart }}</canvas>
+    </div>
+  </div>
+</ng-template>

@@ -6,8 +6,7 @@
 }
 
 .bd-switch.active {
-  border-color: var(--bs-primary);
-  background-color: var(--bs-primary);
+  border-color: var(--bs-primary) !important;
 }
 
 .bd-switch-control {
@@ -25,5 +24,5 @@
 .bd-switch-control.active {
   left: calc(100% - 22px);
   color: var(--bs-primary);
-  background-color: white;
+  background-color: #e8e3fd;
 }

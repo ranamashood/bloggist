@@ -1,11 +1,20 @@
 <div
-  class="bd-container d-flex flex-column gap-3 mx-auto rounded-3 px-4 py-3 bg-body-secondary z-3 shadow-sm"
+  class="bd-container d-flex flex-column gap-4 mx-auto rounded-3 px-4 py-3 bg-body-secondary z-3 shadow-sm"
   [ngClass]="{
     'position-fixed top-50 start-50 translate-middle shadow': popup,
   }"
 >
   <div class="d-flex justify-content-center align-items-center">
-    <h2 class="mx-auto text-capitalize fw-bold">{{ authType }}</h2>
+    <div class="text-center">
+      <h4 class="mx-auto text-body-emphasis text-capitalize fw-bold mb-3">
+        {{ authType === "login" ? "log in" : "sign up" }}
+      </h4>
+      @if (authType === "login") {
+        <div>Log in to your account with your email</div>
+      } @else {
+        <div>Create a free account using your email</div>
+      }
+    </div>
     <button class="btn-close" (click)="closePopup()" *ngIf="popup"></button>
   </div>
   <div>
@@ -48,18 +57,18 @@
     class="btn btn-primary w-100 text-capitalize"
     (click)="onSubmit()"
   >
-    {{ authType }}
+    {{ authType === "login" ? "log in" : "sign up" }}
   </button>
 
   @if (authType === "login") {
     <div>
       Don't have an account?
-      <a routerLink="/register" (click)="closePopup()">Register</a>
+      <a routerLink="/register" (click)="closePopup()">Sign Up</a>
     </div>
   } @else {
     <div>
       Already have an account?
-      <a routerLink="/login" (click)="closePopup()">Login</a>
+      <a routerLink="/login" (click)="closePopup()">Log In</a>
     </div>
   }
 </div>

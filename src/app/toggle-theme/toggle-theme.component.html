@@ -1,6 +1,15 @@
-<div class="d-flex align-items-center gap-2" (click)="toggleTheme()">
-  <ng-icon
-    [name]="theme === 'light' ? 'bootstrapSun' : 'bootstrapMoon'"
-  ></ng-icon>
-  {{ theme === "light" ? "Light" : "Dark" }}
+<div
+  class="bd-switch border rounded-pill"
+  [ngClass]="{ active: theme === 'dark' }"
+  style="cursor: pointer"
+  (click)="toggleTheme()"
+>
+  <div
+    class="bd-switch-control d-flex justify-content-center align-items-center rounded-circle"
+    [ngClass]="{ active: theme === 'dark' }"
+  >
+    <ng-icon
+      [name]="theme === 'light' ? 'bootstrapSunFill' : 'bootstrapMoonFill'"
+    ></ng-icon>
+  </div>
 </div>

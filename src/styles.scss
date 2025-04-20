@@ -12,6 +12,10 @@ $body-secondary-bg-dark: #171717;
   background-color: $primary;
 }
 
+html {
+  scroll-padding-top: 64px;
+}
+
 .bd-btn:focus,
 .bd-btn:active {
   border-color: transparent !important;

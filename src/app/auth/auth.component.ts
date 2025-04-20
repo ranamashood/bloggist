@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { NotificationService } from '../notification.service';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-auth',
-  imports: [FormsModule, NgIf, NgClass, RouterLink],
+  imports: [FormsModule, NgIf, NgClass, RouterLink, NgIcon],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })

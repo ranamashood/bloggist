@@ -1,3 +1,29 @@
 .bd-container {
   max-width: 40%;
 }
+
+.input-group span {
+  background-color: #404040;
+}
+
+.input-group span,
+.input-group input {
+  border-radius: 0;
+}
+
+.input-group:not(:last-child) span,
+.input-group:not(:last-child) input:not(:focus) {
+  border-bottom-color: transparent;
+}
+
+.input-group:first-child span,
+.input-group:first-child input {
+  border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
+}
+
+.input-group:last-child span,
+.input-group:last-child input {
+  border-bottom-left-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
+}

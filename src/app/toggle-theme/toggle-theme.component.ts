@@ -1,12 +1,11 @@
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { NgIcon } from '@ng-icons/core';
+import { SwitchComponent } from '../switch/switch.component';
 
 @Component({
   selector: 'app-toggle-theme',
-  imports: [NgIcon, NgClass],
+  imports: [SwitchComponent],
   templateUrl: './toggle-theme.component.html',
-  styleUrl: './toggle-theme.component.css',
 })
 export class ToggleThemeComponent {
   theme = 'light';

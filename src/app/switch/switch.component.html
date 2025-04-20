@@ -1,0 +1,13 @@
+<div
+  class="bd-switch border border-2 rounded-pill"
+  [ngClass]="{ active: isChecked }"
+  style="cursor: pointer"
+  (click)="onClick()"
+>
+  <div
+    class="bd-switch-control d-flex justify-content-center align-items-center rounded-circle"
+    [ngClass]="{ active: isChecked }"
+  >
+    <ng-icon [name]="isChecked ? isCheckedIcon : isUnCheckedIcon"></ng-icon>
+  </div>
+</div>

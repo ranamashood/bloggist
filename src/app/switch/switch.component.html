@@ -8,6 +8,10 @@
     class="bd-switch-control d-flex justify-content-center align-items-center rounded-circle"
     [ngClass]="{ active: isChecked }"
   >
-    <ng-icon [name]="isChecked ? isCheckedIcon : isUnCheckedIcon"></ng-icon>
+    @if (isCheckedIcon && isUnCheckedIcon) {
+      <ng-icon [name]="isChecked ? isCheckedIcon : isUnCheckedIcon"></ng-icon>
+    } @else {
+      <div class="rounded-circle"></div>
+    }
   </div>
 </div>

@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { UserService } from '../user.service';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { NotificationService } from '../notification.service';
 import { NgIcon } from '@ng-icons/core';
+import { SwitchComponent } from '../switch/switch.component';
 
 @Component({
   selector: 'app-auth',
-  imports: [FormsModule, NgIf, NgClass, RouterLink, NgIcon],
+  imports: [FormsModule, NgIf, NgClass, NgIcon, SwitchComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
@@ -52,5 +53,9 @@ export class AuthComponent {
 
   closePopup() {
     this.notificationService.delete();
+  }
+
+  togglePage() {
+    this.authType = this.authType === 'login' ? 'register' : 'login';
   }
 }

@@ -26,3 +26,15 @@
   color: var(--bs-primary);
   background-color: #e8e3fd;
 }
+
+.bd-switch-control > div {
+  transform: scale(0);
+  transition: all 200ms;
+}
+
+.bd-switch-control.active > div {
+  width: 14px;
+  height: 14px;
+  background-color: var(--bs-primary);
+  transform: scale(1);
+}

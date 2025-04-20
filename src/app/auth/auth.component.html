@@ -1,74 +1,88 @@
-<div
-  class="bd-container d-flex flex-column gap-4 mx-auto rounded-3 px-4 py-3 bg-body-secondary z-3 shadow-sm"
-  [ngClass]="{
-    'position-fixed top-50 start-50 translate-middle shadow': popup,
-  }"
->
-  <div class="d-flex justify-content-center align-items-center">
-    <div class="text-center">
-      <h4 class="mx-auto text-body-emphasis text-capitalize fw-bold mb-3">
-        {{ authType === "login" ? "log in" : "sign up" }}
-      </h4>
-      @if (authType === "login") {
-        <div>Log in to your account with your email</div>
-      } @else {
-        <div>Create a free account using your email</div>
-      }
+<div class="bd-container d-flex flex-column align-items-center gap-3">
+  <div class="d-flex gap-3 user-select-none">
+    <div
+      [ngClass]="{
+        'fw-bold': authType === 'login',
+      }"
+      style="cursor: pointer"
+      (click)="authType = 'login'"
+    >
+      Log In
     </div>
-    <button class="btn-close" (click)="closePopup()" *ngIf="popup"></button>
-  </div>
-  <div>
-    <div class="input-group" *ngIf="authType === 'register'">
-      <span class="input-group-text">
-        <ng-icon name="bootstrapAlphabetUppercase"></ng-icon>
-      </span>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Name"
-        [(ngModel)]="name"
-      />
-    </div>
-    <div class="input-group">
-      <span class="input-group-text">
-        <ng-icon name="bootstrapEnvelope"></ng-icon>
-      </span>
-      <input
-        type="email"
-        class="form-control"
-        placeholder="Email"
-        [(ngModel)]="email"
-      />
-    </div>
-    <div class="input-group">
-      <span class="input-group-text">
-        <ng-icon name="bootstrapLock"></ng-icon>
-      </span>
-      <input
-        type="password"
-        class="form-control"
-        placeholder="Password"
-        [(ngModel)]="password"
-      />
+    <app-switch
+      [isChecked]="authType === 'register'"
+      [onClick]="togglePage.bind(this)"
+    ></app-switch>
+    <div
+      [ngClass]="{
+        'fw-bold': authType === 'register',
+      }"
+      style="cursor: pointer"
+      (click)="authType = 'register'"
+    >
+      Sign Up
     </div>
   </div>
-  <button
-    type="submit"
-    class="btn btn-primary w-100 text-capitalize"
-    (click)="onSubmit()"
+  <div
+    class="d-flex flex-column gap-4 mx-auto rounded-3 px-4 py-3 bg-body-secondary z-3 shadow-sm"
+    [ngClass]="{
+      'position-fixed top-50 start-50 translate-middle shadow': popup,
+    }"
   >
-    {{ authType === "login" ? "log in" : "sign up" }}
-  </button>
-
-  @if (authType === "login") {
-    <div>
-      Don't have an account?
-      <a routerLink="/register" (click)="closePopup()">Sign Up</a>
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="text-center">
+        <h4 class="mx-auto text-body-emphasis text-capitalize fw-bold mb-3">
+          {{ authType === "login" ? "log in" : "sign up" }}
+        </h4>
+        @if (authType === "login") {
+          <div>Log in to your account with your email</div>
+        } @else {
+          <div>Create a free account using your email</div>
+        }
+      </div>
+      <button class="btn-close" (click)="closePopup()" *ngIf="popup"></button>
     </div>
-  } @else {
     <div>
-      Already have an account?
-      <a routerLink="/login" (click)="closePopup()">Log In</a>
+      <div class="input-group" *ngIf="authType === 'register'">
+        <span class="input-group-text">
+          <ng-icon name="bootstrapAlphabetUppercase"></ng-icon>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Name"
+          [(ngModel)]="name"
+        />
+      </div>
+      <div class="input-group">
+        <span class="input-group-text">
+          <ng-icon name="bootstrapEnvelope"></ng-icon>
+        </span>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+      </div>
+      <div class="input-group">
+        <span class="input-group-text">
+          <ng-icon name="bootstrapLock"></ng-icon>
+        </span>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          [(ngModel)]="password"
+        />
+      </div>
     </div>
-  }
+    <button
+      type="submit"
+      class="btn btn-primary w-100 text-capitalize"
+      (click)="onSubmit()"
+    >
+      {{ authType === "login" ? "log in" : "sign up" }}
+    </button>
+  </div>
 </div>

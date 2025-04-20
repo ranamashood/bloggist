@@ -1,9 +1,10 @@
 .bd-container {
-  max-width: 40%;
-}
-
-.input-group span {
-  background-color: #404040;
+  position: absolute;
+  max-width: 90%;
+  width: 350px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input-group span,

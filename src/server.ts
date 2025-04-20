@@ -727,7 +727,7 @@ app.get('/api/blogs/:id/analytics', verifyTokenMiddleware, async (req, res) => {
   } else {
     const blog = await db.collection('blogs').findOne({ _id: id });
     numDays =
-      Math.round(
+      Math.ceil(
         (Date.now() - new Date(blog!['createdAt']).getTime()) /
           (1000 * 60 * 60 * 24),
       ) + 1;

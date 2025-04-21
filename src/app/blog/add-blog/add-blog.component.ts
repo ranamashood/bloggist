@@ -16,14 +16,15 @@ import {
   OperatorFunction,
   Subject,
 } from 'rxjs';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-add-blog',
-  imports: [FormsModule, EditorComponent, NgbTypeahead, NgFor, NgIcon, NgIf],
+  imports: [FormsModule, EditorComponent, NgbTypeahead, NgFor, NgIcon, NgClass],
   templateUrl: './add-blog.component.html',
+  styleUrl: './add-blog.component.css',
 })
 export class AddBlogComponent {
   title = '';

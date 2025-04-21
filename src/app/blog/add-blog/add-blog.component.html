@@ -21,17 +21,22 @@
     <div class="mt-2 d-flex gap-2">
       <a
         *ngFor="let tag of selectedTags"
-        class="btn bg-body position-relative px-3"
+        class="btn bg-body position-relative px-3 overflow-hidden"
         (click)="onDeleteTag(tag)"
         (mouseover)="hoveredTag = tag"
         (mouseleave)="hoveredTag = ''"
       >
         <div>#{{ tag }}</div>
-        <ng-icon
-          name="bootstrapX"
-          class="position-absolute top-0 end-0"
-          *ngIf="hoveredTag === tag"
-        ></ng-icon>
+        <div
+          class="bd-delete-tag-container bg-danger text-light"
+          [ngClass]="{ active: hoveredTag === tag }"
+        >
+          <ng-icon
+            name="bootstrapX"
+            class="bd-delete-tag"
+            [ngClass]="{ active: hoveredTag === tag }"
+          ></ng-icon>
+        </div>
       </a>
     </div>
   </div>

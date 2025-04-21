@@ -1,5 +1,5 @@
 <div class="d-flex gap-4">
-  <div>
+  <div (mouseleave)="currentHoveredButton = currentFocusedButton">
     <div
       ngbNav
       #nav="ngbNav"
@@ -7,7 +7,18 @@
       orientation="vertical"
     >
       <ng-container ngbNavItem>
-        <button ngbNavLink>
+        <button
+          class="bd-sidebar-hover shadow-sm"
+          [style.--current-button]="currentHoveredButton"
+          ngbNavLink
+        >
+          Hover Effect
+        </button>
+        <button
+          ngbNavLink
+          (click)="currentFocusedButton = 0"
+          (mouseover)="currentHoveredButton = 0"
+        >
           <ng-icon name="bootstrapFileText"></ng-icon>
           Blogs
         </button>
@@ -17,7 +28,11 @@
         </ng-template>
       </ng-container>
       <ng-container ngbNavItem>
-        <button ngbNavLink>
+        <button
+          ngbNavLink
+          (click)="currentFocusedButton = 1"
+          (mouseover)="currentHoveredButton = 1"
+        >
           <ng-icon name="bootstrapChat"></ng-icon> Comments
         </button>
         <ng-template ngbNavContent>

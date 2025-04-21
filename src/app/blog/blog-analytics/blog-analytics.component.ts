@@ -31,6 +31,8 @@ export class BlogAnalyticsComponent {
   totalReads = 0;
   totalLikes = 0;
   totalComments = 0;
+  currentHoveredButton = 0;
+  currentFocusedButton = 0;
 
   constructor(
     private readonly blogService: BlogsService,

@@ -24,4 +24,7 @@ import { ViewTagsComponent } from '../tag/view-tags/view-tags.component';
   ],
   templateUrl: './home.component.html',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  currentHoveredButton = 0;
+  currentFocusedButton = 0;
+}

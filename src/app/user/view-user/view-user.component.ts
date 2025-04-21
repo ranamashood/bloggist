@@ -38,6 +38,8 @@ import { NgIcon } from '@ng-icons/core';
 export class ViewUserComponent {
   userId = '';
   user$: Observable<UserResponse> = new Observable<UserResponse>();
+  currentHoveredButton = 0;
+  currentFocusedButton = 0;
 
   constructor(
     private readonly route: ActivatedRoute,

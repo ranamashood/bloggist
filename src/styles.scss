@@ -68,6 +68,16 @@ div:has(> .bd-sidebar) {
   box-shadow: var(--bs-box-shadow-sm);
 }
 
+.bd-sidebar-hover {
+  position: absolute;
+  width: 100%;
+  transform: translateY(calc(100% * var(--current-button)));
+  color: var(--bs-secondary-bg) !important;
+  background-color: var(--bs-secondary-bg) !important;
+  transition: transform 200ms !important;
+  z-index: -1;
+}
+
 .NgxEditor__Wrapper {
   border: var(--bs-border-width) solid var(--bs-border-color) !important;
   border-radius: var(--bs-border-radius) !important;

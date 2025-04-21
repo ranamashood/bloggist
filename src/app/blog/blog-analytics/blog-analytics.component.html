@@ -1,5 +1,5 @@
 <div class="d-flex gap-4">
-  <div>
+  <div (mouseleave)="currentHoveredButton = currentFocusedButton">
     <div
       ngbNav
       #nav="ngbNav"
@@ -7,7 +7,20 @@
       orientation="vertical"
     >
       <ng-container ngbNavItem>
-        <button ngbNavLink (click)="getAnalytics('weekly')">Weekly</button>
+        <button
+          class="bd-sidebar-hover shadow-sm"
+          [style.--current-button]="currentHoveredButton"
+          ngbNavLink
+        >
+          Hover Effect
+        </button>
+        <button
+          ngbNavLink
+          (click)="currentFocusedButton = 0; getAnalytics('weekly')"
+          (mouseover)="currentHoveredButton = 0"
+        >
+          Weekly
+        </button>
         <ng-template ngbNavContent>
           <ng-template
             *ngTemplateOutlet="chart; context: { id: 'weekly' }"
@@ -15,7 +28,13 @@
         </ng-template>
       </ng-container>
       <ng-container ngbNavItem>
-        <button ngbNavLink (click)="getAnalytics('monthly')">Monthly</button>
+        <button
+          ngbNavLink
+          (click)="currentFocusedButton = 1; getAnalytics('monthly')"
+          (mouseover)="currentHoveredButton = 1"
+        >
+          Monthly
+        </button>
         <ng-template ngbNavContent>
           <ng-template
             *ngTemplateOutlet="chart; context: { id: 'monthly' }"
@@ -23,7 +42,13 @@
         </ng-template>
       </ng-container>
       <ng-container ngbNavItem>
-        <button ngbNavLink (click)="getAnalytics('all-time')">All Time</button>
+        <button
+          ngbNavLink
+          (click)="currentFocusedButton = 2; getAnalytics('all-time')"
+          (mouseover)="currentHoveredButton = 2"
+        >
+          All Time
+        </button>
         <ng-template ngbNavContent>
           <ng-template
             *ngTemplateOutlet="chart; context: { id: 'all-time' }"

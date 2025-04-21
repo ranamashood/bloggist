@@ -70,11 +70,18 @@
           <ng-icon name="bootstrapLock"></ng-icon>
         </span>
         <input
-          type="password"
+          [type]="passwordType"
           class="form-control"
           placeholder="Password"
           [(ngModel)]="password"
         />
+        <div class="toggle-password" (click)="togglePassword()">
+          <ng-icon
+            [name]="
+              passwordType === 'password' ? 'bootstrapEye' : 'bootstrapEyeSlash'
+            "
+          ></ng-icon>
+        </div>
       </div>
     </div>
     <button

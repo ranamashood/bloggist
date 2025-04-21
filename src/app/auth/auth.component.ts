@@ -25,6 +25,7 @@ export class AuthComponent {
   name = '';
   email = '';
   password = '';
+  passwordType = 'password';
 
   ngOnInit() {
     this.authType = this.popup ? 'login' : this.router.url.split('/').pop()!;
@@ -57,5 +58,9 @@ export class AuthComponent {
 
   togglePage() {
     this.authType = this.authType === 'login' ? 'register' : 'login';
+  }
+
+  togglePassword() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
 }

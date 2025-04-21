@@ -17,16 +17,20 @@
   border-bottom-color: transparent;
 }
 
-.input-group:first-child span,
-.input-group:first-child input {
+.input-group:first-child span {
   border-top-left-radius: 0.6rem;
+}
+
+.input-group:first-child input {
   border-top-right-radius: 0.6rem;
 }
 
-.input-group:last-child span,
-.input-group:last-child input {
+.input-group:last-child span {
   border-bottom-left-radius: 0.6rem;
-  border-bottom-right-radius: 0.6rem;
+}
+
+.input-group:last-child input {
+  border-bottom-right-radius: 0.6rem !important;
 }
 
 .toggle-password {

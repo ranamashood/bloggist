@@ -14,3 +14,8 @@
   transform: translateY(-50%);
   cursor: pointer;
 }
+
+.btn-close {
+  top: 10px;
+  right: 10px;
+}

@@ -70,23 +70,23 @@
           [(ngModel)]="email"
         />
       </div>
-      <div class="input-group">
+      <div class="input-group position-relative">
         <span class="input-group-text">
           <ng-icon name="bootstrapLock"></ng-icon>
         </span>
-        <input
-          [type]="passwordType"
-          class="form-control"
-          placeholder="Password"
-          [(ngModel)]="password"
-        />
-        <div class="toggle-password" (click)="togglePassword()">
+        <div class="toggle-password z-2" (click)="togglePassword()">
           <ng-icon
             [name]="
               passwordType === 'password' ? 'bootstrapEye' : 'bootstrapEyeSlash'
             "
           ></ng-icon>
         </div>
+        <input
+          [type]="passwordType"
+          class="form-control"
+          placeholder="Password"
+          [(ngModel)]="password"
+        />
       </div>
     </div>
     <button

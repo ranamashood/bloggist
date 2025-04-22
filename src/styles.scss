@@ -73,7 +73,7 @@ div:has(> .bd-sidebar) {
 .bd-sidebar-hover {
   position: absolute;
   width: 100%;
-  transform: translateY(calc(100% * var(--current-button)));
+  transform: translateY(calc(120% * var(--current-button)));
   color: var(--bs-secondary-bg) !important;
   background-color: var(--bs-secondary-bg) !important;
   transition: transform 200ms !important;

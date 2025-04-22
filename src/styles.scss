@@ -135,6 +135,35 @@ div:has(> .bd-sidebar) {
   background-color: var(--bs-secondary-bg) !important;
 }
 
+.input-group span,
+.input-group input,
+.input-group button {
+  border-radius: 0;
+}
+
+.input-group:not(:last-child) span,
+.input-group:not(:last-child) input:not(:focus) {
+  border-bottom-color: transparent;
+}
+
+.input-group:first-child span {
+  border-top-left-radius: 0.6rem;
+}
+
+.input-group:first-child input,
+.input-group:first-child button {
+  border-top-right-radius: 0.6rem;
+}
+
+.input-group:last-child span {
+  border-bottom-left-radius: 0.6rem;
+}
+
+.input-group:last-child input:last-child,
+.input-group:last-child button {
+  border-bottom-right-radius: 0.6rem !important;
+}
+
 [data-bs-theme="dark"] {
   .NgxEditor {
     background-color: var(--bs-secondary-bg) !important;

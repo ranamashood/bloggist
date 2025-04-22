@@ -12,6 +12,7 @@ import { EditorService } from '../editor.service';
 export class EditorComponent {
   editor!: Editor;
   @Input() html = '';
+  @Input() placeholder = '';
   toolbar: Toolbar = [
     // default value
     ['bold', 'italic'],

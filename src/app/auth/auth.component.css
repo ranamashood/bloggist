@@ -7,32 +7,6 @@
   transform: translate(-50%, -50%);
 }
 
-.input-group span,
-.input-group input {
-  border-radius: 0;
-}
-
-.input-group:not(:last-child) span,
-.input-group:not(:last-child) input:not(:focus) {
-  border-bottom-color: transparent;
-}
-
-.input-group:first-child span {
-  border-top-left-radius: 0.6rem;
-}
-
-.input-group:first-child input {
-  border-top-right-radius: 0.6rem;
-}
-
-.input-group:last-child span {
-  border-bottom-left-radius: 0.6rem;
-}
-
-.input-group:last-child input {
-  border-bottom-right-radius: 0.6rem !important;
-}
-
 .toggle-password {
   position: absolute;
   right: 10px;

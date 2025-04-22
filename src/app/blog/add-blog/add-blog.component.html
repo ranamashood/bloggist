@@ -1,49 +1,58 @@
-<div class="rounded-3 px-4 py-3 bg-body-secondary shadow-sm">
-  <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" id="title" [(ngModel)]="title" />
-  </div>
-  <div class="mb-3">
-    <label for="tag" class="form-label">Tags</label>
-    <div class="d-flex gap-2">
+<div
+  class="d-flex flex-column gap-3 rounded-3 px-4 py-3 bg-body-secondary shadow-sm"
+>
+  <div>
+    <div class="input-group">
+      <span class="input-group-text">
+        <ng-icon name="bootstrapCardHeading"></ng-icon>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Title"
+        [(ngModel)]="title"
+      />
+    </div>
+    <div class="input-group">
+      <span class="input-group-text">
+        <ng-icon name="bootstrapTags"></ng-icon>
+      </span>
       <input
         id="typeahead-focus"
         type="text"
         class="form-control"
+        placeholder="Tags"
         [(ngModel)]="tag"
         [ngbTypeahead]="search"
         (focus)="focus$.next($any($event).target.value)"
         (click)="click$.next($any($event).target.value)"
         #instance="ngbTypeahead"
       />
-      <button class="btn btn-primary" (click)="onAddTag()">Add</button>
+      <button class="btn btn-primary px-3" (click)="onAddTag()">Add</button>
     </div>
-    <div class="mt-2 d-flex gap-2">
-      <a
-        *ngFor="let tag of selectedTags"
-        class="btn bg-body position-relative px-3 overflow-hidden"
-        (click)="onDeleteTag(tag)"
-        (mouseover)="hoveredTag = tag"
-        (mouseleave)="hoveredTag = ''"
+  </div>
+  <div class="mb-2 d-flex gap-2">
+    <a
+      *ngFor="let tag of selectedTags"
+      class="btn bg-body position-relative px-3 overflow-hidden"
+      (click)="onDeleteTag(tag)"
+      (mouseover)="hoveredTag = tag"
+      (mouseleave)="hoveredTag = ''"
+    >
+      <div>#{{ tag }}</div>
+      <div
+        class="bd-delete-tag-container bg-danger text-light"
+        [ngClass]="{ active: hoveredTag === tag }"
       >
-        <div>#{{ tag }}</div>
-        <div
-          class="bd-delete-tag-container bg-danger text-light"
+        <ng-icon
+          name="bootstrapX"
+          class="bd-delete-tag"
           [ngClass]="{ active: hoveredTag === tag }"
-        >
-          <ng-icon
-            name="bootstrapX"
-            class="bd-delete-tag"
-            [ngClass]="{ active: hoveredTag === tag }"
-          ></ng-icon>
-        </div>
-      </a>
-    </div>
+        ></ng-icon>
+      </div>
+    </a>
   </div>
-  <div class="mb-3">
-    <label for="desc" class="form-label">Description</label>
-    <app-editor [html]="desc"></app-editor>
-  </div>
+  <app-editor placeholder="Description..." [html]="desc"></app-editor>
   <button
     type="submit"
     class="btn btn-primary"
@@ -52,5 +61,3 @@
     {{ blogId ? "Update" : "Publish" }}
   </button>
 </div>
-
-<div></div>

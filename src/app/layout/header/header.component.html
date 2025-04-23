@@ -22,8 +22,10 @@
             Create Blog
           </button>
         </li>
-        <div class="dropdown">
+        <div ngbDropdown placement="bottom-end" class="d-inline-block">
           <app-preview-avatar
+            ngbDropdownToggle
+            class="hide-arrow"
             data-bs-toggle="dropdown"
             [user]="{
               name: currentUser.name,
@@ -39,27 +41,25 @@
               _id: currentUser._id!,
             }"
           ></app-preview-avatar>
-          <ul class="dropdown-menu">
-            <li>
-              <a
-                class="dropdown-item d-flex align-items-center gap-2"
-                [routerLink]="'/user/' + currentUser._id + '/settings'"
-              >
-                <ng-icon name="bootstrapGear"></ng-icon>
-                Settings
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item d-flex align-items-center gap-2"
-                href=""
-                (click)="onLogout()"
-              >
-                <ng-icon name="bootstrapBoxArrowRight"></ng-icon>
-                Logout
-              </a>
-            </li>
-          </ul>
+          <div ngbDropdownMenu>
+            <a
+              ngbDropdownItem
+              class="dropdown-item d-flex align-items-center gap-2"
+              [routerLink]="'/user/' + currentUser._id + '/settings'"
+            >
+              <ng-icon name="bootstrapGear"></ng-icon>
+              Settings
+            </a>
+            <a
+              ngbDropdownItem
+              class="dropdown-item d-flex align-items-center gap-2"
+              href=""
+              (click)="onLogout()"
+            >
+              <ng-icon name="bootstrapBoxArrowRight"></ng-icon>
+              Logout
+            </a>
+          </div>
         </div>
       } @else {
         <li class="nav-item">

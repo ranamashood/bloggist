@@ -14,6 +14,7 @@ import { NgIcon } from '@ng-icons/core';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { filter } from 'rxjs';
 import { BlogsService } from '../../blogs.service';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ import { BlogsService } from '../../blogs.service';
     SearchBarComponent,
     NgIf,
     NgClass,
+    NgbDropdownModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
